@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/masterLayout">
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="false"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dp"
+        android:editable="false"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:text="Enemy" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyPoke1"
+        android:layout_below="@+id/enemyName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="107.5dp"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyPoke2"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/enemyName"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="62.5dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyPoke3"
+        android:layout_below="@+id/enemyName"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="17.5dp"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyPoke4"
+        android:layout_below="@+id/enemyName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="55dp"
+        android:layout_marginRight="107.5dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyPoke5"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/enemyName"
+        android:layout_marginRight="62.5dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/enemyPoke6"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/enemyName"
+        android:layout_marginTop="55dp"
+        android:layout_marginRight="17.5dp" />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerName"
+        android:editable="false"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="25dp"
+        android:text="Player"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerPoke1"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="17.5dp"
+        android:layout_below="@+id/playerName"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerPoke2"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_below="@+id/playerName"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="62.5dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerPoke3"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/playerName"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="107.5dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerPoke4"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="55dp"
+        android:layout_marginLeft="17.5dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/playerName" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerPoke5"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/playerName"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="62.5dp"
+        android:layout_marginTop="55dp" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/playerPoke6"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="107.5dp"
+        android:layout_marginTop="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/playerName" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="2"
+        android:id="@+id/bottomMovesLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Move3"
+            android:id="@+id/move3"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Move4"
+            android:id="@+id/move4"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:weightSum="4"
+        android:id="@+id/topMovesLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="false"
+        android:layout_above="@+id/bottomMovesLayout"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Move1"
+            android:id="@+id/move1"
+            android:layout_weight="2"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Move2"
+            android:id="@+id/move2"
+            android:layout_weight="2"
+            android:layout_marginLeft="5dp"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playerHPBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:indeterminate="false"
+        android:layout_alignRight="@+id/playerPoke6"
+        android:layout_below="@+id/playerPoke6"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="10dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enemyHPBar"
+        android:indeterminate="false"
+        android:layout_alignLeft="@+id/enemyPoke1"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/enemyPoke4"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Poke         HP"
+        android:id="@+id/playerPokeAndHP"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/playerHPBar"
+        android:layout_marginLeft="10dp"
+        android:layout_alignLeft="@+id/playerHPBar"
+        android:layout_marginBottom="-60dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Poke         HP"
+        android:id="@+id/enemyPokeAndHP"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/enemyHPBar"
+        android:layout_marginBottom="-60dp"
+        android:layout_alignLeft="@+id/enemyHPBar"
+        android:layout_marginRight="10dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/currentPlayerPoke"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toRightOf="@+id/playerHPBar"
+        android:layout_below="@+id/playerHPBar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/currentEnemyPoke"
+        android:layout_alignTop="@+id/currentPlayerPoke"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="pConditions "
+        android:id="@+id/playerConditions"
+        android:layout_below="@+id/playerHPBar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:textSize="6dp" />
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="eConditions"
+        android:id="@+id/enemyConditions"
+        android:layout_below="@+id/enemyHPBar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:textSize="6dp" />
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:text="Next"
+        android:id="@+id/nextButton"
+        android:layout_above="@+id/topMovesLayout"
+        android:layout_centerHorizontal="true"
+        style="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="BLABLAAAAAAAAA"
+        android:id="@+id/commentaryBox"
+        android:layout_above="@+id/enemyPokeAndHP"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/enemyPoke4"
+        android:layout_marginTop="10dp"
+        android:textSize="10dp" />
+
+</RelativeLayout>
