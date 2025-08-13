@@ -319,9 +319,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 if(moveButtons.size() > 1)
                     moveButtons.get(1).setOnClickListener((v) -> resolveSpeedTiers(1));
                 if(moveButtons.size() > 2)
-                moveButtons.get(2).setOnClickListener((v) -> resolveSpeedTiers(2));
+                    moveButtons.get(2).setOnClickListener((v) -> resolveSpeedTiers(2));
                 if(moveButtons.size() > 3)
-                moveButtons.get(3).setOnClickListener((v) -> resolveSpeedTiers(3));
+                    moveButtons.get(3).setOnClickListener((v) -> resolveSpeedTiers(3));
         });
         adb.show();
         return myView;
@@ -1146,7 +1146,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             result.append(statModifier);
             tempV.setText(result);
             csc = tempV.getText() + "";
-            if(csc.length() > 0 && csc.charAt(0) == ' ') {
+            if(!csc.isEmpty() && csc.charAt(0) == ' ') {
                 result = new StringBuilder(csc); //delete leading space
                 result.deleteCharAt(0);
                 tempV.setText(result);
