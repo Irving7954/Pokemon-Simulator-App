@@ -314,26 +314,25 @@
         android:textSize="6dp" />
 
     <Button
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:text="Next"
         android:id="@+id/nextButton"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_above="@+id/topMovesLayout"
         android:layout_centerHorizontal="true"
-        style="@style/Theme.AppCompat.Light.DarkActionBar" />
+        android:text="Next" />
 
     <TextView
+        android:id="@+id/commentaryBox"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="BLABLAAAAAAAAA"
-        android:id="@+id/commentaryBox"
         android:layout_above="@+id/enemyPokeAndHP"
+        android:layout_below="@+id/enemyPoke4"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_below="@+id/enemyPoke4"
-        android:layout_marginTop="10dp"
         android:textSize="10dp" />
 
 </RelativeLayout>

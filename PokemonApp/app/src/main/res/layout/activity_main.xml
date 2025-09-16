@@ -13,27 +13,27 @@
     android:nestedScrollingEnabled="false">
 
     <TextView
+        android:id="@+id/mainText"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:text="Welcome to the world of Pokémon! Press the start button to begin your journey."
-        android:id="@+id/mainText"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="20dp"
+        android:layout_alignParentRight="true"
+        android:text="@string/Welcome"
         android:textAlignment="center"
-        android:visibility="visible"
-        style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        android:textSize="20dp"
+        android:visibility="visible" />
 
     <Button
+        android:id="@+id/startButton"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:text="Start"
-        android:id="@+id/startButton"
         android:layout_below="@+id/mainText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:enabled="true"
-        style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        android:text="@string/Start" />
 
 </RelativeLayout>

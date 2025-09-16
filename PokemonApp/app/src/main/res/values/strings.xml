@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PokemonApp</string>
+    <string name="Welcome">Welcome to the world of Pokémon! Press the Start button to begin your journey.</string>
+    <string name="Start">Start</string>
 </resources>
