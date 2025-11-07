@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">PokemonApp</string>
-    <string name="Welcome">Welcome to the world of Pokémon! Press the Start button to begin your journey.</string>
-    <string name="Start">Start</string>
+    <string name="WelcomeButtonLabel">Welcome to the world of Pokémon! Press the Start button to begin your journey.</string>
+    <string name="StartButtonLabel">Start</string>
+    <string name="EnemyPokeImageDescLabel">An image of the enemy\'s Pokémon, which is typically an animal-like creature</string>
+    <string name="PlayerPokeImageDescLabel">An image of the player\'s Pokémon, which is typically an animal-like creature</string>
+    <string name="NextButtonLabel">Next</string>
 </resources>

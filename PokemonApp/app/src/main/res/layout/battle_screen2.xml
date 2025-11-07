@@ -13,7 +13,6 @@
         android:layout_alignParentStart="false"
         android:layout_marginRight="25dp"
         android:layout_marginTop="10dp"
-        android:editable="false"
         android:textSize="20sp"
         android:gravity="center_horizontal"
         android:text="Enemy" />
@@ -80,7 +79,6 @@
         android:layout_width="100dp"
         android:layout_height="30dp"
         android:id="@+id/playerName"
-        android:editable="false"
         android:textSize="20sp"
         android:gravity="center_horizontal"
         android:layout_alignParentBottom="false"
@@ -272,46 +270,49 @@
         android:layout_marginRight="10dp" />
 
     <ImageView
+        android:id="@+id/currentPlayerPoke"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/currentPlayerPoke"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toRightOf="@+id/playerHPBar"
         android:layout_below="@+id/playerHPBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="27dp"
+        android:layout_toRightOf="@+id/playerHPBar"
+        android:contentDescription="@string/PlayerPokeImageDescLabel" />
 
     <ImageView
+        android:id="@+id/currentEnemyPoke"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/currentEnemyPoke"
         android:layout_alignTop="@+id/currentPlayerPoke"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp" />
-
-    <TextView
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="pConditions "
-        android:id="@+id/playerConditions"
-        android:layout_below="@+id/playerHPBar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp"
-        android:textSize="6dp" />
-
-    <TextView
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:text="eConditions"
-        android:id="@+id/enemyConditions"
-        android:layout_below="@+id/enemyHPBar"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginRight="10dp"
-        android:textSize="6dp" />
+        android:contentDescription="@string/EnemyPokeImageDescLabel" />
+
+    <TextView
+        android:id="@+id/playerConditions"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playerHPBar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:text="pConditions "
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/enemyConditions"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enemyHPBar"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:text="eConditions"
+        android:textSize="11sp" />
 
     <Button
         android:id="@+id/nextButton"
@@ -320,7 +321,7 @@
         android:layout_height="40dp"
         android:layout_above="@+id/topMovesLayout"
         android:layout_centerHorizontal="true"
-        android:text="Next" />
+        android:text="@string/NextButtonLabel" />
 
     <TextView
         android:id="@+id/commentaryBox"
@@ -333,6 +334,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
-        android:textSize="10dp" />
+        android:textSize="11sp" />
 
 </RelativeLayout>
