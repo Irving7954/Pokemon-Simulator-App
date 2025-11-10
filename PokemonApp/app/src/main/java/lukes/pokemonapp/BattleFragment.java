@@ -162,7 +162,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
         //initializes variables unrelated to the name box.
         myView = inflater.inflate(R.layout.battle_screen2, container, false);
-        firstPokeName = (String) getArguments().getSerializable("key");
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            firstPokeName = (String) bundle.getSerializable("key");
+        }
+
         Log.d("AddPersonActivity", firstPokeName);
         weather = 0;
         rand = new Random();
@@ -212,7 +216,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 Log.d("AddPersonActivity", player.toString());
                 moveButtons = new ArrayList<>();
 
-                for (int i = 0; i < leadPlayerPoke.getMoves().size(); i++) {
+                ArrayList<Move> playerMoves = leadPlayerPoke.getMoves();
+                for (int i = 0; i < playerMoves.size(); i++) {
                     //initialize buttons to R.id.move# and set their text to the leadPoke's moves
                     switch (i) {
                         case 0:
@@ -228,7 +233,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                             moveButtons.add(myView.findViewById(R.id.move4));
                             break;
                     }
-                    moveButtons.get(i).setText(leadPlayerPoke.getMoves().get(i).toString());
+                    moveButtons.get(i).setText(playerMoves.get(i).toString());
                 }
 
                 playerImages = new ArrayList<>();
@@ -236,13 +241,13 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     //initialize images to R.id.image# and set their text to the leadPoke's moves
                     switch (i) {
                         case 0:
-                            playerImages.add( myView.findViewById(R.id.playerPoke1));
+                            playerImages.add(myView.findViewById(R.id.playerPoke1));
                             break;
                         case 1:
                             playerImages.add(myView.findViewById(R.id.playerPoke2));
                             break;
                         case 2:
-                            playerImages.add( myView.findViewById(R.id.playerPoke3));
+                            playerImages.add(myView.findViewById(R.id.playerPoke3));
                             break;
                         case 3:
                             playerImages.add(myView.findViewById(R.id.playerPoke4));
@@ -1037,7 +1042,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 continue;
             if(i == 0) {
                 if(cus) {
-                    moveUser.getInitStats()[0] += change/ 100.0 * moveUser.getMaxHP();
+                    moveUser.getInitStats()[0] += (int) (change/ 100.0 * moveUser.getMaxHP());
                     if(moveUser.getInitStats()[0] > moveUser.getMaxHP())
                         moveUser.getInitStats()[0] = moveUser.getMaxHP();
                     if(isPlayerTheUser)
@@ -1046,7 +1051,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                         adjustHPBars(enemyHPBar, moveUser, enemyPokeAndHP);
                 }
                 else {
-                    moveTarget.getInitStats()[0] += change / 100.0 * moveTarget.getMaxHP();
+                    moveTarget.getInitStats()[0] += (int) (change / 100.0 * moveTarget.getMaxHP());
                     if(moveTarget.getInitStats()[0] > moveTarget.getMaxHP())
                         moveTarget.getInitStats()[0] = moveTarget.getMaxHP();
                     if(isPlayerTheUser)

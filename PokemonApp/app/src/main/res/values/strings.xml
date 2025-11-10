@@ -2,7 +2,19 @@
     <string name="app_name">PokemonApp</string>
     <string name="WelcomeButtonLabel">Welcome to the world of Pokémon! Press the Start button to begin your journey.</string>
     <string name="StartButtonLabel">Start</string>
-    <string name="EnemyPokeImageDescLabel">An image of the enemy\'s Pokémon, which is typically an animal-like creature</string>
-    <string name="PlayerPokeImageDescLabel">An image of the player\'s Pokémon, which is typically an animal-like creature</string>
+    <string name="EnemyTrainerNameLabel">Enemy</string>
+    <string name="PlayerTrainerNameLabel">Player</string>
+    <string name="EnemyPokeHPBarLabel">Pokémon: HP</string>
+    <string name="PlayerPokeHPBarLabel">Pokémon: HP</string>
+    <string name="EnemyPokeConditionsLabel">Enemy Conditions</string>
+    <string name="PlayerPokeConditionsLabel">Player Conditions</string>
+    <string name="EnemyCurrPokeImageDescLabel">An image of the enemy\'s current Pokémon, which typically shows an animal-like creature</string>
+    <string name="PlayerCurrPokeImageDescLabel">An image of the player\'s current Pokémon, which typically shows an animal-like creature</string>
+    <string name="EnemyTeamPokeImageDescLabel">An image of a Pokémon in the enemy\'s team, which typically shows a small animal-like creature</string>
+    <string name="PlayerTeamPokeImageDescLabel">An image of a Pokémon in the player\'s team, which typically shows a small animal-like creature</string>
+    <string name="FirstMoveButtonLabel">Move1</string>
+    <string name="SecondMoveButtonLabel">Move2</string>
+    <string name="ThirdMoveButtonLabel">Move3</string>
+    <string name="FourthMoveButtonLabel">Move4</string>
     <string name="NextButtonLabel">Next</string>
 </resources>
