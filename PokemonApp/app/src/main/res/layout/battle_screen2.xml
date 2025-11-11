@@ -165,73 +165,6 @@
         android:layout_marginTop="55dp"
         android:contentDescription="@string/PlayerTeamPokeImageDescLabel" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:weightSum="2"
-        android:id="@+id/bottomMovesLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-
-        <Button
-            android:id="@+id/move3"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:text="@string/ThirdMoveButtonLabel" />
-
-        <Button
-            android:id="@+id/move4"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:text="@string/FourthMoveButtonLabel" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:weightSum="4"
-        android:id="@+id/topMovesLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentEnd="false"
-        android:layout_above="@+id/bottomMovesLayout"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
-
-        <Button
-            android:id="@+id/move1"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="2"
-            android:text="@string/FirstMoveButtonLabel" />
-
-        <Button
-            android:id="@+id/move2"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="2"
-            android:text="@string/SecondMoveButtonLabel" />
-
-    </LinearLayout>
-
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
@@ -325,12 +258,59 @@
         android:text="@string/EnemyPokeConditionsLabel"
         android:textSize="11sp" />
 
+    <GridLayout
+        android:id="@+id/movesLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="96dp"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:id="@+id/move1"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/FirstMoveButtonLabel" />
+
+        <Button
+            android:id="@+id/move2"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="@string/SecondMoveButtonLabel" />
+
+        <Button
+            android:id="@+id/move3"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="@string/ThirdMoveButtonLabel" />
+
+        <Button
+            android:id="@+id/move4"
+            style="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:text="@string/FourthMoveButtonLabel" />
+
+    </GridLayout>
+
     <Button
         android:id="@+id/nextButton"
         style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_above="@+id/topMovesLayout"
+        android:layout_height="48dp"
+        android:layout_above="@+id/movesLayout"
         android:layout_centerHorizontal="true"
         android:text="@string/NextButtonLabel" />
 
