@@ -7,6 +7,7 @@
         android:id="@+id/enemyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="200dp"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -86,6 +87,7 @@
         android:id="@+id/playerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="200dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -179,16 +181,16 @@
         android:layout_marginLeft="10dp" />
 
     <ProgressBar
+        android:id="@+id/enemyHPBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/enemyHPBar"
-        android:indeterminate="false"
-        android:layout_alignLeft="@+id/enemyPoke1"
-        android:layout_marginTop="60dp"
         android:layout_below="@+id/enemyPoke4"
+        android:layout_alignLeft="@+id/enemyPoke1"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp" />
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="10dp"
+        android:indeterminate="false" />
 
     <TextView
         android:id="@+id/playerPokeAndHP"

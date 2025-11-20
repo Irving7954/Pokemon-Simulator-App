@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">PokemonApp</string>
-    <string name="WelcomeButtonLabel">Welcome to the world of Pokémon! Press the Start button to begin your journey.</string>
+    <string name="WelcomeTextLabel">Welcome to the world of Pokémon! Press the button below to begin your journey.</string>
+    <string name="TeamSelectionIntroLabel">Two teams of three Pokémon are available to you. Click on the buttons below to see each Pokémon team in detail, and then choose one team.</string>
     <string name="StartButtonLabel">Start</string>
     <string name="EnemyTrainerNameLabel">Enemy</string>
     <string name="PlayerTrainerNameLabel">Player</string>
     <string name="EnemyPokeHPBarLabel">Pokémon: HP</string>
     <string name="PlayerPokeHPBarLabel">Pokémon: HP</string>
+    <string name="SamplePokeLabel">Pokémon</string>
     <string name="EnemyPokeConditionsLabel">Enemy Conditions</string>
     <string name="PlayerPokeConditionsLabel">Player Conditions</string>
     <string name="EnemyCurrPokeImageDescLabel">An image of the enemy\'s current Pokémon, which typically shows an animal-like creature</string>
@@ -16,5 +18,9 @@
     <string name="SecondMoveButtonLabel">Move2</string>
     <string name="ThirdMoveButtonLabel">Move3</string>
     <string name="FourthMoveButtonLabel">Move4</string>
+    <string name="FirstTeamButtonLabel">Team1</string>
+    <string name="SecondTeamButtonLabel">Team2</string>
+    <string name="ThirdTeamButtonLabel">Team3</string>
     <string name="NextButtonLabel">Next</string>
+    <string name="BackButtonLabel">Back</string>
 </resources>

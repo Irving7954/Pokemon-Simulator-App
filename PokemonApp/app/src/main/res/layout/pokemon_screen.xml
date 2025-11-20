@@ -1,83 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
-    android:id="@+id/psLinLayout">
+    android:id="@+id/psRelLayout">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/psRelLayout"
-        android:scrollIndicators="none">
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statsListView"
+        android:choiceMode="singleChoice"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="125dp"
+        android:layout_marginBottom="75dp"
+        android:focusable="true"
+        android:smoothScrollbar="false"
+        android:textFilterEnabled="false" />
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/statsListView"
-            android:choiceMode="singleChoice"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="38dp"
-            android:layout_marginRight="115dp"
-            android:layout_marginBottom="45dp"
-            android:clickable="true"
-            android:smoothScrollbar="false"
-            android:textFilterEnabled="false" />
+    <TextView
+        android:id="@+id/pokemonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/statsListView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/SamplePokeLabel"
+        android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Squirtle"
-            android:id="@+id/pokemonName"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/statsListView"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="50dp" />
+    <ImageView
+        android:id="@+id/pokemonPic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/pokemonName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/PlayerCurrPokeImageDescLabel" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/pokemonPic"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/pokemonName"
-            android:contentDescription="squirtle" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/NextButtonLabel"
+        android:id="@+id/forwardButton"
+        android:textSize="16sp"
+        android:layout_alignTop="@+id/backButton"
+        android:layout_alignRight="@+id/pokemonPic"
+        android:layout_alignEnd="@+id/pokemonPic"
+        android:layout_marginRight="-5dp"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"/>
 
-        <Button
-            android:layout_width="65dp"
-            android:layout_height="45dp"
-            android:text="Next"
-            android:id="@+id/forwardButton"
-            android:textSize="16dp"
-            android:layout_alignTop="@+id/backButton"
-            android:layout_alignRight="@+id/pokemonPic"
-            android:layout_alignEnd="@+id/pokemonPic"
-            android:layout_marginRight="-5dp"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"/>
+    <Button
+        android:id="@+id/backButton"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/statsListView"
+        android:layout_alignRight="@+id/statsListView"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="-10dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/BackButtonLabel"
+        android:textSize="16sp" />
 
-        <Button
-            android:layout_width="65dp"
-            android:layout_height="45dp"
-            android:text="Back"
-            android:id="@+id/backButton"
-            android:textSize="16dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/statsListView"
-            android:layout_alignEnd="@+id/statsListView"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="-10dp"
-            style="@style/Theme.AppCompat.Light.DarkActionBar"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
