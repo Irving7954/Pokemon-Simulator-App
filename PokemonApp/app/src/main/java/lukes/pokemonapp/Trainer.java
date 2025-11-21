@@ -16,12 +16,12 @@ public abstract class Trainer {
     /**
      * The trainer's name. Each trainer must always have a name.
      */
-    private String name;
+    private final String name;
 
     /**
      * The trainer's Pokémon team. Each team consists of 0-6 Pokémon.
      */
-    private ArrayList<Pokemon> team;
+    private final ArrayList<Pokemon> team;
 
     /**
      * Constructs a named Trainer with an empty team. This acts as the default constructor for its subclasses.

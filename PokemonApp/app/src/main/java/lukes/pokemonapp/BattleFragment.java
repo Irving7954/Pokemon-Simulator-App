@@ -17,7 +17,6 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
-//import android.widget.Toast;
 
 /**
  * The fragment for the battle simulation. Generally, this is the most complex fragment with the most parts
@@ -40,12 +39,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * are used in conjunction with Pokémon's statStages array to ease stat changes.
      */
     public static final double[] ACCURACY_STAT_STAGES = new double[] {.333, .375, .429, .5, .6, .75, 1.0, 1.333, 1.666, 2, 2.333, 2.666, 3};
-
-    /**
-     * The view that this Fragment has. From what I can tell, this essentially represents the overall
-     * screen (the xml layout file) that is initialized in the onCreateView method.
-     */
-    private View myView;
 
     /**
      * The representation of the player and enemy trainers. The player will be of a Player type, and
@@ -123,11 +116,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
     private int weather; /* weather codes:
                                 0: none, 1: rain, 2: sun, 3: sand, 4: hail, 5: heavy rain, 6: harsh sunlight, 7: air current
                                                                                POgre        PDon                MRay        */
-    /**
-     * A button that controls the turn timing. Essentially, the next button advances to the next action (like another move or
-     * end-of-turn effects).
-     */
-    private Button nextButton;
 
     /**
      * A text box that shows the results of the last move or end-of-turn effects. This generally contains the
@@ -160,8 +148,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
-        //initializes variables unrelated to the name box.
-        myView = inflater.inflate(R.layout.battle_screen2, container, false);
+        // This Fragment's view, which is described by the XML layout file
+        View myView = inflater.inflate(R.layout.battle_screen2, container, false);
+
         Bundle bundle = getArguments();
         if(bundle != null) {
             firstPokeName = (String) bundle.getSerializable("key");
@@ -170,9 +159,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
         Log.d("AddPersonActivity", firstPokeName);
         weather = 0;
         rand = new Random();
-        nextButton = myView.findViewById(R.id.nextButton);
 
-        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); //change
+        // A button that controls the turn timing, which means that clicking it allows the user to
+        // Advance to the next action, such as another move or end-of-turn effects).
+        Button nextButton = myView.findViewById(R.id.nextButton);
+
+        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); //TODO - add later
 
         //creates the name box
         final EditText et = new EditText(getContext());
@@ -1196,7 +1188,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 changeStatusText(moveStatus, !isPlayerTheUser); //non-rest case
             }
         }
-
     }
 
     /**

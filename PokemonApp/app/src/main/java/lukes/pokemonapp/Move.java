@@ -44,7 +44,7 @@ public abstract class Move {
      * A list of the invulnerable codes that this move passes through. This is used to reduce the ugliness
      * of breaking semi-invulnerability by name only. This depends on the invulnCodes in the Pokemon class.
      */
-    private ArrayList<Integer> IBList;
+    private final ArrayList<Integer> IBList;
 
     /**
      * A list of the stat changes caused by this move. The HP one indicates recoil or health gain (represented

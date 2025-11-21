@@ -3,7 +3,6 @@ package lukes.pokemonapp;
 import android.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-//import android.widget.Toast;
 
 /**
  * A fragment for displaying Pokemon data and moves. It contains an image and stats about the pokemon
@@ -21,44 +19,10 @@ import android.widget.TextView;
  * @author Luke Schoeberle 7/16/2016.
  */
 public class PokemonFragment extends Fragment { //Fragment code 1
-
-    /**
-     * The view that this Fragment has. From what I can tell, this essentially represents the overall
-     * screen (the xml layout file) that is initialized in the onCreateView method.
-     */
-    private View myView;
-
-    /**
-     * The text box for the Pokémon's name. This is set to the String provided in the constructor.
-     */
-    private TextView pokeName;
-
-    /**
-     * An image of the Pokémon. This is set to an image found in res/drawable based on the Pokémon's name.
-     */
-    private ImageView pokePic;
-
-    /**
-     * The displayed list of Pokémon stats. This shows the moves and stats of the Pokémon named in the constructor.
-     */
-    private ListView pokeInfo;
-
     /**
      * The Pokémon provided in the constructor. This Pokémon is displayed on this Fragment.
      */
     private Pokemon poke;
-
-    /**
-     * The button used to move to the next Pokémon. If you are already on the last Pokémon, this
-     * shows a message about choosing this team for sure.
-     */
-    private Button forwardButton;
-
-    /**
-     * The button for moving back to the last Pokémon. If you are on the first Pokémon, this goes
-     * back to the team selection screen.
-     */
-    private Button backButton;
 
     /**
      * This Fragment's main activity. This is essentially just a shortcut so I don't have to say
@@ -83,8 +47,6 @@ public class PokemonFragment extends Fragment { //Fragment code 1
     /**
      * Creates this view based on the parameters. Essentially, it initializes the buttons, the text boxes,
      * and the listView. It also causes the buttons to change the screen to other Fragments.
-     * Currently, most of these variables could simply be local variables because they are only used
-     * in this method, but I am leaving them as instance variables for later uses.
      * @param inflater Creates this view from the layout file.
      * @param container Puts this view into the specified container.
      * @param savedInstance Not used in this case.
@@ -92,16 +54,29 @@ public class PokemonFragment extends Fragment { //Fragment code 1
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
-        //initializes variables
-        myView = inflater.inflate(R.layout.pokemon_screen, container, false);
-        pokeName = myView.findViewById(R.id.pokemonName);
-        pokePic = myView.findViewById(R.id.pokemonPic);
-        forwardButton = myView.findViewById(R.id.forwardButton);
-        backButton = myView.findViewById(R.id.backButton);
+        // This Fragment's view, which is described by the XML layout file
+        View myView = inflater.inflate(R.layout.pokemon_screen, container, false);
+
+        // The text box for the Pokémon's name, which is initialized to the String provided in the constructor
+        TextView pokeName = myView.findViewById(R.id.pokemonName);
+
+        // An image of the Pokémon, which is initialized to a resource based on the Pokémon's name
+        ImageView pokePic = myView.findViewById(R.id.pokemonPic);
+
+        // The button used to move to the next Pokémon on the current team. If you are already on the last Pokémon,
+        // Clicking the button instead shows a message about confirming your team selection
+        Button forwardButton = myView.findViewById(R.id.forwardButton);
+
+        // The button used to move to the last Pokémon on the current team. If you are already on the last Pokémon,
+        // Clicking the button instead returns to the team selection screen
+        Button backButton = myView.findViewById(R.id.backButton);
 
         ma = (MainActivity) getActivity();
 
-        poke = new Pokemon((String) getArguments().getSerializable("key"));
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            poke = new Pokemon((String) bundle.getSerializable("key"));
+        }
 
         atEndOfTeam = false;
 
@@ -139,9 +114,11 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                                   poke.getMoves().get(1).toString(), poke.getMoves().get(2).toString(),
                                   poke.getMoves().get(3).toString()};
 
-        //creates the adapter for putting the list array into the list view
+        // Creates the adapter for putting the list array into the list view
         ArrayAdapter<String> adapter = new ArrayAdapter<>(myView.getContext(), R.layout.text_for_stats_listview, listPokeStats);
-        pokeInfo = myView.findViewById(R.id.statsListView);
+
+        // The displayed list of Pokémon stats, which shows the moves and stats of the Pokémon named in the constructor
+        ListView pokeInfo = myView.findViewById(R.id.statsListView);
         pokeInfo.setAdapter(adapter);
 
         //determines what happens when items in the list are clicked
@@ -160,7 +137,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                                                               "moves when the user's health is low.");
                                 break;
                             case "Intimidate":
-                                makeBoxWithOk(s + " Ability", "This ability lowers the Attack of the opponent by" +
+                                makeBoxWithOk(s + " Ability", "This ability lowers the Attack of the opponent by " +
                                                               "one stage when the user comes into battle.");
                                 break;
                             case "Overgrow":
@@ -184,17 +161,17 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                         break;
                     case 10: case 11: case 12: case 13: //all the move slots act the same
                         Move move = new StatusMove(text);
-                        if(!move.getName().equals("")) {
+                        if(!move.getName().isEmpty()) {
                             makeBoxWithOk(text, getMoveDescription(move));
                             break;
                         }
                         move = new PhysicalMove(text);
-                        if(!move.getName().equals("")) {
+                        if(!move.getName().isEmpty()) {
                             makeBoxWithOk(text, getMoveDescription(move));
                             break;
                         }
                          move = new SpecialMove(text);
-                        if(!move.getName().equals("")) {
+                        if(!move.getName().isEmpty()) {
                             makeBoxWithOk(text, getMoveDescription(move));
                             break;
                         }
@@ -262,7 +239,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
      * atEndOfTeam to true as well.
      */
     private void prepareForBattleStage() {
-        makeBoxWithOk("Last Pok" + '\u00E9' + "mon!", "This is the last Pok" + '\u00E9' + "mon on the team. Choose this team " +
+        makeBoxWithOk("Last Pokémon!", "This is the last Pokémon on the team. Choose this team " +
                 "if you wish by pressing Next again, or press Back to return to the team selection screen. ");
         atEndOfTeam = true;
     }
