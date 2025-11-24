@@ -185,18 +185,20 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Charmander");
                     player.addPokemon("Squirtle");
-                    player.addPokemon("Bulbasaur");
-                    player.addPokemon("Charmander"); //will be removed later //TODO
-                    player.addPokemon("Squirtle");
+                    // Add more pokemon later //TODO
                 }
                 else if (firstPokeName.equals("Chikorita")) {
                     player.addPokemon("Chikorita");
                     player.addPokemon("Cyndaquil");
                     player.addPokemon("Totodile");
-                    player.addPokemon("Chikorita"); //will be removed later //TODO
-                    player.addPokemon("Cyndaquil");
-                    player.addPokemon("Totodile");
-                } //add third team //TODO
+                    // Add more pokemon later //TODO
+                }
+                else if (firstPokeName.equals("Treecko")) {
+                    player.addPokemon("Treecko");
+                    player.addPokemon("Torchic");
+                    player.addPokemon("Mudkip");
+                    // Add more pokemon later //TODO
+                }
 
                 leadPlayerPoke = player.getTeam().get(0);
                 //initializes text boxes
@@ -266,9 +268,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 enemy.addPokemon("Voltorb");
                 enemy.addPokemon("Wooper");
                 enemy.addPokemon("Snubbull");
-                enemy.addPokemon("Voltorb"); //will be removed later //TODO
-                enemy.addPokemon("Wooper");
-                enemy.addPokemon("Snubbull");
+                // Add more pokemon later //TODO
+
                 leadEnemyPoke = enemy.getTeam().get(0);
                 //initializes text boxes
                 enemyName = myView.findViewById(R.id.enemyName);
@@ -341,7 +342,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param poke The Pokémon to be shown.
      */
     private void setImage(ImageView iv, Pokemon poke) {
-        switch (poke.getName()) {
+        String name = poke.getName();
+        switch (name) {
             case "Bulbasaur":
                 iv.setImageResource(R.drawable.bulbasaur);
                 break;
@@ -369,7 +371,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
             case "Wooper":
                 iv.setImageResource(R.drawable.wooper);
                 break;
-            //more cases will follow
+            case "Treecko":
+                iv.setImageResource(R.drawable.treecko);
+                break;
+            case "Torchic":
+                iv.setImageResource(R.drawable.torchic);
+                break;
+            case "Mudkip":
+                iv.setImageResource(R.drawable.mudkip);
+                break;
+            default:
+                throw new IllegalArgumentException(name + " has not been defined yet!");
+            // Add more cases later for the simulator later //TODO
         }
     }
 

@@ -36,14 +36,14 @@ public class TeamFragment extends Fragment { //fragment code 2
 
         Button team1Button = myView.findViewById(R.id.team1Button);
         Button team2Button = myView.findViewById(R.id.team2Button);
-        Button team3Button = myView.findViewById(R.id.team3Button); // Make this work later //TODO
+        Button team3Button = myView.findViewById(R.id.team3Button);
 
         ma = (MainActivity) getActivity();
 
         // Changes screens
         team1Button.setOnClickListener((v) -> ma.displayView(1, "Bulbasaur"));
         team2Button.setOnClickListener((v) -> ma.displayView(1,"Chikorita"));
-        //team3Button.setOnClickListener((v) -> ma.displayView(1, "Chikorita")); // Add this later  //TODO
+        team3Button.setOnClickListener((v) -> ma.displayView(1, "Chikorita")); // Change this to the new team when it is ready //TODO
 
         return myView;
     }
