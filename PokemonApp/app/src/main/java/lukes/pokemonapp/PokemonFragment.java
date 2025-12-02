@@ -76,6 +76,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
         Bundle bundle = getArguments();
         if(bundle != null) {
             poke = new Pokemon((String) bundle.getSerializable("key"));
+            //poke = bundle.getParcelable("key", Pokemon.class);
         }
 
         atEndOfTeam = false;
@@ -319,4 +320,3 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                 " type move. Its PP is " + move.getPP() + ". " + move.getEffects();
     }
 }
-

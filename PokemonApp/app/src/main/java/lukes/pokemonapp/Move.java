@@ -329,10 +329,10 @@ public abstract class Move {
     }
 
     /**
-     * Used for debugging purposes. May be eliminated later.
+     * Used for debugging purposes.
      * @return A String representation of this object.
      */
-    @Override //TODO
+    @Override
     @NonNull
     public String toString() {
         return name;

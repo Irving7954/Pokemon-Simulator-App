@@ -105,79 +105,88 @@ public class Pokemon {
      * @throws IllegalArgumentException When pName does not match a name in this method.
      */
     private void setPokemon(String pName) {
-        name = pName;
-        level = 50;               //temporary
+        setName(pName);
+        setLevel(50); // Use a temporary level of 50 for the simulator
         setVolStatus("None");     /*can be ("None","Sleeping","Poisoned","Badly Poisoned",
                                   "Paralyzed", "Resting", "Burned", "Frozen") at this point*/
         setNonVolStatus("None");  /* can be("None","Confused","Seeded" ... many more later) */
         setInvulnCode(0);
-        statStages = new int[] {6, 6, 6, 6, 6, 6, 6, 6};
-        criticalState = 0;
+        setStatStages(new int[] {6, 6, 6, 6, 6, 6, 6, 6});
+        setCritState(0);
 
         //database of stats (this is for the simulator only)
         switch(pName) {
             case "Bulbasaur":
-                type = "Grass/Poison";
-                setAbility("Overgrow"); //worry about hidden abilities/other abilities later
-                initStats = new int[] {105, 49, 49, 65, 55, 45, 100, 100}; maxHP = 105;
-                moves = new ArrayList<>(Arrays.asList(new StatusMove("Leech Seed"), new StatusMove("Synthesis"),
-                                    new SpecialMove("Sludge Bomb"), new SpecialMove("Giga Drain")));
+                setType("Grass/Poison");
+                setAbility("Overgrow"); // Consider hidden abilities/other abilities later //TODO
+                setStats(new int[] {105, 49, 49, 65, 55, 45, 100, 100});
+                setMaxHP(105);
+                setMoves(new ArrayList<>(Arrays.asList(new StatusMove("Leech Seed"), new StatusMove("Synthesis"),
+                                    new SpecialMove("Sludge Bomb"), new SpecialMove("Giga Drain"))));
                 break;
             case "Charmander":
-                type = "Fire";
+                setType("Fire");
                 setAbility("Blaze");
-                initStats = new int[] {99, 52, 43, 60, 50, 65, 100, 100}; maxHP = 99;
-                moves = new ArrayList<>(Arrays.asList(new SpecialMove("Flamethrower"), new PhysicalMove("Dig"),
-                        new PhysicalMove("Dragon Claw"), new StatusMove("Will-O-Wisp")));
+                setStats(new int[] {99, 52, 43, 60, 50, 65, 100, 100});
+                setMaxHP(99);
+                setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Flamethrower"), new PhysicalMove("Dig"),
+                        new PhysicalMove("Dragon Claw"), new StatusMove("Will-O-Wisp"))));
                 break;
             case "Squirtle":
-                type = "Water";
+                setType("Water");
                 setAbility("Torrent");
-                initStats = new int[] {104, 48, 65, 50, 64, 43, 100, 100}; maxHP = 104;
-                moves = new ArrayList<>(Arrays.asList(new SpecialMove("Scald"), new SpecialMove("Ice Beam"),
-                        new StatusMove("Substitute"), new StatusMove("Toxic")));
+                setStats(new int[] {104, 48, 65, 50, 64, 43, 100, 100});
+                setMaxHP(104);
+                setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Scald"), new SpecialMove("Ice Beam"),
+                        new StatusMove("Substitute"), new StatusMove("Toxic"))));
                 break;
             case "Voltorb":
-                type = "Electric";
+                setType("Electric");
                 setAbility("Static");
-                initStats = new int[] {100, 30, 50, 55, 55, 100, 100, 100}; maxHP = 100;
-                moves = new ArrayList<>(Arrays.asList(new SpecialMove("Discharge"), new StatusMove("Magnet Rise"),
-                        new SpecialMove("Volt Switch"), new StatusMove("Thunder Wave")));
+                setStats(new int[] {100, 30, 50, 55, 55, 100, 100, 100});
+                setMaxHP(100);
+                setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Discharge"), new StatusMove("Magnet Rise"),
+                        new SpecialMove("Volt Switch"), new StatusMove("Thunder Wave"))));
                 break;
             case "Chikorita":
-                type = "Grass";
+                setType("Grass");
                 setAbility("Overgrow");
-                initStats = new int[] {105, 49, 65, 49, 65, 45, 100, 100}; maxHP = 105;
-                moves = new ArrayList<>(Arrays.asList(new StatusMove("Light Screen"), new StatusMove("Reflect"),
-                        new SpecialMove("Energy Ball"), new StatusMove("Magic Coat")));
+                setStats(new int[] {105, 49, 65, 49, 65, 45, 100, 100});
+                setMaxHP(105);
+                setMoves(new ArrayList<>(Arrays.asList(new StatusMove("Light Screen"), new StatusMove("Reflect"),
+                        new SpecialMove("Energy Ball"), new StatusMove("Magic Coat"))));
                 break;
             case "Cyndaquil":
-                type = "Fire";
+                setType("Fire");
                 setAbility("Blaze");
-                initStats = new int[] {99, 52, 43, 60, 50, 65, 100, 100}; maxHP = 99;
-                moves = new ArrayList<>(Arrays.asList(new SpecialMove("Eruption"), new SpecialMove("Lava Plume"),
-                        new StatusMove("Sunny Day"), new SpecialMove("Solar Beam")));
+                setStats(new int[] {99, 52, 43, 60, 50, 65, 100, 100});
+                setMaxHP(99);
+                setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Eruption"), new SpecialMove("Lava Plume"),
+                        new StatusMove("Sunny Day"), new SpecialMove("Solar Beam"))));
                 break;
             case "Totodile":
-                type = "Water";
+                setType("Water");
                 setAbility("Torrent");
-                initStats = new int[] {110, 65, 64, 44, 48, 43, 100, 100}; maxHP = 110;
-                moves = new ArrayList<>(Arrays.asList(new PhysicalMove("Aqua Tail"), new PhysicalMove("Superpower"),
-                        new StatusMove("Screech"), new PhysicalMove("Ice Punch")));
+                setStats(new int[] {110, 65, 64, 44, 48, 43, 100, 100});
+                setMaxHP(110);
+                setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Aqua Tail"), new PhysicalMove("Superpower"),
+                        new StatusMove("Screech"), new PhysicalMove("Ice Punch"))));
                 break;
             case "Wooper":
-                type = "Water/Ground";
+                setType("Water/Ground");
                 setAbility("Water Absorb");
-                initStats = new int[] {115, 45, 45, 25, 25, 15, 100, 100}; maxHP = 115;
-                moves = new ArrayList<>(Arrays.asList(new StatusMove("Amnesia"), new PhysicalMove("Earthquake"),
-                        new StatusMove("Yawn"), new StatusMove("Rest")));
+                setStats(new int[] {115, 45, 45, 25, 25, 15, 100, 100});
+                setMaxHP(115);
+                setMoves(new ArrayList<>(Arrays.asList(new StatusMove("Amnesia"), new PhysicalMove("Earthquake"),
+                        new StatusMove("Yawn"), new StatusMove("Rest"))));
                 break;
             case "Snubbull":
-                type = "Fairy";
+                setType("Fairy");
                 setAbility("Intimidate");
-                initStats = new int[] {120, 80, 50, 40, 40, 30, 100, 100}; maxHP = 120;
-                moves = new ArrayList<>(Arrays.asList(new PhysicalMove("Play Rough"), new StatusMove("Roar"),
-                        new PhysicalMove("Earthquake"), new PhysicalMove("Payback")));
+                setStats(new int[] {120, 80, 50, 40, 40, 30, 100, 100});
+                setMaxHP(120);
+                setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Play Rough"), new StatusMove("Roar"),
+                        new PhysicalMove("Earthquake"), new PhysicalMove("Payback"))));
                 break;
             default:
                 throw new IllegalArgumentException(pName + " is currently not a valid Pokémon in this simulator!");
@@ -194,11 +203,27 @@ public class Pokemon {
     }
 
     /**
-     * Sets this Pokémon's ability to the aName.
-     * @param aName The new ability.
+     * Sets this Pokémon's level to the new level.
+     * @param nLevel The new level.
      */
-    public void setAbility(String aName) {
-        ability = aName;
+    public void setLevel(int nLevel) {
+        level = nLevel;
+    }
+
+    /**
+     * Sets this Pokémon's name to the new name.
+     * @param nName The new name.
+     */
+    public void setName(String nName) {
+        name = nName;
+    }
+
+    /**
+     * Sets this Pokémon's ability to the new ability.
+     * @param nAbility The new ability.
+     */
+    public void setAbility(String nAbility) {
+        ability = nAbility;
     }
 
     /**
@@ -234,7 +259,7 @@ public class Pokemon {
     }
 
     /**
-     * *Precondition: This Pokémon does not have the named move.
+     * Precondition: This Pokémon does not have the named move.
      * Adds the named move to the Pokémon's move list and returns true if the move can be added without
      * replacing any other moves. If the Pokémon is full on moves, it
      * returns false and does not change any moves.
@@ -242,12 +267,21 @@ public class Pokemon {
      * @return True if the Pokémon is not full on moves, false otherwise.
      */
     public boolean addMove(Move move) {
-        //if(hasMove(move))  return false; *Precondition
+        if(hasMove(move))  return false; //
         if(moves.size() < 4) {
             moves.add(move);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Copies the provided ArrayList to this Pokémon's moves ArrayList array, which is used mainly
+     * for initialization and potentially for changing the move list via rare moves like Transform.
+     * @param nMoves The new move array.
+     */
+    public void setMoves(ArrayList<Move> nMoves) {
+        moves = nMoves;
     }
 
     /**
@@ -294,6 +328,15 @@ public class Pokemon {
         statStages[index] = value;
     } //more detail later //TODO
 
+    /**
+     * Copies the stat stages from the provided array to this Pokémon's stat stage array, which is used mainly
+     * for initialization and changing many different stat stages. For reference, the values in the array from index 0-5 are
+     * HP, Attack, Defense, Special Attack, Special Defense, and Speed.
+     * @param newStatStages The new array that represents all of the stat stages.
+     */
+    public void setStatStages(int[] newStatStages) {
+        statStages = newStatStages;
+    }
 
     /**
      * Sets the stat at index to value. This changes that stat.
@@ -305,6 +348,16 @@ public class Pokemon {
     } //more detail later //TODO
 
     /**
+     * Copies the stats from the provided array to this Pokémon's stats array, which is used mainly
+     * for initialization and changing the base stats for rare moves like Transform. For reference,
+     * the values in the array from index 0-5 are HP, Attack, Defense, Special Attack, Special Defense, and Speed.
+     * @param newStats The new array that represents all of the stats.
+     */
+    public void setStats(int[] newStats) {
+        initStats = newStats;
+    }
+
+    /**
      * Adds the specified value to the critical state, as long as the critical state does not drop below zero.
      * @param state The critical state to be added.
      */
@@ -312,6 +365,16 @@ public class Pokemon {
         if(criticalState + state < 0)
             throw new IllegalArgumentException("A Pokémon's critical state can never be negative!");
         criticalState += state;
+    }
+
+    /**
+     * Sets the critical state to the specified value, assuming that it is positive, as long as the critical state does not drop below zero.
+     * @param state The critical state to be added.
+     */
+    public void setCritState(int state) {
+        if(state < 0)
+            throw new IllegalArgumentException("A Pokémon's critical state can never be negative!");
+        criticalState = state;
     }
 
     /**

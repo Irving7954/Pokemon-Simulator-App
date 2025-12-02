@@ -154,6 +154,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         Bundle bundle = getArguments();
         if(bundle != null) {
             firstPokeName = (String) bundle.getSerializable("key");
+            //firstPokeName = bundle.getParcelable("key", String.class);
         }
 
         Log.d("AddPersonActivity", firstPokeName);
@@ -181,25 +182,28 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 playerName.setText(playerNameText);
                 player = new Player(playerNameText);
                 //determines which team based on the first Pokémon
-                if (firstPokeName.equals("Bulbasaur")) {
-                    player.addPokemon("Bulbasaur");
-                    player.addPokemon("Charmander");
-                    player.addPokemon("Squirtle");
-                    // Add more pokemon later //TODO
+                switch(firstPokeName) {
+                    case "Bulbasaur":
+                        player.addPokemon("Bulbasaur");
+                        player.addPokemon("Charmander");
+                        player.addPokemon("Squirtle");
+                        // Add more pokemon later //TODO
+                        break;
+                    case "Chikorita":
+                        player.addPokemon("Chikorita");
+                        player.addPokemon("Cyndaquil");
+                        player.addPokemon("Totodile");
+                        // Add more pokemon later //TODO
+                        break;
+                    case "Treecko":
+                        player.addPokemon("Treecko");
+                        player.addPokemon("Torchic");
+                        player.addPokemon("Mudkip");
+                        // Add more pokemon later //TODO
+                        break;
+                    default:
+                        throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
                 }
-                else if (firstPokeName.equals("Chikorita")) {
-                    player.addPokemon("Chikorita");
-                    player.addPokemon("Cyndaquil");
-                    player.addPokemon("Totodile");
-                    // Add more pokemon later //TODO
-                }
-                else if (firstPokeName.equals("Treecko")) {
-                    player.addPokemon("Treecko");
-                    player.addPokemon("Torchic");
-                    player.addPokemon("Mudkip");
-                    // Add more pokemon later //TODO
-                }
-
                 leadPlayerPoke = player.getTeam().get(0);
                 //initializes text boxes
                 playerPokeAndHP = myView.findViewById(R.id.playerPokeAndHP);
@@ -490,7 +494,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     secondMoveChoices.add(numAdded2++, firstMoveChoices.get(i));
                     numAdded2++;
                 }
-
 
             if(numAdded2 == 0)
                 compareBP(firstMoveChoices);

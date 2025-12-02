@@ -35,20 +35,27 @@ public class MainActivity extends AppCompatActivity {
      */
     public void displayView(int position, String pokeName) {
         Fragment fragment;
+        Bundle b;
         switch(position) { //chooses a fragment based on the code
-            case 0: fragment = new StartFragment();
+            case 0:
+                fragment = new StartFragment();
                 break;
-            case 1: fragment = new PokemonFragment();
-                Bundle b = new Bundle();
+            case 1:
+                fragment = new PokemonFragment();
+                b = new Bundle();
                 b.putSerializable("key", pokeName);
+                //b.putParcelable("key", new ParcelableObj(pokeName)); // This one probably wouldn't work, but I'm not certain
                 fragment.setArguments(b);
                 break;
-            case 2: fragment = new TeamFragment();
+            case 2:
+                fragment = new TeamFragment();
                 break;
-            case 3: fragment = new BattleFragment();
-                Bundle b1 = new Bundle();
-                b1.putSerializable("key", pokeName);
-                fragment.setArguments(b1);
+            case 3:
+                fragment = new BattleFragment();
+                b = new Bundle();
+                b.putSerializable("key", pokeName);
+                //b.putParcelable("key", new ParcelableObj(pokeName));
+                fragment.setArguments(b);
                 break;
             default:
                 throw new IllegalArgumentException(position + " is not a valid fragment at this time.");
@@ -59,5 +66,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.backgroundLayout, fragment);
         fragmentTransaction.commit();
     }
-
 }
