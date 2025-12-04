@@ -2,6 +2,8 @@ package lukes.pokemonapp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import android.os.Parcelable;
+import android.os.Parcel;
 
 import androidx.annotation.NonNull;
 
@@ -12,8 +14,7 @@ import androidx.annotation.NonNull;
  * contains lists of all of the base current stats of known Pokémon (9 so far).
  * @author Luke Schoeberle 7/11/2016.
  */
-@SuppressWarnings("unused")
-public class Pokemon {
+public class Pokemon implements Parcelable {
     //add gender later //TODO
     //add accuracy/evasion eventually //TODO
     //add experience in due time //TODO
@@ -56,13 +57,13 @@ public class Pokemon {
     /**
      * The list of stat levels of each stat. Each level can range from 0 (equivalent of -6) to 12 (equivalent of +6).
      */
-    private int[] statStages;
+    private Integer[] statStages;
 
     /**
      * The list of initial stats, which include the six base stats and accuracy and evasion.
      * These cannot be influenced by stat changes.
      */
-    private int[] initStats;
+    private Integer[] initStats;
 
     /**
      * The Pokémon's set of moves. A Pokémon can have from 1-4 moves. If the Pokémon has less than four
@@ -99,6 +100,75 @@ public class Pokemon {
     }
 
     /**
+     * Handles Parcel creation, which sets the variables from the parcel in the same order
+     * As the other constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param in The incoming Pokémon parcel.
+     */
+    protected Pokemon(Parcel in){
+        // Initialize some variables for later
+        Class<Integer> integerClass = Integer.class;
+        ClassLoader integerClassLoader = integerClass.getClassLoader();
+        Class<Move> moveClass = Move.class;
+
+        // Set the variables to the inputs
+        setName(in.readString());
+        setLevel(in.readInt());
+        setVolStatus(in.readString());
+        setNonVolStatus(in.readString());
+        setInvulnCode(in.readInt());
+        setStatStages(in.readArray(integerClassLoader, integerClass));
+        setCritState(in.readInt());
+        setType(in.readString());
+        setAbility(in.readString());
+        setStats(in.readArray(integerClassLoader, integerClass));
+        setMaxHP(in.readInt());
+        setMoves(in.readArrayList(moveClass.getClassLoader(), moveClass));
+    }
+
+    /**
+     * Handles Parcel output, which sends the data from the class to the parcel in the same order
+     * As the main constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param out The outgoing Pokémon parcel.
+     * @param flags Extra options for customization, which is currently unused.
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        // Set the outputs based on the class variables
+        out.writeString(name);
+        out.writeInt(level);
+        out.writeString(volStatus);
+        out.writeString(nonVolStatus);
+        out.writeInt(invulnerableCode);
+        out.writeArray(statStages);
+        out.writeInt(criticalState);
+        out.writeString(type);
+        out.writeString(ability);
+        out.writeArray(initStats);
+        out.writeInt(maxHP);
+        out.writeList(moves);
+    }
+
+    /**
+     * Indicates if there are special file contents, such as file descriptors.
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<Pokemon> CREATOR = new Creator<>() {
+        public Pokemon createFromParcel(Parcel in) {
+            return new Pokemon(in);
+        }
+
+        public Pokemon[] newArray(int size) {
+            return new Pokemon[size];
+        }
+    };
+
+    /**
      * Presets this Pokémon to its stats based on the data in this method. This is private because it
      * should never be accessed outside of this class.
      * @param pName The Pokémon's name.
@@ -111,7 +181,7 @@ public class Pokemon {
                                   "Paralyzed", "Resting", "Burned", "Frozen") at this point*/
         setNonVolStatus("None");  /* can be("None","Confused","Seeded" ... many more later) */
         setInvulnCode(0);
-        setStatStages(new int[] {6, 6, 6, 6, 6, 6, 6, 6});
+        setStatStages(new Integer[] {6, 6, 6, 6, 6, 6, 6, 6});
         setCritState(0);
 
         //database of stats (this is for the simulator only)
@@ -119,7 +189,7 @@ public class Pokemon {
             case "Bulbasaur":
                 setType("Grass/Poison");
                 setAbility("Overgrow"); // Consider hidden abilities/other abilities later //TODO
-                setStats(new int[] {105, 49, 49, 65, 55, 45, 100, 100});
+                setStats(new Integer[] {105, 49, 49, 65, 55, 45, 100, 100});
                 setMaxHP(105);
                 setMoves(new ArrayList<>(Arrays.asList(new StatusMove("Leech Seed"), new StatusMove("Synthesis"),
                                     new SpecialMove("Sludge Bomb"), new SpecialMove("Giga Drain"))));
@@ -127,7 +197,7 @@ public class Pokemon {
             case "Charmander":
                 setType("Fire");
                 setAbility("Blaze");
-                setStats(new int[] {99, 52, 43, 60, 50, 65, 100, 100});
+                setStats(new Integer[] {99, 52, 43, 60, 50, 65, 100, 100});
                 setMaxHP(99);
                 setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Flamethrower"), new PhysicalMove("Dig"),
                         new PhysicalMove("Dragon Claw"), new StatusMove("Will-O-Wisp"))));
@@ -135,7 +205,7 @@ public class Pokemon {
             case "Squirtle":
                 setType("Water");
                 setAbility("Torrent");
-                setStats(new int[] {104, 48, 65, 50, 64, 43, 100, 100});
+                setStats(new Integer[] {104, 48, 65, 50, 64, 43, 100, 100});
                 setMaxHP(104);
                 setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Scald"), new SpecialMove("Ice Beam"),
                         new StatusMove("Substitute"), new StatusMove("Toxic"))));
@@ -143,7 +213,7 @@ public class Pokemon {
             case "Voltorb":
                 setType("Electric");
                 setAbility("Static");
-                setStats(new int[] {100, 30, 50, 55, 55, 100, 100, 100});
+                setStats(new Integer[] {100, 30, 50, 55, 55, 100, 100, 100});
                 setMaxHP(100);
                 setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Discharge"), new StatusMove("Magnet Rise"),
                         new SpecialMove("Volt Switch"), new StatusMove("Thunder Wave"))));
@@ -151,7 +221,7 @@ public class Pokemon {
             case "Chikorita":
                 setType("Grass");
                 setAbility("Overgrow");
-                setStats(new int[] {105, 49, 65, 49, 65, 45, 100, 100});
+                setStats(new Integer[] {105, 49, 65, 49, 65, 45, 100, 100});
                 setMaxHP(105);
                 setMoves(new ArrayList<>(Arrays.asList(new StatusMove("Light Screen"), new StatusMove("Reflect"),
                         new SpecialMove("Energy Ball"), new StatusMove("Magic Coat"))));
@@ -159,7 +229,7 @@ public class Pokemon {
             case "Cyndaquil":
                 setType("Fire");
                 setAbility("Blaze");
-                setStats(new int[] {99, 52, 43, 60, 50, 65, 100, 100});
+                setStats(new Integer[] {99, 52, 43, 60, 50, 65, 100, 100});
                 setMaxHP(99);
                 setMoves(new ArrayList<>(Arrays.asList(new SpecialMove("Eruption"), new SpecialMove("Lava Plume"),
                         new StatusMove("Sunny Day"), new SpecialMove("Solar Beam"))));
@@ -167,7 +237,7 @@ public class Pokemon {
             case "Totodile":
                 setType("Water");
                 setAbility("Torrent");
-                setStats(new int[] {110, 65, 64, 44, 48, 43, 100, 100});
+                setStats(new Integer[] {110, 65, 64, 44, 48, 43, 100, 100});
                 setMaxHP(110);
                 setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Aqua Tail"), new PhysicalMove("Superpower"),
                         new StatusMove("Screech"), new PhysicalMove("Ice Punch"))));
@@ -175,7 +245,7 @@ public class Pokemon {
             case "Wooper":
                 setType("Water/Ground");
                 setAbility("Water Absorb");
-                setStats(new int[] {115, 45, 45, 25, 25, 15, 100, 100});
+                setStats(new Integer[] {115, 45, 45, 25, 25, 15, 100, 100});
                 setMaxHP(115);
                 setMoves(new ArrayList<>(Arrays.asList(new StatusMove("Amnesia"), new PhysicalMove("Earthquake"),
                         new StatusMove("Yawn"), new StatusMove("Rest"))));
@@ -183,7 +253,7 @@ public class Pokemon {
             case "Snubbull":
                 setType("Fairy");
                 setAbility("Intimidate");
-                setStats(new int[] {120, 80, 50, 40, 40, 30, 100, 100});
+                setStats(new Integer[] {120, 80, 50, 40, 40, 30, 100, 100});
                 setMaxHP(120);
                 setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Play Rough"), new StatusMove("Roar"),
                         new PhysicalMove("Earthquake"), new PhysicalMove("Payback"))));
@@ -198,8 +268,9 @@ public class Pokemon {
      * This would be used during a future Pokémon adventure game.
      */
     public void levelUp() {
-        if(level < 100)
-            level++;
+        if(level < 100) {
+            setLevel(level + 1);
+        }
     }
 
     /**
@@ -321,12 +392,12 @@ public class Pokemon {
     /**
      * Sets the stat stage at index to value. This changes one specific stat stage, and the indexes from 0-5
      * are HP, Attack, Defense, Special Attack, Special Defense, and Speed.
-     * @param value The new value of the stat.
      * @param index The specific stat to be changed, as per the indexes described above.
+     * @param value The new value of the stat.
      */
-    public void setStatStages(int value, int index) {
-        statStages[index] = value;
-    } //more detail later //TODO
+    public void setStatStage(int index, int value) {
+        statStages[index] = value; // Use this later //TODO
+    }
 
     /**
      * Copies the stat stages from the provided array to this Pokémon's stat stage array, which is used mainly
@@ -334,7 +405,7 @@ public class Pokemon {
      * HP, Attack, Defense, Special Attack, Special Defense, and Speed.
      * @param newStatStages The new array that represents all of the stat stages.
      */
-    public void setStatStages(int[] newStatStages) {
+    public void setStatStages(Integer[] newStatStages) {
         statStages = newStatStages;
     }
 
@@ -353,7 +424,7 @@ public class Pokemon {
      * the values in the array from index 0-5 are HP, Attack, Defense, Special Attack, Special Defense, and Speed.
      * @param newStats The new array that represents all of the stats.
      */
-    public void setStats(int[] newStats) {
+    public void setStats(Integer[] newStats) {
         initStats = newStats;
     }
 
@@ -445,7 +516,7 @@ public class Pokemon {
      * Returns the Pokemon's current stats.
      * @return the Pokemon's current stats.
      */
-    public int[] getStatStages() {
+    public Integer[] getStatStages() {
         return statStages;
     }
 
@@ -461,7 +532,7 @@ public class Pokemon {
      * Returns the Pokemon's initial stats.
      * @return the Pokemon's initial stats.
      */
-    public int[] getInitStats() {
+    public Integer[] getInitStats() {
         return initStats;
     }
 
@@ -525,10 +596,10 @@ public class Pokemon {
     } //finish this method //TODO
 
     /**
-     * Used for debugging purposes. May be eliminated later.
+     * Used for debugging purposes.
      * @return A String representation of this object.
      */
-    @Override //TODO
+    @Override
     @NonNull
     public String toString() {
         StringBuilder result = new StringBuilder(name + " " + level + " " + volStatus + " "

@@ -129,7 +129,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private String commentary;
 
-
     /**
      * The default constructor. This essentially does nothing because everything is initialized in onCreateView().
      */
@@ -153,8 +152,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            firstPokeName = (String) bundle.getSerializable("key");
-            //firstPokeName = bundle.getParcelable("key", String.class);
+            //firstPokeName = (String) bundle.getSerializable("key");
+            Pokemon poke = bundle.getParcelable("key", Pokemon.class); // Use the full pokemon later //TODO
+            firstPokeName = poke.getName();
         }
 
         Log.d("AddPersonActivity", firstPokeName);

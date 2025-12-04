@@ -75,8 +75,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            poke = new Pokemon((String) bundle.getSerializable("key"));
-            //poke = bundle.getParcelable("key", Pokemon.class);
+            poke = bundle.getParcelable("key", Pokemon.class);
         }
 
         atEndOfTeam = false;
