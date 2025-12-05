@@ -3,6 +3,8 @@ package lukes.pokemonapp;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import androidx.core.graphics.BlendModeColorFilterCompat;
+import androidx.core.graphics.BlendModeCompat;
 import androidx.fragment.app.Fragment;
 import android.text.InputType;
 import android.util.Log;
@@ -152,9 +154,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            //firstPokeName = (String) bundle.getSerializable("key");
-            Pokemon poke = bundle.getParcelable("key", Pokemon.class); // Use the full pokemon later //TODO
-            firstPokeName = poke.getName();
+            firstPokeName = (String) bundle.getSerializable("key");
+            // Pokemon poke = bundle.getParcelable("key", Pokemon.class); // TODO - Use the full pokemon later
+            // firstPokeName = poke.getName();
         }
 
         Log.d("AddPersonActivity", firstPokeName);
@@ -265,7 +267,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 //initializes the progress bars
                 playerHPBar = myView.findViewById(R.id.playerHPBar);
                 playerHPBar.setProgress(100);
-                playerHPBar.getProgressDrawable().setColorFilter(Color.rgb(25, 255, 25), android.graphics.PorterDuff.Mode.SRC_IN);
+                playerHPBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(25, 255, 25), BlendModeCompat.SRC_IN));
 
                 //initializations for the enemy trainer
                 enemy = new EnemyTrainer("Angel");
@@ -315,7 +317,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 //initializes HP bars
                 enemyHPBar = myView.findViewById(R.id.enemyHPBar);
                 enemyHPBar.setProgress(100);
-                enemyHPBar.getProgressDrawable().setColorFilter(Color.rgb(25, 255, 25), android.graphics.PorterDuff.Mode.SRC_IN);
+                enemyHPBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(25, 255, 25), BlendModeCompat.SRC_IN));
 
                 moveButtons.get(0).setOnClickListener((v) -> resolveSpeedTiers(0));
                 if(moveButtons.size() > 1)
@@ -677,13 +679,15 @@ public class BattleFragment extends Fragment { //Fragment code 3
         long roundedHPPercent = Math.round(hpPercentage * 100); //round hpPercentage
 
         hpBar.setProgress((int) roundedHPPercent);  //changes HP bar percentage
-        if(hpBar.getProgress() <= 50 && hpBar.getProgress() >= 25)
-            hpBar.getProgressDrawable().setColorFilter(Color.rgb(255, 255, 25), android.graphics.PorterDuff.Mode.SRC_IN);
-        else if(hpBar.getProgress() <= 25) //change color
-            hpBar.getProgressDrawable().setColorFilter(Color.rgb(255, 50, 50), android.graphics.PorterDuff.Mode.SRC_IN);
-        else
-            hpBar.getProgressDrawable().setColorFilter(Color.rgb(25, 255, 25), android.graphics.PorterDuff.Mode.SRC_IN);
-
+        if(hpBar.getProgress() <= 50 && hpBar.getProgress() >= 25) {
+            hpBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(255, 255, 25), BlendModeCompat.SRC_IN));
+        }
+        else if(hpBar.getProgress() <= 25) {  //change color
+            hpBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(255, 50, 50), BlendModeCompat.SRC_IN));
+        }
+        else {
+            hpBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(25, 255, 25), BlendModeCompat.SRC_IN));
+        }
         String commonHpPrefix = injuredPoke.getName() + "       HP: ";
         if (roundedHPPercent >= 0) {
             hpText.setText(String.format("%s%s %%", commonHpPrefix, roundedHPPercent)); //set the text to the percentage

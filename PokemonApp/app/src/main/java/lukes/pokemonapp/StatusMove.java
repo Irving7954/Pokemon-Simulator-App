@@ -1,8 +1,8 @@
 package lukes.pokemonapp;
 
 /**
- * The representation of a status move. Each StatusMoe has (in addition to the characteristics of a
- * Move) just a set of effects, which are stored in a String. More moves will be added to this database
+ * The representation of a status move. Each StatusMove has (in addition to the characteristics of a
+ * Move) a set of effects, which are stored in a String. More moves will be added to this database
  * in the future.
  * @author Luke Schoeberle 7/11/2016.
  */

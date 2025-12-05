@@ -75,7 +75,8 @@ public class PokemonFragment extends Fragment { //Fragment code 1
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            poke = bundle.getParcelable("key", Pokemon.class);
+            poke = new Pokemon((String) bundle.getSerializable("key"));
+            // poke = bundle.getParcelable("key", Pokemon.class);
         }
 
         atEndOfTeam = false;
@@ -180,41 +181,57 @@ public class PokemonFragment extends Fragment { //Fragment code 1
         });
         //sets the back button to change screens correctly.
         backButton.setOnClickListener((v) -> {
-                if (poke.getName().equals("Bulbasaur"))
-                    ma.displayView(2, "");
-                else if (poke.getName().equals("Charmander"))
-                    ma.displayView(1, "Bulbasaur");
-                else if (poke.getName().equals("Squirtle") && !atEndOfTeam)
-                    ma.displayView(1, "Charmander");
-                else if (poke.getName().equals("Squirtle") && atEndOfTeam)
-                    ma.displayView(2, "");
-                else if(poke.getName().equals("Chikorita"))
-                    ma.displayView(2, "");
-                else if(poke.getName().equals("Cyndaquil"))
-                    ma.displayView(1,"Chikorita");
-                else if (poke.getName().equals("Totodile") && !atEndOfTeam)
-                    ma.displayView(1, "Cyndaquil");
-                else if (poke.getName().equals("Totodile") && atEndOfTeam)
-                    ma.displayView(2, "");
+            if (poke.getName().equals("Bulbasaur")) {
+                ma.displayView(2, "");
+            }
+            else if (poke.getName().equals("Charmander"))  {
+                ma.displayView(1, "Bulbasaur");
+            }
+            else if (poke.getName().equals("Squirtle") && !atEndOfTeam) {
+                ma.displayView(1, "Charmander");
+            }
+            else if (poke.getName().equals("Squirtle") && atEndOfTeam) {
+                ma.displayView(2, "");
+            }
+            else if(poke.getName().equals("Chikorita")) {
+                ma.displayView(2, "");
+            }
+            else if(poke.getName().equals("Cyndaquil")) {
+                ma.displayView(1,"Chikorita");
+            }
+            else if (poke.getName().equals("Totodile") && !atEndOfTeam) {
+                ma.displayView(1, "Cyndaquil");
+            }
+            else if (poke.getName().equals("Totodile") && atEndOfTeam) {
+                ma.displayView(2, "");
+            }
         });
         //sets the forward button to change screens correctly
         forwardButton.setOnClickListener((v) -> {
-                if (poke.getName().equals("Bulbasaur"))
-                    ma.displayView(1, "Charmander");
-                else if (poke.getName().equals("Charmander"))
-                    ma.displayView(1, "Squirtle");
-                else if (poke.getName().equals("Squirtle") && !atEndOfTeam)
-                    prepareForBattleStage();
-                else if (poke.getName().equals("Squirtle") && atEndOfTeam)
-                    ma.displayView(3, "Bulbasaur");
-                else if(poke.getName().equals("Chikorita"))
-                    ma.displayView(1, "Cyndaquil");
-                else if(poke.getName().equals("Cyndaquil"))
-                    ma.displayView(1, "Totodile");
-                else if (poke.getName().equals("Totodile") && !atEndOfTeam)
-                    prepareForBattleStage();
-                else if (poke.getName().equals("Totodile") && atEndOfTeam)
-                    ma.displayView(3, "Chikorita");
+            if (poke.getName().equals("Bulbasaur")) {
+                ma.displayView(1, "Charmander");
+            }
+            else if (poke.getName().equals("Charmander")) {
+                ma.displayView(1, "Squirtle");
+            }
+            else if (poke.getName().equals("Squirtle") && !atEndOfTeam) {
+                prepareForBattleStage();
+            }
+            else if (poke.getName().equals("Squirtle") && atEndOfTeam) {
+                ma.displayView(3, "Bulbasaur");
+            }
+            else if(poke.getName().equals("Chikorita")) {
+                ma.displayView(1, "Cyndaquil");
+            }
+            else if(poke.getName().equals("Cyndaquil")) {
+                ma.displayView(1, "Totodile");
+            }
+            else if (poke.getName().equals("Totodile") && !atEndOfTeam) {
+                prepareForBattleStage();
+            }
+            else if (poke.getName().equals("Totodile") && atEndOfTeam) {
+                ma.displayView(3, "Chikorita");
+            }
         });
         return myView;
     }

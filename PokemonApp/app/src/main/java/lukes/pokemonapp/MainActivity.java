@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public void displayView(int position, String pokeName) {
         Fragment fragment;
         Bundle bund;
-        Pokemon poke;
+        //Pokemon poke;
         switch(position) { //chooses a fragment based on the code
             case 0:
                 fragment = new StartFragment();
@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 fragment = new PokemonFragment();
                 bund = new Bundle();
-                poke = new Pokemon(pokeName);
-                bund.putParcelable("key", poke);
+                // poke = new Pokemon(pokeName);
+                // bund.putParcelable("key", poke);
+                bund.putSerializable("key", pokeName);
                 fragment.setArguments(bund);
                 break;
             case 2:
@@ -54,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
             case 3:
                 fragment = new BattleFragment();
                 bund = new Bundle();
-                //bund.putSerializable("key", pokeName);
-                poke = new Pokemon(pokeName);
-                bund.putParcelable("key", poke);
+                // poke = new Pokemon(pokeName);
+                // bund.putParcelable("key", poke);
+                bund.putSerializable("key", pokeName);
                 fragment.setArguments(bund);
                 break;
             default:
