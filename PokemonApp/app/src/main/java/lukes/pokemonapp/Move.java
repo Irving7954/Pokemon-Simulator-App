@@ -1,5 +1,8 @@
 package lukes.pokemonapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -11,7 +14,7 @@ import androidx.annotation.NonNull;
  * @author Luke Schoeberle 7/11/2016.
  */
 @SuppressWarnings("unused")
-public abstract class Move {
+public abstract class Move implements Parcelable {
 
     /**
      * The move's name. This is its primary identifier.
@@ -44,13 +47,13 @@ public abstract class Move {
      * A list of the invulnerable codes that this move passes through. This is used to reduce the ugliness
      * of breaking semi-invulnerability by name only. This depends on the invulnCodes in the Pokemon class.
      */
-    private final ArrayList<Integer> IBList;
+    private final ArrayList<Integer> IBList = new ArrayList<>();
 
     /**
      * A list of the stat changes caused by this move. The HP one indicates recoil or health gain (represented
      * by a percentage), and the others indicate the number of stat changes. For both kinds, zeroes indicate no change.
      */
-    private int[] statChanges;
+    private Integer[] statChanges;
 
     /**
      * Determines whether or not the stat changes affect the user or the opponent.
@@ -85,8 +88,52 @@ public abstract class Move {
      * @param mName The name of the move.
      */
     public Move(String mName) {
-        IBList = new ArrayList<>();
         setMove(mName);
+    }
+
+    /**
+     * Handles Parcel creation, which sets the variables from the parcel in the same order
+     * As the other constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param in The incoming Move parcel.
+     */
+    protected Move(Parcel in){
+        // Initialize a variable for later
+        Class<Integer> integerClass = Integer.class;
+
+        // Set the variables to the inputs
+        setName(in.readString());
+        setType(in.readString());
+        setPP(in.readInt());
+        setTwoTurnCode(in.readInt());
+        setAccuracy(in.readInt());
+        setStatChanges(in.readArray(integerClass.getClassLoader(), integerClass));
+        setChangesUserStats(in.readBoolean());
+        setNonVolChanges(in.readString());
+        setVolChanges(in.readString());
+        setStatusesUser(in.readBoolean());
+    }
+
+    /**
+     * Handles Parcel output, which sends the data from the class to the parcel in the same order
+     * As the main constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param out The outgoing Move parcel.
+     * @param flags Extra options for customization, which is currently unused.
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        // Set the outputs based on the class variables
+        out.writeString(name);
+        out.writeString(type);
+        out.writeInt(PP);
+        out.writeInt(twoTurnCode);
+        out.writeInt(accuracy);
+        out.writeArray(statChanges);
+        out.writeBoolean(changesUserStats);
+        out.writeString(nonVolChanges);
+        out.writeString(volChanges);
+        out.writeBoolean(statusesUser);
     }
 
     /**
@@ -231,7 +278,7 @@ public abstract class Move {
      * Sets this move's stat changes to the specified array.
      * @param sc The new value of the stat changes.
      */
-    public void setStatChanges(int[] sc) {
+    public void setStatChanges(Integer[] sc) {
         statChanges = sc;
     }
 
@@ -284,7 +331,7 @@ public abstract class Move {
      * Returns the list of stat changes caused by this move.
      * @return The stat changes caused by this move.
      */
-    public int[] getStatChanges() {
+    public Integer[] getStatChanges() {
         return statChanges;
     }
 

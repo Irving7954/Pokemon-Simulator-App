@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
  * contains lists of all of the base current stats of known Pokémon (9 so far).
  * @author Luke Schoeberle 7/11/2016.
  */
+@SuppressWarnings("unused")
 public class Pokemon implements Parcelable {
     //add gender later //TODO
     //add accuracy/evasion eventually //TODO

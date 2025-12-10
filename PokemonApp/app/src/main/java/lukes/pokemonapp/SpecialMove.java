@@ -1,5 +1,8 @@
 package lukes.pokemonapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * The representation of a special move. A PhysicalMove is no different than an attacking
  * move except that it uses the S.Attack and S.Defense stats in battle.
@@ -14,6 +17,46 @@ public class SpecialMove extends AttackingMove {
     public SpecialMove(String mName) {
         super(mName);
     }
+
+    /**
+     * Handles Parcel creation, which sets the variables from the parcel in the same order
+     * As the other constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param in The incoming SpecialMove parcel.
+     */
+    protected SpecialMove(Parcel in) {
+        super(in);
+    }
+
+    /**
+     * Handles Parcel output, which sends the data from the class to the parcel in the same order
+     * As the main constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param out The outgoing SpecialMove parcel.
+     * @param flags Extra options for customization, which is currently unused.
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+    }
+
+    /**
+     * Indicates if there are special file contents, such as file descriptors.
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<SpecialMove> CREATOR = new Creator<>() {
+        public SpecialMove createFromParcel(Parcel in) {
+            return new SpecialMove(in);
+        }
+
+        public SpecialMove[] newArray(int size) {
+            return new SpecialMove[size];
+        }
+    };
 
     /**
      * Returns true if this is move is physical. This is always false for this class.
@@ -34,54 +77,129 @@ public class SpecialMove extends AttackingMove {
         setName(mName);
         switch(mName) {
             case "Discharge":
-                setType("Electric"); setPP(15); setTwoTurnCode(0); setBP(80); setAccuracy(100); setMakesContact(false); setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to paralyze the opponent."); setAddEffectChance(30);
+                setType("Electric");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(80);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This special move has a 30% chance to paralyze the opponent.");
+                setAddEffectChance(30);
                 break;
             case "Energy Ball":
-                setType("Grass"); setPP(10); setTwoTurnCode(0); setBP(90); setAccuracy(100); setMakesContact(false); setBPCode(0);
+                setType("Grass");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(90);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
                 setAdditionalEffects("This special move has a 10% chance to lower the opponent's Sp. Def. by one stage.");
-                setStatChanges(new int[] {0, 0, 0, 0, -1, 0, 0, 0}); setChangesUserStats(false); setAddEffectChance(10);
+                setStatChanges(new Integer[] {0, 0, 0, 0, -1, 0, 0, 0});
+                setChangesUserStats(false);
+                setAddEffectChance(10);
                 break;
             case "Eruption":
-                setType("Fire"); setPP(5); setTwoTurnCode(0); setBP(150); setAccuracy(100); setMakesContact(false); setBPCode(1);
+                setType("Fire");
+                setPP(5);
+                setTwoTurnCode(0);
+                setBP(150); setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(1);
                 setAdditionalEffects("This special move decreases in power as the user's HP decreases.");
                 break;
             case "Flamethrower":
-                setType("Fire"); setPP(15); setTwoTurnCode(0); setBP(90); setAccuracy(100); setMakesContact(false); setBPCode(0);
+                setType("Fire");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(90);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
                 setAdditionalEffects("This special move has a 10% chance to burn the opponent, assuming that " +
-                                     "the opponent is not immune to being burned."); setAddEffectChance(10);
+                                     "the opponent is not immune to being burned.");
+                setAddEffectChance(10);
                 break;
             case "Giga Drain": //deal with half HP recovery (currently has bogus code) //TODO
-                setType("Grass"); setPP(10); setTwoTurnCode(0); setBP(75); setAccuracy(100); setMakesContact(false); setBPCode(0);
+                setType("Grass");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(75);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
                 setAdditionalEffects("This special move deals damage and also allows the user to recover " +
-                                     "half of the HP dealt by this move."); setStatChanges(new int[] {500, 0, 0, 0, 0, 0, 0, 0}); setChangesUserStats(true);
+                                     "half of the HP dealt by this move.");
+                setStatChanges(new Integer[] {500, 0, 0, 0, 0, 0, 0, 0});
+                setChangesUserStats(true);
                 break;
             case "Ice Beam":
-                setType("Ice"); setPP(10); setTwoTurnCode(0); setBP(90); setAccuracy(100); setMakesContact(false); setBPCode(0);
-                setAdditionalEffects("This special move has a 10% chance to freeze the opponent."); setAddEffectChance(10);
+                setType("Ice");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(90);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This special move has a 10% chance to freeze the opponent.");
+                setAddEffectChance(10);
                 break;
             case "Lava Plume":
-                setType("Fire"); setPP(15); setTwoTurnCode(0); setBP(80); setAccuracy(100); setMakesContact(false); setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to burn the opponent."); setAddEffectChance(30);
+                setType("Fire");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(80);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This special move has a 30% chance to burn the opponent.");
+                setAddEffectChance(30);
                 break;
             case "Scald":
-                setType("Water"); setPP(15); setTwoTurnCode(0); setBP(80); setAccuracy(100); setMakesContact(false); setBPCode(0);
+                setType("Water");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(80);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
                 setAdditionalEffects("This special move has a 30% chance to burn the opponent. It also " +
-                                     "unfreezes a frozen target that it hits."); setAddEffectChance(30);
+                                     "unfreezes a frozen target that it hits.");
+                setAddEffectChance(30);
                 break;
             case "Sludge Bomb":
-                setType("Poison"); setPP(10); setTwoTurnCode(0); setBP(90); setAccuracy(100); setMakesContact(false); setBPCode(0);
+                setType("Poison");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(90);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
                 setAdditionalEffects("This special move has a 30% chance to poison the opponent, assuming " +
-                                     "that the opposing Pokémon is not immune to being poisoned."); setAddEffectChance(30);
+                                     "that the opposing Pokémon is not immune to being poisoned.");
+                setAddEffectChance(30);
                 break;
             case "Solar Beam":
-                setType("Grass"); setPP(10); setTwoTurnCode(2); setBP(120); setAccuracy(100); setMakesContact(false); setBPCode(4);
+                setType("Grass");
+                setPP(10);
+                setTwoTurnCode(2);
+                setBP(120);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(4);
                 setAdditionalEffects("This special move allows the user to gather up light for one turn " +
                                      "and then unleash it on the next turn. In sunlight, no charging turn " +
                                      "is required, and this move's power is decreased during other weather conditions.");
                 break;
             case "Volt Switch":
-                setType("Electric"); setPP(20); setTwoTurnCode(0); setBP(70); setAccuracy(100); setMakesContact(false); setBPCode(0);
+                setType("Electric");
+                setPP(20);
+                setTwoTurnCode(0);
+                setBP(70);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
                 setAdditionalEffects("This special move deals damage and then forces the user to switch to another " +
                                      "Pokémon on their team. The user will not switch if Volt Switch deals no damage.");
                 break;

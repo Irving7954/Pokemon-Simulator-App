@@ -154,9 +154,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            firstPokeName = (String) bundle.getSerializable("key");
-            // Pokemon poke = bundle.getParcelable("key", Pokemon.class); // TODO - Use the full pokemon later
-            // firstPokeName = poke.getName();
+            Pokemon poke = bundle.getParcelable("key", Pokemon.class); // TODO - Actually use the full pokemon later
+            firstPokeName = poke.getName();
         }
 
         Log.d("AddPersonActivity", firstPokeName);
@@ -1044,7 +1043,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param isPlayerTheUser Whether or not the player used this move.
      */
     private void changeStats(Move move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
-        int[] statChanges = move.getStatChanges();
+        Integer[] statChanges = move.getStatChanges();
         if(statChanges == null)
             return;
         boolean cus = move.changesUserStats();

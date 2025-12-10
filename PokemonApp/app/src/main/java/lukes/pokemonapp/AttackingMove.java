@@ -1,5 +1,7 @@
 package lukes.pokemonapp;
 
+import android.os.Parcel;
+
 /**
  * The representation of an attacking move, which is a type of Move. Each AttackingMove (in addition to
  * the characteristics of a Move) has BP, accuracy, a bpCode, additional effects, and a makesContact boolean.
@@ -30,7 +32,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
     /**
      * Determines whether or not the move makes contact. This matters for certain abilities and moves.
      */
-    private boolean makesContact; // use this variable //TODO
+    private boolean makesContact;
 
     /**
      * Determines the chance of additional effects from this move. This will be zero by default for moves
@@ -45,6 +47,39 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
      */
     public AttackingMove(String mName) {
         super(mName);
+    }
+
+    /**
+     * Handles Parcel creation, which sets the variables from the parcel in the same order
+     * As the other constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param in The incoming AttackingMove parcel.
+     */
+    protected AttackingMove(Parcel in) {
+        super(in);
+
+        setBP(in.readInt());
+        setBPCode(in.readInt());
+        setMakesContact(in.readBoolean());
+        setAddEffectChance(in.readInt());
+    }
+
+    /**
+     * Handles Parcel output, which sends the data from the class to the parcel in the same order
+     * As the main constructor. For reference, it is important to match parcel I/O order,
+     * So this is a critical detail that may need to be updated when this class is changed.
+     * @param out The outgoing AttackingMove parcel.
+     * @param flags Extra options for customization, which is currently unused.
+     */
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        super.writeToParcel(out, flags);
+
+        // Set the outputs based on the class variables
+        out.writeInt(BP);
+        out.writeInt(bpCode);
+        out.writeBoolean(makesContact);
+        out.writeInt(addEffectChance);
     }
 
     /**
