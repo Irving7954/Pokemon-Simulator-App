@@ -156,6 +156,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
             2: Earthquake (BP = 200 if the target is underground)
             3: Payback (BP = 100 if the target moves first)
             4: Solar Beam (BP is halved in weather other than sunlight)
+            5: Low Kick and Grass Knot (BP depends directly on weight)
          */
         return bpCode != 0;
     } //watch out for changed BP codes //TODO

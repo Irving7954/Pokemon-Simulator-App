@@ -259,6 +259,30 @@ public class Pokemon implements Parcelable {
                 setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Play Rough"), new StatusMove("Roar"),
                         new PhysicalMove("Earthquake"), new PhysicalMove("Payback"))));
                 break;
+            case "Treecko":
+                setType("Grass");
+                setAbility("Overgrow");
+                setStats(new Integer[] {100, 45, 35, 65, 55, 70, 100, 100});
+                setMaxHP(100);
+                setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Crunch"), new StatusMove("Swords Dance"),
+                        new PhysicalMove("Seed Bomb"), new PhysicalMove("Drain Punch"))));
+                break;
+            case "Torchic":
+                setType("Fire");
+                setAbility("Blaze");
+                setStats(new Integer[] {105, 60, 40, 70, 50, 45, 100, 100});
+                setMaxHP(105);
+                setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Flare Blitz"), new StatusMove("Protect"),
+                        new PhysicalMove("Aerial Ace"), new PhysicalMove("Low Kick"))));
+                break;
+            case "Mudkip":
+                setType("Water");
+                setAbility("Torrent");
+                setStats(new Integer[] {110, 70, 50, 50, 50, 40, 100, 100});
+                setMaxHP(110);
+                setMoves(new ArrayList<>(Arrays.asList(new PhysicalMove("Liquidation"), new StatusMove("Rain Dance"),
+                        new PhysicalMove("Rock Slide"), new SpecialMove("Earth Power"))));
+                break;
             default:
                 throw new IllegalArgumentException(pName + " is currently not a valid Pokémon in this simulator!");
         }
@@ -363,8 +387,8 @@ public class Pokemon implements Parcelable {
      */
     public void transform(String pName) {
         setPokemon(pName);
-        //will need more detail
-    } //TODO
+        //will need more detail //TODO
+    }
 
     /**
      * Sets this Pokémon's volatile status to s.
@@ -392,7 +416,7 @@ public class Pokemon implements Parcelable {
 
     /**
      * Sets the stat stage at index to value. This changes one specific stat stage, and the indexes from 0-5
-     * are HP, Attack, Defense, Special Attack, Special Defense, and Speed.
+     * are HP, Attack, Defense, Special Attack, Special Defense, Speed, Accuracy, and Evasion.
      * @param index The specific stat to be changed, as per the indexes described above.
      * @param value The new value of the stat.
      */
@@ -402,8 +426,8 @@ public class Pokemon implements Parcelable {
 
     /**
      * Copies the stat stages from the provided array to this Pokémon's stat stage array, which is used mainly
-     * for initialization and changing many different stat stages. For reference, the values in the array from index 0-5 are
-     * HP, Attack, Defense, Special Attack, Special Defense, and Speed.
+     * for initialization and changing many different stat stages. For reference, the values in the array
+     * from index 0-7 are HP, Attack, Defense, Special Attack, Special Defense, Speed, Accuracy, and Evasion.
      * @param newStatStages The new array that represents all of the stat stages.
      */
     public void setStatStages(Integer[] newStatStages) {
@@ -422,7 +446,8 @@ public class Pokemon implements Parcelable {
     /**
      * Copies the stats from the provided array to this Pokémon's stats array, which is used mainly
      * for initialization and changing the base stats for rare moves like Transform. For reference,
-     * the values in the array from index 0-5 are HP, Attack, Defense, Special Attack, Special Defense, and Speed.
+     * the values in the array from index 0-7 are HP, Attack, Defense, Special Attack, Special Defense,
+     * Speed, Accuracy, and Evasion, respectively.
      * @param newStats The new array that represents all of the stats.
      */
     public void setStats(Integer[] newStats) {
@@ -594,7 +619,7 @@ public class Pokemon implements Parcelable {
                 throw new IllegalArgumentException(status + " is not a valid volatile status at this time!");
         }
         //add more later //TODO
-    } //finish this method //TODO
+    }
 
     /**
      * Used for debugging purposes.

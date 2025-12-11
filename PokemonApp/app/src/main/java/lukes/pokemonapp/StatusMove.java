@@ -157,7 +157,8 @@ public class StatusMove extends Move {
                 setTwoTurnCode(0);
                 setAccuracy(85);
                 setStatChanges(new Integer[] {0, 0, -2, 0, 0, 0, 0, 0});
-                setEffects("This status move has an 85% chance to reduce the opponent's Defense by two stages.");
+                setEffects("This status move has an 85% chance to reduce the opponent's Defense by two stages. Keep in mind that " +
+                           "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(false);
                 break;
             case "Substitute":
@@ -187,7 +188,8 @@ public class StatusMove extends Move {
                 setStatChanges(new Integer[] {-50, 0, 0, 0, 0, 0, 0, 0});
                 setEffects("This status move restores HP to the user depending on the weather. If used while " +
                            "no weather conditions are present, it heals 50% of the user's HP, but it heals more " +
-                           "in sunlight and less in other weather conditions."); setChangesUserStats(true);
+                           "in sunlight and less in other weather conditions.");
+                setChangesUserStats(true);
                 break;
             case "Thunder Wave":
                 setType("Electric");
@@ -223,6 +225,35 @@ public class StatusMove extends Move {
                 setEffects("This status move makes the opponent drowsy, which means that the opponent will fall asleep " +
                            "for 1-3 turns after the opponent's next turn. If the opponent switches out before the opponent " +
                            "falls asleep, the effects of Yawn on that Pokémon are nullified.");
+                break;
+            case "Swords Dance":
+                setType("Normal");
+                setPP(20);
+                setTwoTurnCode(0);
+                setAccuracy(1000);
+                setStatChanges(new Integer[] {0, 2, 0, 0, 0, 0, 0, 0});
+                setEffects("This status move increases the user's Attack by two stages. Keep in mind that " +
+                           "each stat can only be increased or decreased by six stages.");
+                setChangesUserStats(true);
+                break;
+            case "Protect": //implement protection as some sort of status move attribute code //TODO
+                setType("Normal");
+                setPP(10);
+                setTwoTurnCode(0);
+                setAccuracy(1000);
+                setEffects("This status move protects the user from most attacks and the majority of status moves" +
+                           "that only target the user. This has increased priority (+4) and has a large failure chance " +
+                           "after the initial usage when used consecutively with itself or other protection moves.");
+                setChangesUserStats(true);
+                // implement priority for all moves //TODO
+                break;
+            case "Rain Dance":
+                setType("Water"); // Implement weather as some sort of status move/ability attribute code //TODO
+                setPP(5);
+                setTwoTurnCode(0);
+                setAccuracy(1000);
+                setEffects("This status move brings out the rain for five turns, which strengthens Water " +
+                           "type moves, weakens Fire type moves, and has many other small effects.");
                 break;
             default:
                 setName("");

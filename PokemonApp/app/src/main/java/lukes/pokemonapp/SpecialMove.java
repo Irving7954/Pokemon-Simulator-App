@@ -107,7 +107,8 @@ public class SpecialMove extends AttackingMove {
                 setBP(150); setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(1);
-                setAdditionalEffects("This special move decreases in power as the user's HP decreases.");
+                setAdditionalEffects("This special move decreases in power as the user's HP decreases " +
+                                    "and also hits both targets in a double battle.");
                 break;
             case "Flamethrower":
                 setType("Fire");
@@ -153,7 +154,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to burn the opponent.");
+                setAdditionalEffects("This special move has a 30% chance to burn the opponent " +
+                                     "and also hits both targets in a double battle.");
                 setAddEffectChance(30);
                 break;
             case "Scald":
@@ -202,6 +204,19 @@ public class SpecialMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This special move deals damage and then forces the user to switch to another " +
                                      "Pokémon on their team. The user will not switch if Volt Switch deals no damage.");
+                break;
+            case "Earth Power":
+                setType("Ground");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(90);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This special move has a 20% chance to lower the opponent's Sp. Def. by one stage.");
+                setStatChanges(new Integer[] {0, 0, 0, 0, -1, 0, 0, 0});
+                setChangesUserStats(false);
+                setAddEffectChance(20);
                 break;
             default:
                 setName("");

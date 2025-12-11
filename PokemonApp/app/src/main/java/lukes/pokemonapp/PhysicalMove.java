@@ -167,6 +167,108 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, -1, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
                 break;
+            case "Seed Bomb":
+                setType("Grass");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(80);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This physical move has no additional effects, and" +
+                                     "for future reference, it is blocked by the Bulletproof ability.");
+                break;
+            case "Drain Punch": //deal with half HP recovery (currently has bogus code) //TODO
+                setType("Fighting");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(75);
+                setAccuracy(100);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This physical move deals damage and also allows the user to recover " +
+                                     "half of the HP dealt by this move. For reference, this healing effect is " +
+                                     "negated by the Heal Block or the Psychic Noise effects, and it hurts the user" +
+                                     "if they attempt to use this effect against a Pokemon with the Liquid Ooze ability.");
+                setStatChanges(new Integer[] {500, 0, 0, 0, 0, 0, 0, 0});
+                setChangesUserStats(true);
+                break;
+            case "Crunch":
+                setType("Dark");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(80);
+                setAccuracy(100);
+                setMakesContact(true);
+                setBPCode(0);
+                setAdditionalEffects("This physical move has a 20% chance of lowering the opponent's Defense by one stage.");
+                setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
+                setChangesUserStats(false);
+                setAddEffectChance(20);
+                break;
+            case "Flare Blitz": //deal with recoil (currently has bogus code, at best) //TODO
+                setType("Fire");
+                setPP(15);
+                setTwoTurnCode(0);
+                setBP(120);
+                setAccuracy(100);
+                setMakesContact(true);
+                setBPCode(0);
+                setAdditionalEffects("This physical move deals damage and also causes the user to suffer " +
+                                     "30% of the target's damage as recoilAdditionally, if necessary, " +
+                                     "the user is thawed out before the moved is performed.");
+                setStatChanges(new Integer[] {-30, 0, 0, 0, 0, 0, 0, 0});
+                setChangesUserStats(true);
+                break;
+            case "Aerial Ace":
+                setType("Flying");
+                setPP(20);
+                setTwoTurnCode(0);
+                setBP(60);
+                setAccuracy(1000);
+                setMakesContact(true);
+                setBPCode(0);
+                setAdditionalEffects("This physical move deals damage and bypasses accuracy checks. For reference, " +
+                                     "this means the move can only be directly avoided by Pokemon in semi-invulnerable states.");
+                break;
+            case "Low Kick":
+                setType("Fighting");
+                setPP(20);
+                setTwoTurnCode(0);
+                setBP(20); // This is the default value, but actually set it dynamically based on weight in the formula //TODO
+                setAccuracy(100);
+                setMakesContact(true);
+                setBPCode(5);
+                setAdditionalEffects("This physical move deals a variable amount of damage depending on the target's base weight value. " +
+                                     "For reference, this increases by weight, so generally it is stronger against heavier foes.");
+                break;
+            case "Liquidation":
+                setType("Water");
+                setPP(10);
+                setTwoTurnCode(0);
+                setBP(85);
+                setAccuracy(100);
+                setMakesContact(true);
+                setBPCode(0);
+                setAdditionalEffects("This physical move has a 20% chance to lower the opponent's Def. by one stage.");
+                setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
+                setChangesUserStats(false);
+                setAddEffectChance(20);
+                break;
+            case "Rock Slide":
+                setType("Rock"); // implement flinching //TODO
+                setPP(10);       // deal with multiple targets much later //TODO
+                setTwoTurnCode(0);
+                setBP(75);
+                setAccuracy(90);
+                setMakesContact(false);
+                setBPCode(0);
+                setAdditionalEffects("This physical move has a 30% chance of causing the opponent to flinch and " +
+                                     "also hits both targets in a double battle.");
+                setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
+                setChangesUserStats(false);
+                setAddEffectChance(20);
+                break;
             default:
                 setName("");
         }
