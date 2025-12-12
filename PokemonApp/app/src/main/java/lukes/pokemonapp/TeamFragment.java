@@ -43,7 +43,7 @@ public class TeamFragment extends Fragment { //fragment code 2
         // Changes screens
         team1Button.setOnClickListener((v) -> ma.displayView(1, "Bulbasaur"));
         team2Button.setOnClickListener((v) -> ma.displayView(1,"Chikorita"));
-        team3Button.setOnClickListener((v) -> ma.displayView(1, "Chikorita")); // Change this to the new team when it is ready //TODO
+        team3Button.setOnClickListener((v) -> ma.displayView(1, "Treecko"));
 
         return myView;
     }

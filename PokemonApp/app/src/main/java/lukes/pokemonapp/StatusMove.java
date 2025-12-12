@@ -241,7 +241,7 @@ public class StatusMove extends Move {
                 setPP(10);
                 setTwoTurnCode(0);
                 setAccuracy(1000);
-                setEffects("This status move protects the user from most attacks and the majority of status moves" +
+                setEffects("This status move protects the user from most attacks and the majority of status moves " +
                            "that only target the user. This has increased priority (+4) and has a large failure chance " +
                            "after the initial usage when used consecutively with itself or other protection moves.");
                 setChangesUserStats(true);

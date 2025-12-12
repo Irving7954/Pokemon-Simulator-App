@@ -1008,14 +1008,44 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 if (eType.contains("Dragon"))
                     damage /= 2;
                 break;
+            case "Flying":
+                if (eType.contains("Bug"))
+                    damage *= 2;
+                if (eType.contains("Fighting"))
+                    damage *= 2;
+                if (eType.contains("Grass"))
+                    damage *= 2;
+                if (eType.contains("Electric"))
+                    damage /= 2;
+                if (eType.contains("Rock"))
+                    damage /= 2;
+                if (eType.contains("Steel"))
+                    damage /= 2;
+                break;
+            case "Rock":
+                if (eType.contains("Bug"))
+                    damage *= 2;
+                if (eType.contains("Fire"))
+                    damage *= 2;
+                if (eType.contains("Flying"))
+                    damage *= 2;
+                if (eType.contains("Ice"))
+                    damage /= 2;
+                if (eType.contains("Fighting"))
+                    damage /= 2;
+                if (eType.contains("Ground"))
+                    damage /= 2;
+                if (eType.contains("Steel"))
+                    damage /= 2;
+                break;
             default:
-                throw new IllegalArgumentException(mType + " is not yet a valid type in this simulator!");
-            //and so on //TODO
+                throw new IllegalArgumentException(mType + " is not yet a valid offensive type in this simulator!");
+            //add more offensive types //TODO
         }
         if (moveUser.getType().contains(mType)) //STAB bonus
             damage *= 1.5;
         return damage;
-    } //add more types //TODO
+    }
 
     /**
      * Resolves the additional effect of the move, which include stat changes and both types of status changes.

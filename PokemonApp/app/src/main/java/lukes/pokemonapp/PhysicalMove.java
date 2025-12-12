@@ -175,7 +175,7 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has no additional effects, and" +
+                setAdditionalEffects("This physical move has no additional effects, and " +
                                      "for future reference, it is blocked by the Bulletproof ability.");
                 break;
             case "Drain Punch": //deal with half HP recovery (currently has bogus code) //TODO
@@ -188,8 +188,8 @@ public class PhysicalMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and also allows the user to recover " +
                                      "half of the HP dealt by this move. For reference, this healing effect is " +
-                                     "negated by the Heal Block or the Psychic Noise effects, and it hurts the user" +
-                                     "if they attempt to use this effect against a Pokemon with the Liquid Ooze ability.");
+                                     "negated by the Heal Block or the Psychic Noise effects, and it hurts the user " +
+                                     "if this move is used against a Pokemon with the Liquid Ooze ability.");
                 setStatChanges(new Integer[] {500, 0, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
                 break;
@@ -215,7 +215,7 @@ public class PhysicalMove extends AttackingMove {
                 setMakesContact(true);
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and also causes the user to suffer " +
-                                     "30% of the target's damage as recoilAdditionally, if necessary, " +
+                                     "30% of the target's damage as recoil. Additionally, if necessary, " +
                                      "the user is thawed out before the moved is performed.");
                 setStatChanges(new Integer[] {-30, 0, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
@@ -250,7 +250,7 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has a 20% chance to lower the opponent's Def. by one stage.");
+                setAdditionalEffects("This physical move has a 20% chance to lower the opponent's Defense by one stage.");
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);

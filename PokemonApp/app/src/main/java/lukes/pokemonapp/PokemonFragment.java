@@ -81,28 +81,50 @@ public class PokemonFragment extends Fragment { //Fragment code 1
         atEndOfTeam = false;
 
         //sets the text to the pokemon's name.
-        pokeName.setText(poke.getName());
+        String pokemonName = poke.getName();
+
+        pokeName.setText(pokemonName);
 
         //initializes the image
-        switch(poke.getName()) {
+        switch(pokemonName) {
             case "Bulbasaur":
-                pokePic.setImageResource(R.drawable.bulbasaur); break;
+                pokePic.setImageResource(R.drawable.bulbasaur);
+                break;
             case "Charmander":
-                pokePic.setImageResource(R.drawable.charmander); break;
+                pokePic.setImageResource(R.drawable.charmander);
+                break;
             case "Squirtle":
-                pokePic.setImageResource(R.drawable.squirtle); break;
+                pokePic.setImageResource(R.drawable.squirtle);
+                break;
             case "Chikorita":
-                pokePic.setImageResource(R.drawable.chikorita); break;
+                pokePic.setImageResource(R.drawable.chikorita);
+                break;
             case "Cyndaquil":
-                pokePic.setImageResource(R.drawable.cyndaquil); break;
+                pokePic.setImageResource(R.drawable.cyndaquil);
+                break;
             case "Totodile":
-                pokePic.setImageResource(R.drawable.totodile); break;
+                pokePic.setImageResource(R.drawable.totodile);
+                break;
             case "Wooper":
-                pokePic.setImageResource(R.drawable.wooper); break;
+                pokePic.setImageResource(R.drawable.wooper);
+                break;
             case "Voltorb":
-                pokePic.setImageResource(R.drawable.voltorb); break;
+                pokePic.setImageResource(R.drawable.voltorb);
+                break;
             case "Snubbull":
-                pokePic.setImageResource(R.drawable.snubbull); break;
+                pokePic.setImageResource(R.drawable.snubbull);
+                break;
+            case "Treecko":
+                pokePic.setImageResource(R.drawable.treecko);
+                break;
+            case "Torchic":
+                pokePic.setImageResource(R.drawable.torchic);
+                break;
+            case "Mudkip":
+                pokePic.setImageResource(R.drawable.mudkip);
+                break;
+            default:
+                throw new IllegalArgumentException(pokemonName + " has not been defined yet!");
             //more cases will follow in the future //TODO
         }
         //initializes the list array
@@ -170,7 +192,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                             makeBoxWithOk(text, getMoveDescription(move));
                             break;
                         }
-                         move = new SpecialMove(text);
+                        move = new SpecialMove(text);
                         if(!move.getName().isEmpty()) {
                             makeBoxWithOk(text, getMoveDescription(move));
                             break;
@@ -180,56 +202,94 @@ public class PokemonFragment extends Fragment { //Fragment code 1
         });
         //sets the back button to change screens correctly.
         backButton.setOnClickListener((v) -> {
-            if (poke.getName().equals("Bulbasaur")) {
-                ma.displayView(2, "");
-            }
-            else if (poke.getName().equals("Charmander"))  {
-                ma.displayView(1, "Bulbasaur");
-            }
-            else if (poke.getName().equals("Squirtle") && !atEndOfTeam) {
-                ma.displayView(1, "Charmander");
-            }
-            else if (poke.getName().equals("Squirtle") && atEndOfTeam) {
-                ma.displayView(2, "");
-            }
-            else if(poke.getName().equals("Chikorita")) {
-                ma.displayView(2, "");
-            }
-            else if(poke.getName().equals("Cyndaquil")) {
-                ma.displayView(1,"Chikorita");
-            }
-            else if (poke.getName().equals("Totodile") && !atEndOfTeam) {
-                ma.displayView(1, "Cyndaquil");
-            }
-            else if (poke.getName().equals("Totodile") && atEndOfTeam) {
-                ma.displayView(2, "");
+            switch(pokemonName) {
+                case "Bulbasaur": case "Chikorita": case "Treecko":
+                    ma.displayView(2, "");
+                    break;
+                case "Charmander":
+                    ma.displayView(1, "Bulbasaur");
+                    break;
+                case "Squirtle":
+                    if(atEndOfTeam) {
+                        ma.displayView(2, "");
+                    }
+                    else {
+                        ma.displayView(1, "Charmander");
+                    }
+                    break;
+                case "Cyndaquil":
+                    ma.displayView(1, "Chikorita");
+                    break;
+                case "Totodile":
+                    if(atEndOfTeam) {
+                        ma.displayView(2, "");
+                    }
+                    else {
+                        ma.displayView(1, "Cyndaquil");
+                    }
+                    break;
+                case "Torchic":
+                    ma.displayView(1, "Treecko");
+                    break;
+                case "Mudkip":
+                    if(atEndOfTeam) {
+                        ma.displayView(2, "");
+                    }
+                    else {
+                        ma.displayView(1, "Torchic");
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException(pokemonName + " cannot possibly be used at this point in the simulator!");
             }
         });
         //sets the forward button to change screens correctly
         forwardButton.setOnClickListener((v) -> {
-            if (poke.getName().equals("Bulbasaur")) {
-                ma.displayView(1, "Charmander");
-            }
-            else if (poke.getName().equals("Charmander")) {
-                ma.displayView(1, "Squirtle");
-            }
-            else if (poke.getName().equals("Squirtle") && !atEndOfTeam) {
-                prepareForBattleStage();
-            }
-            else if (poke.getName().equals("Squirtle") && atEndOfTeam) {
-                ma.displayView(3, "Bulbasaur");
-            }
-            else if(poke.getName().equals("Chikorita")) {
-                ma.displayView(1, "Cyndaquil");
-            }
-            else if(poke.getName().equals("Cyndaquil")) {
-                ma.displayView(1, "Totodile");
-            }
-            else if (poke.getName().equals("Totodile") && !atEndOfTeam) {
-                prepareForBattleStage();
-            }
-            else if (poke.getName().equals("Totodile") && atEndOfTeam) {
-                ma.displayView(3, "Chikorita");
+            switch(pokemonName) {
+                case "Bulbasaur":
+                    ma.displayView(1, "Charmander");
+                    break;
+                case "Charmander":
+                    ma.displayView(1, "Squirtle");
+                    break;
+                case "Squirtle":
+                    if(atEndOfTeam) {
+                        ma.displayView(3, "Bulbasaur");
+                    }
+                    else {
+                        prepareForBattleStage();
+                    }
+                    break;
+                case "Chikorita":
+                    ma.displayView(1, "Cyndaquil");
+                    break;
+                case "Cyndaquil":
+                    ma.displayView(1, "Totodile");
+                    break;
+                case "Totodile":
+                    if(atEndOfTeam) {
+                        ma.displayView(3, "Chikorita");
+                    }
+                    else {
+                        prepareForBattleStage();
+                    }
+                    break;
+                case "Treecko":
+                    ma.displayView(1, "Torchic");
+                    break;
+                case "Torchic":
+                    ma.displayView(1, "Mudkip");
+                    break;
+                case "Mudkip":
+                    if(atEndOfTeam) {
+                        ma.displayView(3, "Treecko");
+                    }
+                    else {
+                        prepareForBattleStage();
+                    }
+                    break;
+                default:
+                    throw new IllegalArgumentException(pokemonName + " cannot possibly be used currently at this point in the simulator!");
             }
         });
         return myView;
