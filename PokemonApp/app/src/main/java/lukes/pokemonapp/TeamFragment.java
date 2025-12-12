@@ -9,8 +9,7 @@ import android.widget.Button;
 
 /**
  * The fragment that drives the team selection screen. Essentially, it just tells the buttons to
- * change the screen to the PokemonFragments when they are clicked. The third button is still
- * in development since the Pokémon in the third team do not have data yet.
+ * change the screen to the PokemonFragments when they are clicked.
  * @author Luke Schoeberle 7/21/2016.
  */
 public class TeamFragment extends Fragment { //fragment code 2
