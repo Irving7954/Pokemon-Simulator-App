@@ -1217,25 +1217,19 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void changeNonVolStatus(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
         String moveStatus = move.getNonVolChanges();
-        if(moveStatus == null) //skip this if it causes no non-volatile changes
-            return;
-        if(move.statusesUser() && !moveUser.avoidsNonVolStatus(moveStatus)) { //if it would affect the user
-            String userStatus = moveUser.getNonVolStatus();
-            if(moveStatus.equals("Resting") && !userStatus.equals("Sleeping") && !userStatus.equals("Resting")) {
-                moveUser.setNonVolStatus(moveStatus);
-                changeStatusText(moveStatus, isPlayerTheUser); //check for rest case
-            }
-            else if(userStatus.equals("None")) {
-                moveUser.setNonVolStatus(moveStatus);
-                changeStatusText(moveStatus, isPlayerTheUser); //non-rest case
-            }
+        if(moveStatus == null)  {
+            return; //skip this if it causes no non-volatile changes
         }
-        else if(!move.statusesUser() && !moveTarget.avoidsNonVolStatus(moveStatus)) { //if it would affect the opponent
-            String targetStatus = moveTarget.getNonVolStatus();
-            if(targetStatus.equals("None")) {
-                moveUser.setNonVolStatus(moveStatus);
-                changeStatusText(moveStatus, !isPlayerTheUser); //non-rest case
-            }
+        String moveUserAbility = moveUser.getAbility();
+        boolean nonVolCheck = move.avoidsNonVolStatus(moveStatus, moveUser.getNonVolStatus(), moveUser.getType(), moveUserAbility, moveUserAbility);
+        if(move.statusesUser() && !nonVolCheck) { //if it would affect the user
+            moveUser.setNonVolStatus(moveStatus);
+            changeStatusText(moveStatus, isPlayerTheUser);
+        }
+        else if(!move.statusesUser() && !move.avoidsNonVolStatus(moveStatus, moveTarget.getNonVolStatus(),
+                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { //if it would affect the opponent
+            moveTarget.setNonVolStatus(moveStatus);
+            changeStatusText(moveStatus, !isPlayerTheUser);
         }
     }
 
@@ -1249,16 +1243,21 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void changeVolStatus(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
         String moveStatus = move.getVolChanges();
-        if(moveStatus == null) //skip this if it causes no non-volatile changes
-            return;
-        if(move.statusesUser() && !moveUser.avoidsVolStatus(moveStatus)) { //if it would affect the user
-            String userStatus = moveUser.getVolStatus();
+        if(moveStatus == null)  {
+            return; //skip this if it causes no volatile changes
+        }
+        String moveType = move.getType();
+        String userStatus = moveUser.getVolStatus();
+        String moveUserAbility = moveUser.getAbility();
+        boolean volCheck = move.avoidsVolStatus(moveStatus, userStatus, moveUser.getType(), moveUserAbility, moveUserAbility);
+        if(move.statusesUser() && !volCheck) { //if it would affect the user
             if(!userStatus.contains(moveStatus)) {
                 moveUser.setNonVolStatus(moveStatus);
                 changeStatusText(moveStatus, isPlayerTheUser); //user case
             }
         }
-        else if(!move.statusesUser() && !moveTarget.avoidsVolStatus(moveStatus)) { //if it would affect the opponent
+        else if(!move.statusesUser() && !move.avoidsVolStatus(moveStatus, moveTarget.getVolStatus(),
+                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { //if it would affect the opponent
             String targetStatus = moveTarget.getVolStatus();
             if(!targetStatus.contains(moveStatus)) {
                 moveTarget.setNonVolStatus(moveStatus);

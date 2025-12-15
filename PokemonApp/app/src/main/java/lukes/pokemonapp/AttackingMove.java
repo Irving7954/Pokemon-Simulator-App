@@ -39,7 +39,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
      * with no additional effects, and it is also zero for effects that always happen.
      * For other cases, it is represented by a number from 1-100 (just like accuracy).
      */
-    private int addEffectChance; // check this TODO
+    private int addEffectChance;
 
     /**
      * Constructs an attacking move to its preset state based on its name. This is the only constructor.

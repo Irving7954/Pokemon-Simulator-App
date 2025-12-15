@@ -579,49 +579,6 @@ public class Pokemon implements Parcelable {
     }
 
     /**
-     * Determines whether or not this Pokémon is immune to the non-volatile status listed.
-     * @param status The non-volatile status in question.
-     * @return True if this Pokémon is immune, false otherwise.
-     */
-    public boolean avoidsNonVolStatus(String status) {
-        if(ability.equals("Comatose") && !status.equals("Sleeping"))
-            return true; //check on this later //TODO
-        switch(status) {
-            case "Burned":
-                return type.contains("Fire") || ability.equals("Water Veil") ||  ability.equals("Water Bubble");
-            case "Poisoned": case "Badly Poisoned":
-                return type.contains("Poison") || type.contains("Steel") || ability.equals("Immunity"); //check on Corrosion //TODO
-            case "Frozen":
-                return type.contains("Ice") || ability.equals("Magma Armor");
-            case "Sleeping": case "Resting":
-                return ability.equals("Insomnia") || ability.equals("Vital Spirit");
-            case "Paralyzed":
-                return type.contains("Electric") || ability.equals("Limber");
-            default:
-                throw new IllegalArgumentException(status + " is not a valid non-volatile status!");
-        }
-    }
-
-    /**
-     * Determines whether or not this Pokémon is immune to the volatile status listed.
-     * @param status The volatile status in question.
-     * @return True if this Pokémon is immune, false otherwise.
-     */
-    public boolean avoidsVolStatus(String status) {
-        switch(status) {
-            case "Seeded":
-                return type.contains("Grass") || ability.equals("Sap Sipper"); //check on this one //TODO
-            case "Confused":
-                return ability.equals("Own Tempo");
-            case "Yawning":
-                return avoidsNonVolStatus("Sleeping") || !nonVolStatus.equals("None") || ability.equals("Comatose");
-            default:
-                throw new IllegalArgumentException(status + " is not a valid volatile status at this time!");
-        }
-        //add more later //TODO
-    }
-
-    /**
      * Used for debugging purposes.
      * @return A String representation of this object.
      */

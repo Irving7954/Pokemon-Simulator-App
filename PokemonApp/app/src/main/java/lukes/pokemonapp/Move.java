@@ -61,8 +61,9 @@ public abstract class Move implements Parcelable {
     private boolean changesUserStats;
 
     /**
-     * A list of the non-volatile statuses that this move can cause. This can only contain one status (since
-     * only one volatile status can occur at one time).
+     * A list of the non-volatile statuses that this move can cause. This usually contains only one status since only one
+     * volatile status can occur at one time, but there are some exceptions for rare moves like Tri Attack. For reference
+     * the current non-volatile statuses are Burned, Poisoned, Badly Poisoned, Frozen, Sleeping, Resting, and Paralyzed.
      */
     private String nonVolChanges;
 
@@ -325,6 +326,62 @@ public abstract class Move implements Parcelable {
             accuracy = acc;
         else
             throw new IllegalArgumentException("A move's accuracy can only be between 1 and 100 (or 1000 if accuracy is unnecessary)!");
+    }
+
+    /**
+     * Determines if the Pokemon is immune to the provided non-volatile status from a move in
+     * The provided scenario, which is essentially a shortcut for checking a bunch of
+     * status-related Types and abilities in one method.
+     * @param moveStatus The move's non-volatile status that is in question.
+     * @param targetStatus The target's current non-volatile status, if it exists.
+     * @param targetType The target's type in question.
+     * @param moveUserAbility The move user's type in question.
+     * @param moveTargetAbility The move target's ability in question.
+     * @return True if this Pokémon is immune to the non-volatile status in this scenario, false otherwise.
+     */
+    public boolean avoidsNonVolStatus(String moveStatus, String targetStatus, String targetType, String moveUserAbility, String moveTargetAbility) {
+        if(!targetStatus.equals("None") || moveTargetAbility.equals("Comatose")) {
+            return true; // Expand on these later and check the details below //TODO
+        }
+        switch(moveStatus) {
+            case "Burned":
+                return targetType.contains("Fire") || moveTargetAbility.equals("Water Veil") || moveTargetAbility.equals("Water Bubble");
+            case "Poisoned": case "Badly Poisoned":
+                return moveUserAbility.equals("Corrosion") || targetType.contains("Poison") ||
+                        targetType.contains("Steel") || moveTargetAbility.equals("Immunity");
+            case "Frozen":
+                return targetType.contains("Ice") || moveTargetAbility.equals("Magma Armor");
+            case "Sleeping": case "Resting":
+                return moveTargetAbility.equals("Insomnia") || moveTargetAbility.equals("Vital Spirit");
+            case "Paralyzed":
+                return targetType.contains("Electric") || moveTargetAbility.equals("Limber");
+            default:
+                throw new IllegalArgumentException(moveStatus + " is not a valid non-volatile status!");
+        }
+    }
+
+    /**
+     * Determines whether or not this Pokémon is immune to the volatile status listed.
+     * @param moveStatus The move's non-volatile status that is in question.
+     * @param targetStatus The target's current non-volatile status, if it exists.
+     * @param targetType The target's type in question.
+     * @param moveUserAbility The move user's type in question.
+     * @param moveTargetAbility The move target's ability in question.
+     * @return True if this Pokémon is immune, false otherwise.
+     */
+    public boolean avoidsVolStatus(String moveStatus, String targetStatus, String targetType, String moveUserAbility, String moveTargetAbility) {
+        switch(moveStatus) {
+            case "Seeded":
+                return targetType.contains("Grass") || moveTargetAbility.equals("Sap Sipper");
+            case "Confused":
+                return moveTargetAbility.equals("Own Tempo");
+            case "Yawning":
+                return avoidsNonVolStatus("Sleeping", targetStatus, targetType, moveUserAbility, moveTargetAbility)
+                        || moveTargetAbility.equals("Comatose");
+            default:
+                throw new IllegalArgumentException(moveStatus + " is not a valid volatile status at this time!");
+        }
+        //Expand on these later and check the details above//TODO
     }
 
     /**

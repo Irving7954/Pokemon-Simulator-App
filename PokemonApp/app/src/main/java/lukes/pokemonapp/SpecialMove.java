@@ -86,6 +86,7 @@ public class SpecialMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This special move has a 30% chance to paralyze the opponent.");
                 setAddEffectChance(30);
+                setNonVolChanges("Paralyzed");
                 break;
             case "Energy Ball":
                 setType("Grass");
@@ -104,7 +105,8 @@ public class SpecialMove extends AttackingMove {
                 setType("Fire");
                 setPP(5);
                 setTwoTurnCode(0);
-                setBP(150); setAccuracy(100);
+                setBP(150);
+                setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(1);
                 setAdditionalEffects("This special move decreases in power as the user's HP decreases " +
@@ -121,6 +123,7 @@ public class SpecialMove extends AttackingMove {
                 setAdditionalEffects("This special move has a 10% chance to burn the opponent, assuming that " +
                                      "the opponent is not immune to being burned.");
                 setAddEffectChance(10);
+                setNonVolChanges("Burned");
                 break;
             case "Giga Drain": //deal with half HP recovery (currently has bogus code) //TODO
                 setType("Grass");
@@ -145,6 +148,7 @@ public class SpecialMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This special move has a 10% chance to freeze the opponent.");
                 setAddEffectChance(10);
+                setNonVolChanges("Frozen");
                 break;
             case "Lava Plume":
                 setType("Fire");
@@ -157,6 +161,7 @@ public class SpecialMove extends AttackingMove {
                 setAdditionalEffects("This special move has a 30% chance to burn the opponent " +
                                      "and also hits both targets in a double battle.");
                 setAddEffectChance(30);
+                setNonVolChanges("Burned");
                 break;
             case "Scald":
                 setType("Water");
@@ -169,6 +174,7 @@ public class SpecialMove extends AttackingMove {
                 setAdditionalEffects("This special move has a 30% chance to burn the opponent. It also " +
                                      "unfreezes a frozen target that it hits.");
                 setAddEffectChance(30);
+                setNonVolChanges("Burned");
                 break;
             case "Sludge Bomb":
                 setType("Poison");
@@ -181,6 +187,7 @@ public class SpecialMove extends AttackingMove {
                 setAdditionalEffects("This special move has a 30% chance to poison the opponent, assuming " +
                                      "that the opposing Pokémon is not immune to being poisoned.");
                 setAddEffectChance(30);
+                setNonVolChanges("Poisoned");
                 break;
             case "Solar Beam":
                 setType("Grass");

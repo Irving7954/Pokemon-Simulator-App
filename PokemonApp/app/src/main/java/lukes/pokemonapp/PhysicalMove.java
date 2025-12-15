@@ -130,6 +130,7 @@ public class PhysicalMove extends AttackingMove {
                 setAdditionalEffects("This physical move has a 10% chance to freeze the opponent, assuming that " +
                                      "the opponent is not immune to being frozen.");
                 setAddEffectChance(10);
+                setNonVolChanges("Frozen");
                 break;
             case "Payback":
                 setType("Dark");
