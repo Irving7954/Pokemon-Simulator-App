@@ -71,13 +71,13 @@ public class StatusMove extends Move {
     };
 
     /**
-     * Determines whether or not this is an AttackingMove. This always returns false for this class,
-     * since StatusMoves are not AttackingMoves. This is mainly for polymorphism.
-     * @return False for this class.
+     * Checks whether or not the move is an attacking move, which is mainly used for polymorphism.
+     * For this class, it always returns false since we know the subtype at this point (StatusMove).
+     * @return True if the move is an attacking move, which means that it always returns false.
      */
     @Override
     public boolean isAttackingMove() {
-        return false; //for polymorphism
+        return false;
     }
 
     public void setMove(String mName) {
@@ -161,15 +161,17 @@ public class StatusMove extends Move {
                            "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(false);
                 break;
-            case "Substitute":
+            case "Substitute": // Handle sub health drop (and sub in general) //TODO
                 setType("Normal");
                 setPP(10);
                 setTwoTurnCode(0);
                 setAccuracy(1000);
                 setStatChanges(new Integer[] {-25, 0, 0, 0, 0, 0, 0, 0});
                 setEffects("This status move uses 25% of the user's HP to create a substitute for the user. " +
-                           "This substitute is immune to the effects of most status moves but " +
-                           "is destroyed when an attacking move takes at least 25% of the user's HP.");
+                           "This substitute is immune to the effects of most status moves but is usually " +
+                           "destroyed when an attacking move takes at least 25% of the user's HP." +
+                           "For reference, sound-based moves and certain other effects bypass substitutes, so" +
+                           "this does not ensure that the user and their side of the field is fully protected.");
                 setChangesUserStats(true);
                 break;
             case "Sunny Day":
@@ -180,12 +182,12 @@ public class StatusMove extends Move {
                 setEffects("This status move brings out the sunlight for five turns, which strengthens Fire " +
                            "type moves, weakens Water type moves, and has many other small effects.");
                 break;
-            case "Synthesis":
+            case "Synthesis": // Handle variable health changes from synthesis from weather //TODO
                 setType("Grass");
                 setPP(5);
                 setTwoTurnCode(0);
                 setAccuracy(1000);
-                setStatChanges(new Integer[] {-50, 0, 0, 0, 0, 0, 0, 0});
+                setStatChanges(new Integer[] {50, 0, 0, 0, 0, 0, 0, 0});
                 setEffects("This status move restores HP to the user depending on the weather. If used while " +
                            "no weather conditions are present, it heals 50% of the user's HP, but it heals more " +
                            "in sunlight and less in other weather conditions.");

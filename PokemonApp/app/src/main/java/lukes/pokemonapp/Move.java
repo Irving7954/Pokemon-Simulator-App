@@ -63,7 +63,7 @@ public abstract class Move implements Parcelable {
     /**
      * A list of the non-volatile statuses that this move can cause. This usually contains only one status since only one
      * volatile status can occur at one time, but there are some exceptions for rare moves like Tri Attack. For reference
-     * the current non-volatile statuses are Burned, Poisoned, Badly Poisoned, Frozen, Sleeping, Resting, and Paralyzed.
+     * the current non-volatile statuses are None, Burned, Poisoned, Badly Poisoned, Frozen, Sleeping, Resting, and Paralyzed.
      */
     private String nonVolChanges;
 
@@ -80,7 +80,7 @@ public abstract class Move implements Parcelable {
 
     //consider adding priority tiers later //TODO
 
-    //add sound based (breaks through sub) //TODO
+    //add sound-based (breaks through sub) //TODO
 
     //add multi-target moves //TODO
 
@@ -138,15 +138,16 @@ public abstract class Move implements Parcelable {
     }
 
     /**
-     * Sets the move to the preset state based on the name. This has no definition currently because
-     * its meaning depends on whether the move is an AttackingMove or a StatusMove.
+     * Sets the move to the preset state based on the name. This is undefined in this superclass
+     * because this cannot be defined without knowing its subtype (AttackingMove or StatusMove).
      * @param mName The name of the move.
      */
     public abstract void setMove(String mName);
 
     /**
-     * Checks whether or not the move is an AttackingMove. This is mainly used for polymorphism.
-     * @return True if the move is an AttackingMove, false otherwise.
+     * Determines whether or not the move is an attacking move. This is undefined in this superclass
+     * because this cannot be determined without knowing its subtype (AttackingMove or StatusMove).
+     * @return True if this move is an attacking move, false otherwise.
      */
     public abstract boolean isAttackingMove();
 

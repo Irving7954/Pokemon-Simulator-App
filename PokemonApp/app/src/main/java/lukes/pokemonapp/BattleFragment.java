@@ -265,8 +265,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 setImage(playerPoke, leadPlayerPoke);
                 //initializes the progress bars
                 playerHPBar = myView.findViewById(R.id.playerHPBar);
-                playerHPBar.setProgress(100);
-                playerHPBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(25, 255, 25), BlendModeCompat.SRC_IN));
+                adjustHPBars(playerHPBar, leadPlayerPoke, playerPokeAndHP);
 
                 //initializations for the enemy trainer
                 enemy = new EnemyTrainer("Angel");
@@ -315,8 +314,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 setImage(enemyPoke, leadEnemyPoke);
                 //initializes HP bars
                 enemyHPBar = myView.findViewById(R.id.enemyHPBar);
-                enemyHPBar.setProgress(100);
-                enemyHPBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(25, 255, 25), BlendModeCompat.SRC_IN));
+                adjustHPBars(enemyHPBar, leadEnemyPoke, enemyPokeAndHP);
 
                 moveButtons.get(0).setOnClickListener((v) -> resolveSpeedTiers(0));
                 if(moveButtons.size() > 1)
@@ -600,7 +598,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             }
             adjustHPBars(tempBar, moveTarget, tempV); //adjust the hp bars
 
-            resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser); //stat changes, status changes, other
+            resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, roundedDownDamage); //stat changes, status changes, other
         }
     }
 
@@ -687,15 +685,14 @@ public class BattleFragment extends Fragment { //Fragment code 3
         else {
             hpBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(25, 255, 25), BlendModeCompat.SRC_IN));
         }
-        String commonHpPrefix = injuredPoke.getName() + "       HP: ";
+        String commonHpPrefix = injuredPoke.getName() + " HP: ";
         if (roundedHPPercent >= 0) {
-            hpText.setText(String.format("%s%s %%", commonHpPrefix, roundedHPPercent)); //set the text to the percentage
+            hpText.setText(String.format("%s%s%%", commonHpPrefix, roundedHPPercent)); //set the text to the percentage
         }
         else {
-            hpText.setText(String.format("%s 0%%", commonHpPrefix)); //set it to zero if it is less than zero (deal with fainting later) //TODO
+            hpText.setText(String.format("%s0%%", commonHpPrefix)); //Deal with fainting once it is at zero //TODO
         }
     }
-
 
     private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget) {
         //actually do this //TODO
@@ -1054,11 +1051,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
      * @param isPlayerTheUser True if the player is the moveUser, false otherwise.
+     * @param moveDamage The damage inflicted by the move, which is relevant at this stage for HP-draining and recoil-inducing moves.
      */
-    private void resolveAdditionalEffects(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
+    private void resolveAdditionalEffects(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, int moveDamage) {
         int randomNum = rand.nextInt(100);
         if((randomNum + 1) <= move.getAddEffectChance()) {
-            changeStats(move, moveUser, moveTarget, isPlayerTheUser);
+            changeStats(move, moveUser, moveTarget, isPlayerTheUser, moveDamage);
             changeNonVolStatus(move, moveUser, moveTarget, isPlayerTheUser);
             changeVolStatus(move, moveUser, moveTarget, isPlayerTheUser);
         }
@@ -1071,43 +1069,61 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param moveUser The user of the move,
      * @param moveTarget The target of the move.
      * @param isPlayerTheUser Whether or not the player used this move.
+     * @param moveDamage The damage inflicted by the move, which is relevant at this stage for HP-draining and recoil-inducing moves.
      */
-    private void changeStats(Move move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
+    private void changeStats(Move move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, int moveDamage) {
         Integer[] statChanges = move.getStatChanges();
-        if(statChanges == null)
+        if(statChanges == null) {
             return;
+        }
         boolean cus = move.changesUserStats();
         for(int i = 0; i < 6; i++) {
             int change = statChanges[i];
-            if(change == 0)
+            if(change == 0) {
                 continue;
-            if(i == 0) {
-                if(cus) {
-                    moveUser.getInitStats()[0] += (int) (change/ 100.0 * moveUser.getMaxHP());
-                    if(moveUser.getInitStats()[0] > moveUser.getMaxHP())
-                        moveUser.getInitStats()[0] = moveUser.getMaxHP();
-                    if(isPlayerTheUser)
-                        adjustHPBars(playerHPBar, moveUser, playerPokeAndHP);
-                    else
-                        adjustHPBars(enemyHPBar, moveUser, enemyPokeAndHP);
-                }
-                else {
-                    moveTarget.getInitStats()[0] += (int) (change / 100.0 * moveTarget.getMaxHP());
-                    if(moveTarget.getInitStats()[0] > moveTarget.getMaxHP())
-                        moveTarget.getInitStats()[0] = moveTarget.getMaxHP();
-                    if(isPlayerTheUser)
-                        adjustHPBars(playerHPBar, moveTarget, playerPokeAndHP);
-                    else
-                        adjustHPBars(enemyHPBar, moveTarget, enemyPokeAndHP);
-                }
-                //deal with HP recovery like Giga Drain //TODO
             }
-            else if(cus)
+            // Treat HP as a special case since it does not follow a -6 to 6 scale that maps to a percentage of the original value;
+            // Instead, the most standard case is based on a percentage from recoil or HP-draining moves
+            // Then there are plenty of more exceptional cases
+            if (i == 0) {
+                int absChange = Math.abs(change);
+                //Verify first that this is a standard damage percentage-based change (recoil/HP-draining)
+                if(absChange <= 100 && absChange > 0) {
+                    if (cus) {
+                        moveUser.getInitStats()[0] += (int) (change / 100.0 * moveDamage);
+                        if(moveUser.getInitStats()[0] > moveUser.getMaxHP()) {
+                            moveUser.getInitStats()[0] = moveUser.getMaxHP();
+                        }
+                        if(isPlayerTheUser) {
+                            adjustHPBars(playerHPBar, moveUser, playerPokeAndHP);
+                        }
+                        else {
+                            adjustHPBars(enemyHPBar, moveUser, enemyPokeAndHP);
+                        }
+                    }
+                    else {
+                        moveTarget.getInitStats()[0] += (int) (change / 100.0 * moveTarget.getMaxHP());
+                        if(moveTarget.getInitStats()[0] > moveTarget.getMaxHP()) {
+                            moveTarget.getInitStats()[0] = moveTarget.getMaxHP();
+                        }
+                        if (isPlayerTheUser) {
+                            adjustHPBars(playerHPBar, moveTarget, playerPokeAndHP);
+                        }
+                        else {
+                            adjustHPBars(enemyHPBar, moveTarget, enemyPokeAndHP);
+                        }
+                    }
+                }
+                //deal with other cases like Sonic Boom or Nature's Madness later //TODO
+            }
+            else if (cus) {
                 resolveStatChange(i, change, moveUser, isPlayerTheUser);
-            else
+            }
+            else {
                 resolveStatChange(i, change, moveTarget, !isPlayerTheUser);
+            }
         }
-    } //HP recover //TODO
+    }
 
     /**
      * Resolves a stat change (except for HP). It changes the status texts on the screen, and it also catches stat changes

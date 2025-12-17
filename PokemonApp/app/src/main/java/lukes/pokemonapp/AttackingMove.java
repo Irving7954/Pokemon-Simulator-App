@@ -4,7 +4,7 @@ import android.os.Parcel;
 
 /**
  * The representation of an attacking move, which is a type of Move. Each AttackingMove (in addition to
- * the characteristics of a Move) has BP, accuracy, a bpCode, additional effects, and a makesContact boolean.
+ * the characteristics of a Move) has BP, accuracy, a bpCode, additional effects and their percentage chance, and a makesContact boolean.
  * More characteristics may be added as necessary.
  * @author Luke Schoeberle 7/11/2016.
  */
@@ -90,20 +90,20 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
     public abstract void setMove(String mName);
 
     /**
-     * Determines whether or not the move is physical. This has no definition currently because
-     * this cannot be determined without knowing its subtype (PhysicalMove or SpecialMove).
+     * Determines whether or not the move is physical. This is undefined in this superclass
+     * because this cannot be determined without knowing its subtype (PhysicalMove or SpecialMove).
      * @return True if this move is physical, false otherwise.
      */
     public abstract boolean isPhysical();
 
     /**
-     * Checks whether or not the move is an AttackingMove. This is mainly used for polymorphism. For this
-     * class, it always returns true.
-     * @return True if the move is an AttackingMove, false otherwise.
+     * Checks whether or not the move is an attacking move, which is mainly used for polymorphism.
+     * For this class, it always returns true since we know the subtype at this point (AttackingMove).
+     * @return True if the move is an attacking move, which means that it always returns true.
      */
     @Override
     public boolean isAttackingMove() {
-        return true;  //for polymorphism
+        return true;
     }
 
     /**

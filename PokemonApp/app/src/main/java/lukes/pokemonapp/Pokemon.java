@@ -33,15 +33,15 @@ public class Pokemon implements Parcelable {
     /**
      * The volatile status of a Pokémon, which means that the condition will disappear upon switching out.
      * This includes both all statuses other than the non-volatile ones. You can have more than one volatile
-     * status at a time, which will be separated by slashes.
+     * Status at a time, which will be separated by slashes.
      */
     private String volStatus;
 
     /**
      * The non-volatile status of a Pokémon, which means that the condition will remain upon switching out.
-     * This includes both poison types, paralysis, burn, freeze, natural sleep, and resting sleep. You can
-     * only have one non-volatile status at a time, and these conditions generally cannot be overridden
-     * by other non-volatile statuses (except with rest).
+     * For reference, the current non-volatile statuses are None, Burned, Poisoned, Badly Poisoned,
+     * Frozen, Sleeping, Resting, and Paralyzed. You can only have one non-volatile status at a time,
+     * And these conditions generally cannot be overridden by other non-volatile statuses except by Rest.
      */
     private String nonVolStatus;
 
@@ -178,8 +178,7 @@ public class Pokemon implements Parcelable {
     private void setPokemon(String pName) {
         setName(pName);
         setLevel(50); // Use a temporary level of 50 for the simulator
-        setVolStatus("None");     /*can be ("None","Sleeping","Poisoned","Badly Poisoned",
-                                  "Paralyzed", "Resting", "Burned", "Frozen") at this point*/
+        setVolStatus("None");
         setNonVolStatus("None");  /* can be("None","Confused","Seeded" ... many more later) */
         setInvulnCode(0);
         setStatStages(new Integer[] {6, 6, 6, 6, 6, 6, 6, 6});

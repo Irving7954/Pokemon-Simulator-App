@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * The representation of a special move. A PhysicalMove is no different than an attacking
- * move except that it uses the S.Attack and S.Defense stats in battle.
+ * The representation of a special move. Essentially, a Special is an AttackingMove that typically
+ * Uses the Special Attack and Special Defense stats and rarely makes contact with the opponent in battle.
  * @author Luke Schoeberle 7/11/2016.
  */
 public class SpecialMove extends AttackingMove {
@@ -59,12 +59,13 @@ public class SpecialMove extends AttackingMove {
     };
 
     /**
-     * Returns true if this is move is physical. This is always false for this class.
-     * @return False for this class.
+     * Determines whether or not the move is physical.
+     * For this class, it always returns false since we know the subtype at this point (SpecialMove).
+     * @return True if the move is physical, which means that it always returns false.
      */
     @Override
     public boolean isPhysical() {
-        return false; //for polymorphism
+        return false;
     }
 
     /**
@@ -84,7 +85,7 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to paralyze the opponent.");
+                setAdditionalEffects("This special move deals damage and has a 30% chance to paralyze the opponent.");
                 setAddEffectChance(30);
                 setNonVolChanges("Paralyzed");
                 break;
@@ -96,7 +97,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 10% chance to lower the opponent's Sp. Def. by one stage.");
+                setAdditionalEffects("This special move deals damage and has a 10% chance to " +
+                                     "lower the opponent's Sp. Def. by one stage.");
                 setStatChanges(new Integer[] {0, 0, 0, 0, -1, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(10);
@@ -110,7 +112,7 @@ public class SpecialMove extends AttackingMove {
                 setMakesContact(false);
                 setBPCode(1);
                 setAdditionalEffects("This special move decreases in power as the user's HP decreases " +
-                                    "and also hits both targets in a double battle.");
+                                     "and also hits both targets in a double battle.");
                 break;
             case "Flamethrower":
                 setType("Fire");
@@ -120,12 +122,12 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 10% chance to burn the opponent, assuming that " +
-                                     "the opponent is not immune to being burned.");
+                setAdditionalEffects("This special move deals damage and has a 10% chance to burn the opponent, " +
+                                     "assuming that the opponent is not immune to being burned.");
                 setAddEffectChance(10);
                 setNonVolChanges("Burned");
                 break;
-            case "Giga Drain": //deal with half HP recovery (currently has bogus code) //TODO
+            case "Giga Drain":
                 setType("Grass");
                 setPP(10);
                 setTwoTurnCode(0);
@@ -134,8 +136,11 @@ public class SpecialMove extends AttackingMove {
                 setMakesContact(false);
                 setBPCode(0);
                 setAdditionalEffects("This special move deals damage and also allows the user to recover " +
-                                     "half of the HP dealt by this move.");
-                setStatChanges(new Integer[] {500, 0, 0, 0, 0, 0, 0, 0});
+                                     "half of the damage in HP dealt by this move. For reference, this move is entirely " +
+                                     "disabled by the Heal Block or the Psychic Noise effects, and it hurts the user " +
+                                     "if this move is used against a Pokemon with the Liquid Ooze ability.");
+                setStatChanges(new Integer[] {50, 0, 0, 0, 0, 0, 0, 0});
+                setAddEffectChance(100);
                 setChangesUserStats(true);
                 break;
             case "Ice Beam":
@@ -146,7 +151,7 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 10% chance to freeze the opponent.");
+                setAdditionalEffects("This special move deals damage and has a 10% chance to freeze the opponent.");
                 setAddEffectChance(10);
                 setNonVolChanges("Frozen");
                 break;
@@ -158,7 +163,7 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to burn the opponent " +
+                setAdditionalEffects("This special move deals damage, has a 30% chance to burn the opponent, " +
                                      "and also hits both targets in a double battle.");
                 setAddEffectChance(30);
                 setNonVolChanges("Burned");
@@ -171,8 +176,9 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to burn the opponent. It also " +
-                                     "unfreezes a frozen target that it hits.");
+                setAdditionalEffects("This special move deals damage and has a 30% chance to burn the opponent. " +
+                                     "Additionally, if necessary, the user is thawed out before the moved is performed," +
+                                     "It also unfreezes a frozen target hit by the attack.");
                 setAddEffectChance(30);
                 setNonVolChanges("Burned");
                 break;
@@ -184,8 +190,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 30% chance to poison the opponent, assuming " +
-                                     "that the opposing Pokémon is not immune to being poisoned.");
+                setAdditionalEffects("This special move deals damage and has a 30% chance to poison the opponent " +
+                                     "assuming that the opposing Pokémon is not immune to being poisoned.");
                 setAddEffectChance(30);
                 setNonVolChanges("Poisoned");
                 break;
@@ -220,7 +226,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move has a 20% chance to lower the opponent's Sp. Def. by one stage.");
+                setAdditionalEffects("This special move deals damage has a 20% chance to " +
+                                     "lower the opponent's Sp. Def. by one stage.");
                 setStatChanges(new Integer[] {0, 0, 0, 0, -1, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);

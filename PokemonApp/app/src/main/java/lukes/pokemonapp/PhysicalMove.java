@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * The representation of a physical move. A PhysicalMove is no different than an attacking
- * move except that it uses the Attack and Defense stats in battle.
+ * The representation of a physical move. Essentially, a PhysicalMove is an AttackingMove
+ * That typically uses the Attack and Defense stats and often makes contact with the opponent in battle.
  * @author Luke Schoeberle 7/11/2016.
  */
 public class PhysicalMove extends AttackingMove {
@@ -59,12 +59,13 @@ public class PhysicalMove extends AttackingMove {
     };
 
     /**
-     * Returns true if this is move is physical. This is always true for this class.
-     * @return True for this class.
+     * Determines whether or not the move is physical.
+     * For this class, it always returns true since we know the subtype at this point (PhysicalMove).
+     * @return True if the move is physical, which means that it always returns true.
      */
     @Override
     public boolean isPhysical() {
-        return true; //for polymorphism
+        return true;
     }
 
     /**
@@ -83,7 +84,7 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(90);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has no additional effects.");
+                setAdditionalEffects("This physical move deals damage and has no additional effects.");
                 break;
             case "Dig":
                 setType("Ground");
@@ -105,7 +106,7 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has no additional effects.");
+                setAdditionalEffects("This physical move deals damage and has no additional effects.");
                 break;
             case "Earthquake":
                 setType("Ground");
@@ -115,8 +116,9 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(2);
-                setAdditionalEffects("This physical move has no additional effects, except for dealing double damage to " +
-                                     "an opponent that is underground due to the move Dig.");
+                setAdditionalEffects("This physical move deals damage and has no additional effects, " +
+                                     "except for dealing double damage to an opponent that is underground due to the move Dig." +
+                                     "It also affects all other Pokémon in double battles.");
                 addToIBList(6);
                 break;
             case "Ice Punch":
@@ -127,8 +129,8 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has a 10% chance to freeze the opponent, assuming that " +
-                                     "the opponent is not immune to being frozen.");
+                setAdditionalEffects("This physical move deals damage and has a 10% chance to freeze the opponent, " +
+                                     "assuming that the opponent is not immune to being frozen.");
                 setAddEffectChance(10);
                 setNonVolChanges("Frozen");
                 break;
@@ -150,7 +152,8 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(90);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has a 10% chance of lowering the opponent's Attack by one stage.");
+                setAdditionalEffects("This physical moved deals damage and has a 10% chance of " +
+                                     "lowering the opponent's Attack by one stage.");
                 setStatChanges(new Integer[] {0, -1, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(10);
@@ -163,10 +166,11 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move will lower the user's Attack by one stage after " +
-                                     "this move is used. It also will lower the user's Defense by one stage in the same manner.");
+                setAdditionalEffects("This physical move deals damage and will lower the user's Attack and Defense" +
+                                     "by one stage after the move is used.");
                 setStatChanges(new Integer[] {0, -1, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
+                setAddEffectChance(100);
                 break;
             case "Seed Bomb":
                 setType("Grass");
@@ -176,10 +180,10 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has no additional effects, and " +
-                                     "for future reference, it is blocked by the Bulletproof ability.");
+                setAdditionalEffects("This physical move deals damage and has no additional effects. " +
+                                     "For future reference, it is blocked by the Bulletproof ability.");
                 break;
-            case "Drain Punch": //deal with half HP recovery (currently has bogus code) //TODO
+            case "Drain Punch":
                 setType("Fighting");
                 setPP(10);
                 setTwoTurnCode(0);
@@ -188,10 +192,11 @@ public class PhysicalMove extends AttackingMove {
                 setMakesContact(false);
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and also allows the user to recover " +
-                                     "half of the HP dealt by this move. For reference, this healing effect is " +
-                                     "negated by the Heal Block or the Psychic Noise effects, and it hurts the user " +
+                                     "half of the damage in HP dealt by this move. For reference, this move is entirely " +
+                                     "disabled by the Heal Block or the Psychic Noise effects, and it hurts the user " +
                                      "if this move is used against a Pokemon with the Liquid Ooze ability.");
-                setStatChanges(new Integer[] {500, 0, 0, 0, 0, 0, 0, 0});
+                setStatChanges(new Integer[] {50, 0, 0, 0, 0, 0, 0, 0});
+                setAddEffectChance(100);
                 setChangesUserStats(true);
                 break;
             case "Crunch":
@@ -202,7 +207,8 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has a 20% chance of lowering the opponent's Defense by one stage.");
+                setAdditionalEffects("This physical move deals damage and has a 20% chance of " +
+                                     "lowering the opponent's Defense by one stage.");
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
@@ -220,6 +226,7 @@ public class PhysicalMove extends AttackingMove {
                                      "the user is thawed out before the moved is performed.");
                 setStatChanges(new Integer[] {-30, 0, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
+                setAddEffectChance(100);
                 break;
             case "Aerial Ace":
                 setType("Flying");
@@ -251,7 +258,8 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has a 20% chance to lower the opponent's Defense by one stage.");
+                setAdditionalEffects("This physical move deals damage and has a 20% chance to " +
+                                     "lower the opponent's Defense by one stage.");
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
@@ -264,8 +272,8 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(90);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This physical move has a 30% chance of causing the opponent to flinch and " +
-                                     "also hits both targets in a double battle.");
+                setAdditionalEffects("This physical move deals damage, has a 30% chance of causing the opponent " +
+                                     "to flinch, and hits both targets in a double battle.");
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
