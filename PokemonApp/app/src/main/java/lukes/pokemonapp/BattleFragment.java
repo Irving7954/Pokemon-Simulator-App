@@ -588,17 +588,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
             Log.d("AddPersonActivity", damage + "");
 
             int roundedDownDamage = (int) damage; //round down
-            moveTarget.setStats(moveTarget.getInitStats()[0] - roundedDownDamage, 0); //reduce HP
+            int actualDamage = Math.max(moveTarget.getInitStats()[0] - roundedDownDamage, 0);
+            moveTarget.setStat(actualDamage, 0); //reduce HP
 
             ProgressBar tempBar = enemyHPBar;
             TextView tempV = enemyPokeAndHP; //choose the appropriate hp bar and text box
             if(!isPlayerTheUser) {
                 tempBar = playerHPBar;
-                //tempV = enemyPokeAndHP;
+                tempV = playerPokeAndHP;
             }
             adjustHPBars(tempBar, moveTarget, tempV); //adjust the hp bars
 
-            resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, roundedDownDamage); //stat changes, status changes, other
+            resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, actualDamage); //stat changes, status changes, other
         }
     }
 
@@ -660,9 +661,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     damage *= 0.5;
                 break;
         }
-        //add in other effects later //TODO
+        //add in other effects later, such as abilities //TODO
         return damage;
-    } //abilities //TODO
+    }
 
     /**
      * Adjusts the HP bar and the HP text box of the injured Pokémon. This can be used whenever any HP change
@@ -690,12 +691,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
             hpText.setText(String.format("%s%s%%", commonHpPrefix, roundedHPPercent)); //set the text to the percentage
         }
         else {
-            hpText.setText(String.format("%s0%%", commonHpPrefix)); //Deal with fainting once it is at zero //TODO
+            hpText.setText(String.format("%s0%%", commonHpPrefix)); //Deal with fainting once it is at most zero //TODO
         }
     }
 
     private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget) {
-        //actually do this //TODO
+        //Actually handle these moves //TODO
     }
 
     /**
@@ -709,7 +710,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param weather The current weather.
      * @return True if this move will be taking a charging turn, false otherwise.
      */
-    private boolean takesTwoTurns(AttackingMove move, Pokemon moveUser, int weather) { //make sure this works //TODO
+    private boolean takesTwoTurns(AttackingMove move, Pokemon moveUser, int weather) {
         int ttCode = move.getTwoTurnCode();
         if(ttCode == 2 && (weather == 2 || weather == 6))
             return false; //check this //TODO
@@ -745,7 +746,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param moveUser The user of the move.
      * @return The rounded down value of the new BP (by truncating it back to int).
      */
-    private int calculateBP(AttackingMove move, Pokemon moveUser, Pokemon moveTarget) { //add BP codes later //TODO
+    private int calculateBP(AttackingMove move, Pokemon moveUser, Pokemon moveTarget) {
         if(move.hasBPCode(1))
             return move.getBP() * moveUser.getInitStats()[0] / moveUser.getMaxHP(); //eruption/water spout
         if(move.hasBPCode(2) && moveTarget.getInvulnCode() == 6)
@@ -774,7 +775,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             if (isCrit && moveTarget.getStatStages()[1] <= 0)
                 damage *= moveTarget.getInitStats()[1]; //choose greater attack on crit (between 0 and -something)
             else
-                damage *= moveTarget.getInitStats()[1] * NORMAL_STAT_STAGES[moveTarget.getStatStages()[1]]; // check this later//TODO
+                damage *= moveTarget.getInitStats()[1] * NORMAL_STAT_STAGES[moveTarget.getStatStages()[1]]; // check this later //TODO
             if (isCrit && moveTarget.getStatStages()[2] >= 0)
                 damage /= moveTarget.getInitStats()[2];
             else              //choose lower defense on crit (between 0 and +something)
@@ -1054,8 +1055,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param moveDamage The damage inflicted by the move, which is relevant at this stage for HP-draining and recoil-inducing moves.
      */
     private void resolveAdditionalEffects(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, int moveDamage) {
-        int randomNum = rand.nextInt(100);
-        if((randomNum + 1) <= move.getAddEffectChance()) {
+        int randomNum = rand.nextInt(100) + 1;
+        if(randomNum <= move.getAddEffectChance()) {
             changeStats(move, moveUser, moveTarget, isPlayerTheUser, moveDamage);
             changeNonVolStatus(move, moveUser, moveTarget, isPlayerTheUser);
             changeVolStatus(move, moveUser, moveTarget, isPlayerTheUser);
@@ -1126,21 +1127,26 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
-     * Resolves a stat change (except for HP). It changes the status texts on the screen, and it also catches stat changes
-     * beyond +/- 6.
+     * Resolves a stat change (except for HP). It changes the status texts on the screen,
+     * and it also catches stat changes beyond +/- 6.
      * @param statIndex The index of the stat to be changed.
      * @param numStages The number of stages to increase or decrease the stat.
      * @param statChanger The Pokémon whose stats are to be increased.
      * @param isPlayerChangingStats True if the statChanger is the player's Pokémon, false otherwise.
      */
     private void resolveStatChange(int statIndex, int numStages, Pokemon statChanger, boolean isPlayerChangingStats) {
-        statChanger.getStatStages()[statIndex] += numStages; //change the stat stage
-        if(statChanger.getStatStages()[statIndex] > 12)
-            statChanger.getStatStages()[statIndex] = 12;
-        else if(statChanger.getStatStages()[statIndex] < 0)  //catch out of bounds
-            statChanger.getStatStages()[statIndex] = 0;
-        String statName = "";
-        double modifier = 0;
+        if(statChanger.getInitStats()[0] == 0) {
+            return; // Skip the stat change if the Pokemon has fainted
+        }
+        statChanger.getStatStages()[statIndex] += numStages; // Change the stat stage
+        if(statChanger.getStatStages()[statIndex] > 12) {
+            statChanger.getStatStages()[statIndex] = 12; // Catch out of bounds above +6
+        }
+        else if(statChanger.getStatStages()[statIndex] < 0)   {
+            statChanger.getStatStages()[statIndex] = 0; // Catch out of bounds below -6
+        }
+        String statName;
+        double modifier;
         int currStage = statChanger.getStatStages()[statIndex];
         switch(statIndex) {
             case 1:
@@ -1149,7 +1155,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 break;
             case 2:
                 statName = "Def.";
-                modifier = NORMAL_STAT_STAGES[currStage]; //pick the correct stat and modifier
+                modifier = NORMAL_STAT_STAGES[currStage]; // Pick the correct stat and modifier
                 break;
             case 3:
                 statName = "Sp. Att.";
@@ -1171,6 +1177,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 statName = "Evas.";
                 modifier = ACCURACY_STAT_STAGES[currStage];
                 break;
+            default:
+                throw new IllegalArgumentException(statIndex + " is not a possible index in this scenario!");
         }
         changeStatsText(statName, modifier, isPlayerChangingStats);
     }
@@ -1202,7 +1210,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     break; //add everything but the "_x1.55"
                 }
                 else
-                    result.append(csc.charAt(i)); //check over this later //TODO
+                    result.append(csc.charAt(i));
             }
             Log.d("AddPersonActivity", result + " Line 919");
             result.append(statModifier);
@@ -1233,8 +1241,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void changeNonVolStatus(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
         String moveStatus = move.getNonVolChanges();
-        if(moveStatus == null)  {
-            return; //skip this if it causes no non-volatile changes
+        if(moveStatus == null || moveTarget.getInitStats()[0] == 0)  {
+            return; //skip this if it causes no non-volatile changes or if the target has fainted
         }
         String moveUserAbility = moveUser.getAbility();
         boolean nonVolCheck = move.avoidsNonVolStatus(moveStatus, moveUser.getNonVolStatus(), moveUser.getType(), moveUserAbility, moveUserAbility);
@@ -1259,8 +1267,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void changeVolStatus(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
         String moveStatus = move.getVolChanges();
-        if(moveStatus == null)  {
-            return; //skip this if it causes no volatile changes
+        if(moveStatus == null  || moveTarget.getInitStats()[0] == 0)  {
+            return; //skip this if it causes no volatile changes or if the target has fainted
         }
         String moveType = move.getType();
         String userStatus = moveUser.getVolStatus();

@@ -434,13 +434,15 @@ public class Pokemon implements Parcelable {
     }
 
     /**
-     * Sets the stat at index to value. This changes that stat.
+     * Sets the stat at index to value, which changes one specific stat value.
+     * This is the preferred external API to change a Pokemon's stats since these stats
+     * typically only change individually (or at most in small groups) during actual battles.
      * @param value The new value of the stat.
      * @param index The index of the stat.
      */
-    public void setStats(int value, int index) {
+    public void setStat(int value, int index) {
         initStats[index] = value;
-    } //more detail later //TODO
+    }
 
     /**
      * Copies the stats from the provided array to this Pokémon's stats array, which is used mainly
