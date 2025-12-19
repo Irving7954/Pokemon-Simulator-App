@@ -70,10 +70,10 @@ public abstract class Trainer {
     }
 
     /**
-     * Used for debugging purposes. May be eliminated later.
+     * Used for debugging purposes.
      * @return A String representation of this object.
      */
-    @Override //TODO
+    @Override
     @NonNull
     public String toString() {
         StringBuilder s = new StringBuilder(name + " ");

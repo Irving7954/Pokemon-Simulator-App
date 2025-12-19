@@ -166,7 +166,7 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move deals damage and will lower the user's Attack and Defense" +
+                setAdditionalEffects("This physical move deals damage and will lower the user's Attack and Defense " +
                                      "by one stage after the move is used.");
                 setStatChanges(new Integer[] {0, -1, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);

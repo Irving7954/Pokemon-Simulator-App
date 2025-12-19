@@ -289,7 +289,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                     }
                     break;
                 default:
-                    throw new IllegalArgumentException(pokemonName + " cannot possibly be used currently at this point in the simulator!");
+                    throw new IllegalArgumentException(pokemonName + " cannot possibly be used currently on this screen in the simulator!");
             }
         });
         return myView;
@@ -371,7 +371,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                         formatting[1] + "Flying, Grass, and Bug" + formatting[2] +
                         "Water/Ground" + formatting[3] + "Grass" + formatting[4] +
                         "Steel, Electric, Fire, Poison, and Rock" + formatting[5];
-            //more cases later, using the same format //TODO
+            // Add more cases later, using the same format //TODO
             default:
                 return "";
         }

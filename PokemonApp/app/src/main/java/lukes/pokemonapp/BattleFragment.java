@@ -154,7 +154,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            Pokemon poke = bundle.getParcelable("key", Pokemon.class); // TODO - Actually use the full pokemon later
+            Pokemon poke = bundle.getParcelable("key", Pokemon.class); // Actually use the full pokemon later //TODO
             firstPokeName = poke.getName();
         }
 
@@ -166,7 +166,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         // Advance to the next action, such as another move or end-of-turn effects).
         Button nextButton = myView.findViewById(R.id.nextButton);
 
-        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); //TODO - add later
+        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); //add later //TODO
 
         //creates the name box
         final EditText et = new EditText(getContext());
@@ -182,29 +182,49 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 playerName = myView.findViewById(R.id.playerName);
                 playerName.setText(playerNameText);
                 player = new Player(playerNameText);
-                //determines which team based on the first Pokémon
-                switch(firstPokeName) {
+                player.addPokemon(firstPokeName);
+                switch(firstPokeName) { // Determines the rest of the team based on the first Pokemon
                     case "Bulbasaur":
-                        player.addPokemon("Bulbasaur");
                         player.addPokemon("Charmander");
                         player.addPokemon("Squirtle");
-                        // Add more pokemon later //TODO
+                        break;
+                    case "Charmander":
+                        player.addPokemon("Bulbasaur");
+                        player.addPokemon("Squirtle");
+                        break;
+                    case "Squirtle":
+                        player.addPokemon("Bulbasaur");
+                        player.addPokemon("Charmander");
                         break;
                     case "Chikorita":
-                        player.addPokemon("Chikorita");
                         player.addPokemon("Cyndaquil");
                         player.addPokemon("Totodile");
-                        // Add more pokemon later //TODO
+                        break;
+                    case "Cyndaquil":
+                        player.addPokemon("Chikorita");
+                        player.addPokemon("Totodile");
+                        break;
+                    case "Totodile":
+                        player.addPokemon("Chikorita");
+                        player.addPokemon("Cyndaquil");
                         break;
                     case "Treecko":
-                        player.addPokemon("Treecko");
                         player.addPokemon("Torchic");
                         player.addPokemon("Mudkip");
-                        // Add more pokemon later //TODO
+                        break;
+                    case "Torchic":
+                        player.addPokemon("Treecko");
+                        player.addPokemon("Totodile");
+                        break;
+                    case "Mudkip":
+                        player.addPokemon("Treecko");
+                        player.addPokemon("Torchic");
                         break;
                     default:
                         throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
+                    // Add more pokemon later //TODO
                 }
+
                 leadPlayerPoke = player.getTeam().get(0);
                 //initializes text boxes
                 playerPokeAndHP = myView.findViewById(R.id.playerPokeAndHP);
@@ -391,37 +411,61 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * A helper method used to reduce repetitive code in resolving speed tiers. This simply compares speeds
-     * and resolves moves in that order, barring additional effects like priority.
+     * And resolves moves in that order, barring additional effects like priority. It also considers if
+     * The Pokemon have fainted before or during the turn during move resolution.
      * @param moveIndex The index of the chosen move.
      */
     private void resolveSpeedTiers(int moveIndex) {
-        //resolve priority later //TODO
         int playerSpeed = (int) (leadPlayerPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadPlayerPoke.getStatStages()[5]]);
         int enemySpeed = (int) (leadEnemyPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadEnemyPoke.getStatStages()[5]]);
         if(playerSpeed > enemySpeed) {
-            resolveMoveType(moveIndex); //player
-            resolveAIMove(); //enemy
-            didPlayerMoveFirst = true;
+            movePlayerFirst(moveIndex);
         }
         else if(playerSpeed < enemySpeed) {
-            resolveAIMove(); //enemy
-            resolveMoveType(moveIndex); //player
-            didPlayerMoveFirst = false;
+            moveEnemyFirst(moveIndex);
         }
         else { //speed tie
             int randomNum = rand.nextInt(2); // This will properly give a fifty 50% chance of 0 and 1
             if (randomNum == 0) {
-                resolveMoveType(moveIndex); //player
-                resolveAIMove(); //enemy
-                didPlayerMoveFirst = true;
-            } else {
-                resolveAIMove(); //enemy
-                resolveMoveType(moveIndex); //player
-                didPlayerMoveFirst = false;
+                movePlayerFirst(moveIndex);
+            }
+            else {
+                moveEnemyFirst(moveIndex);
             }
         }
-        //resolve end turn effects //TODO
-    } //resolve priority //TODO
+    } // Resolve priority and end-of-turn effects //TODO
+
+    /**
+     * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
+     * With proper move resolution order. Most notably, this method is one of the main places that considers if
+     * The Pokemon have fainted before or during the turn during move resolution.
+     * @param moveIndex The index of the chosen move.
+     */
+    private void movePlayerFirst(int moveIndex) {
+        if(leadPlayerPoke.getInitStats()[0] > 0) {
+            resolveMoveType(moveIndex);  // Player
+            didPlayerMoveFirst = true;
+        }
+        if(leadEnemyPoke.getInitStats()[0] > 0) {
+            resolveAIMove(); // Enemy
+        }
+    }
+
+    /**
+     * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
+     * With proper move resolution order. Most notably, this method is one of the main places that considers if
+     * The Pokemon have fainted before or during the turn during move resolution.
+     * @param moveIndex The index of the chosen move.
+     */
+    private void moveEnemyFirst(int moveIndex) {
+        if(leadEnemyPoke.getInitStats()[0] > 0) {
+            resolveAIMove(); // Enemy
+            didPlayerMoveFirst = false;
+        }
+        if(leadPlayerPoke.getInitStats()[0] > 0) {
+            resolveMoveType(moveIndex);  // Player
+        }
+    }
 
     /**
      * A helper method that checks if the chosen move is valid and passes it off to the appropriate resolveMove
@@ -491,7 +535,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
             for(int i = 0; i < numAdded; i++)
                 if (checkTypeMatchups(leadPlayerPoke.getType(), firstMoveChoices.get(i).getType(), 1, leadEnemyPoke) >= 1.5) {
                     secondMoveChoices.add(numAdded2++, firstMoveChoices.get(i));
-                    numAdded2++;
                 }
 
             if(numAdded2 == 0)
@@ -750,7 +793,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         if(move.hasBPCode(1))
             return move.getBP() * moveUser.getInitStats()[0] / moveUser.getMaxHP(); //eruption/water spout
         if(move.hasBPCode(2) && moveTarget.getInvulnCode() == 6)
-            return move.getBP() *2 ; //earthquake with dig
+            return move.getBP() * 2 ; //earthquake with dig
         if(move.hasBPCode(3) && !didPlayerMoveFirst)
             return move.getBP() * 2; //payback
         if(move.hasBPCode(4) && (weather != 2 && weather != 0 && weather != 6 && weather != 7))
@@ -1229,7 +1272,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 tempV.setText(result);
             }
         }
-    } //look over this more //TODO
+    } // Review this later when I have time //TODO
 
     /**
      * Changes the non-volatile status of the Pokémon done by the move, if necessary and applicable. It uses other methods
