@@ -86,7 +86,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * The HP bar for each of the current Pokémon. This displays a green bar until 50% HP,
      * a yellow bar until 25% HP, and a red bar until 0% HP. At 0%, fainting should occur.
      */
-    private ProgressBar playerHPBar, enemyHPBar; //fix fainting //TODO
+    private ProgressBar playerHPBar, enemyHPBar;
 
     /**
      * The actual current Pokémon for each of the players. This Pokémon's HP is the one that will
@@ -98,12 +98,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * A Random object used for determining damage rolls, accuracy/evasion, and other additional effects.
      */
     private Random rand;
-
-    /**
-     * A boolean that specified if the player moved first This usually depends on speed except for priority,
-     * and it mainly matters for moves like Payback.
-     */
-    private boolean didPlayerMoveFirst; //is this necessary? //TODO
 
     /**
      * The two-turn code of the current used move. This only matters if a two-turn move was used.
@@ -166,7 +160,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         // Advance to the next action, such as another move or end-of-turn effects).
         Button nextButton = myView.findViewById(R.id.nextButton);
 
-        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); //add later //TODO
+        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); // Use this later //TODO
 
         //creates the name box
         final EditText et = new EditText(getContext());
@@ -177,172 +171,180 @@ public class BattleFragment extends Fragment { //Fragment code 3
         adb.setTitle("Name?");
         adb.setMessage("Enter your name here: ");
         adb.setPositiveButton("Ok", (dialog, id) -> {
-                //initializations for the player
-                playerNameText = et.getText().toString();
-                playerName = myView.findViewById(R.id.playerName);
-                playerName.setText(playerNameText);
-                player = new Player(playerNameText);
-                player.addPokemon(firstPokeName);
-                switch(firstPokeName) { // Determines the rest of the team based on the first Pokemon
-                    case "Bulbasaur":
-                        player.addPokemon("Charmander");
-                        player.addPokemon("Squirtle");
+            //initializations for the player
+            playerNameText = et.getText().toString();
+            playerName = myView.findViewById(R.id.playerName);
+            playerName.setText(playerNameText);
+            player = new Player(playerNameText);
+            player.addPokemon(firstPokeName);
+            switch(firstPokeName) { // Determines the rest of the team based on the first Pokemon
+                case "Bulbasaur":
+                    player.addPokemon("Charmander");
+                    player.addPokemon("Squirtle");
+                    break;
+                case "Charmander":
+                    player.addPokemon("Bulbasaur");
+                    player.addPokemon("Squirtle");
+                    break;
+                case "Squirtle":
+                    player.addPokemon("Bulbasaur");
+                    player.addPokemon("Charmander");
+                    break;
+                case "Chikorita":
+                    player.addPokemon("Cyndaquil");
+                    player.addPokemon("Totodile");
+                    break;
+                case "Cyndaquil":
+                    player.addPokemon("Chikorita");
+                    player.addPokemon("Totodile");
+                    break;
+                case "Totodile":
+                    player.addPokemon("Chikorita");
+                    player.addPokemon("Cyndaquil");
+                    break;
+                case "Treecko":
+                    player.addPokemon("Torchic");
+                    player.addPokemon("Mudkip");
+                    break;
+                case "Torchic":
+                    player.addPokemon("Treecko");
+                    player.addPokemon("Totodile");
+                    break;
+                case "Mudkip":
+                    player.addPokemon("Treecko");
+                    player.addPokemon("Torchic");
+                    break;
+                default:
+                    throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
+            }
+
+            leadPlayerPoke = player.getTeam().get(0);
+            //initializes text boxes
+            playerPokeAndHP = myView.findViewById(R.id.playerPokeAndHP);
+            playerPokeAndHP.setText(String.format("%s HP: 100%%", leadPlayerPoke.getName()));
+            playerConditions = myView.findViewById(R.id.playerConditions);
+            playerConditions.setText("");
+
+            Log.d("AddPersonActivity", player.toString());
+            moveButtons = new ArrayList<>();
+
+            ArrayList<Move> playerMoves = leadPlayerPoke.getMoves();
+            for (int i = 0; i < playerMoves.size(); i++) {
+               //initialize buttons to R.id.move# and set their text to the leadPoke's moves
+               switch (i) {
+                   case 0:
+                       moveButtons.add(myView.findViewById(R.id.move1));
+                       break;
+                   case 1:
+                        moveButtons.add(myView.findViewById(R.id.move2));
                         break;
-                    case "Charmander":
-                        player.addPokemon("Bulbasaur");
-                        player.addPokemon("Squirtle");
+                   case 2:
+                       moveButtons.add(myView.findViewById(R.id.move3));
+                       break;
+                   case 3:
+                       moveButtons.add(myView.findViewById(R.id.move4));
+                       break;
+                   default:
+                       throw new IllegalArgumentException(i + " is not a possible argument here!");
+               }
+               moveButtons.get(i).setText(playerMoves.get(i).toString());
+            }
+
+            playerImages = new ArrayList<>();
+            for (int i = 0; i < player.getTeam().size(); i++) {
+                //initialize images to R.id.image# and set their text to the leadPoke's moves
+                switch (i) {
+                    case 0:
+                        playerImages.add(myView.findViewById(R.id.playerPoke1));
                         break;
-                    case "Squirtle":
-                        player.addPokemon("Bulbasaur");
-                        player.addPokemon("Charmander");
+                    case 1:
+                        playerImages.add(myView.findViewById(R.id.playerPoke2));
                         break;
-                    case "Chikorita":
-                        player.addPokemon("Cyndaquil");
-                        player.addPokemon("Totodile");
+                    case 2:
+                        playerImages.add(myView.findViewById(R.id.playerPoke3));
                         break;
-                    case "Cyndaquil":
-                        player.addPokemon("Chikorita");
-                        player.addPokemon("Totodile");
+                    case 3:
+                        playerImages.add(myView.findViewById(R.id.playerPoke4));
                         break;
-                    case "Totodile":
-                        player.addPokemon("Chikorita");
-                        player.addPokemon("Cyndaquil");
+                    case 4:
+                        playerImages.add(myView.findViewById(R.id.playerPoke5));
                         break;
-                    case "Treecko":
-                        player.addPokemon("Torchic");
-                        player.addPokemon("Mudkip");
-                        break;
-                    case "Torchic":
-                        player.addPokemon("Treecko");
-                        player.addPokemon("Totodile");
-                        break;
-                    case "Mudkip":
-                        player.addPokemon("Treecko");
-                        player.addPokemon("Torchic");
+                    case 5:
+                        playerImages.add(myView.findViewById(R.id.playerPoke6));
                         break;
                     default:
-                        throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
-                    // Add more pokemon later //TODO
+                        throw new IllegalArgumentException(i + " is not a possible argument here!");
                 }
+            }
+            setImages(playerImages, player.getTeam());
 
-                leadPlayerPoke = player.getTeam().get(0);
-                //initializes text boxes
-                playerPokeAndHP = myView.findViewById(R.id.playerPokeAndHP);
-                playerPokeAndHP.setText(String.format("%s HP: 100%%", leadPlayerPoke.getName()));
-                playerConditions = myView.findViewById(R.id.playerConditions);
-                playerConditions.setText("");
+            playerPoke = myView.findViewById(R.id.currentPlayerPoke);
+            setImage(playerPoke, leadPlayerPoke);
+            //initializes the progress bars
+            playerHPBar = myView.findViewById(R.id.playerHPBar);
+            adjustHPBars(playerHPBar, leadPlayerPoke, playerPokeAndHP);
 
-                Log.d("AddPersonActivity", player.toString());
-                moveButtons = new ArrayList<>();
+            //initializations for the enemy trainer
+            enemy = new EnemyTrainer("Angel");
+            enemy.addPokemon("Voltorb");
+            enemy.addPokemon("Wooper");
+            enemy.addPokemon("Snubbull");
+            // Add more enemy pokemon later //TODO
 
-                ArrayList<Move> playerMoves = leadPlayerPoke.getMoves();
-                for (int i = 0; i < playerMoves.size(); i++) {
-                    //initialize buttons to R.id.move# and set their text to the leadPoke's moves
-                    switch (i) {
-                        case 0:
-                            moveButtons.add(myView.findViewById(R.id.move1));
-                            break;
-                        case 1:
-                            moveButtons.add(myView.findViewById(R.id.move2));
-                            break;
-                        case 2:
-                            moveButtons.add(myView.findViewById(R.id.move3));
-                            break;
-                        case 3:
-                            moveButtons.add(myView.findViewById(R.id.move4));
-                            break;
-                    }
-                    moveButtons.get(i).setText(playerMoves.get(i).toString());
+            leadEnemyPoke = enemy.getTeam().get(0);
+            //initializes text boxes
+            enemyName = myView.findViewById(R.id.enemyName);
+            enemyName.setText(enemy.getName());
+
+            enemyPokeAndHP = myView.findViewById(R.id.enemyPokeAndHP);
+            enemyPokeAndHP.setText(String.format("%s HP: 100%%", leadEnemyPoke.getName()));
+            enemyConditions = myView.findViewById(R.id.enemyConditions);
+            enemyConditions.setText("");
+
+            enemyImages = new ArrayList<>();
+            for (int i = 0; i < enemy.getTeam().size(); i++) {
+                //initialize images to R.id.image# and set their text to the leadPoke's moves
+                switch (i) {
+                    case 0:
+                        enemyImages.add(myView.findViewById(R.id.enemyPoke1));
+                        break;
+                    case 1:
+                        enemyImages.add(myView.findViewById(R.id.enemyPoke2));
+                        break;
+                    case 2:
+                        enemyImages.add(myView.findViewById(R.id.enemyPoke3));
+                        break;
+                    case 3:
+                        enemyImages.add(myView.findViewById(R.id.enemyPoke4));
+                        break;
+                    case 4:
+                        enemyImages.add(myView.findViewById(R.id.enemyPoke5));
+                        break;
+                    case 5:
+                        enemyImages.add(myView.findViewById(R.id.enemyPoke6));
+                        break;
+                    default:
+                        throw new IllegalArgumentException(i + " is not a possible argument here!");
                 }
+            }
+            setImages(enemyImages, enemy.getTeam());
 
-                playerImages = new ArrayList<>();
-                for (int i = 0; i < player.getTeam().size(); i++) {
-                    //initialize images to R.id.image# and set their text to the leadPoke's moves
-                    switch (i) {
-                        case 0:
-                            playerImages.add(myView.findViewById(R.id.playerPoke1));
-                            break;
-                        case 1:
-                            playerImages.add(myView.findViewById(R.id.playerPoke2));
-                            break;
-                        case 2:
-                            playerImages.add(myView.findViewById(R.id.playerPoke3));
-                            break;
-                        case 3:
-                            playerImages.add(myView.findViewById(R.id.playerPoke4));
-                            break;
-                        case 4:
-                            playerImages.add(myView.findViewById(R.id.playerPoke5));
-                            break;
-                        case 5:
-                            playerImages.add(myView.findViewById(R.id.playerPoke6));
-                            break;
-                    }
-                }
-                setImages(playerImages, player.getTeam());
+            enemyPoke = myView.findViewById(R.id.currentEnemyPoke);
+            setImage(enemyPoke, leadEnemyPoke);
+            //initializes HP bars
+            enemyHPBar = myView.findViewById(R.id.enemyHPBar);
+            adjustHPBars(enemyHPBar, leadEnemyPoke, enemyPokeAndHP);
 
-                playerPoke = myView.findViewById(R.id.currentPlayerPoke);
-                setImage(playerPoke, leadPlayerPoke);
-                //initializes the progress bars
-                playerHPBar = myView.findViewById(R.id.playerHPBar);
-                adjustHPBars(playerHPBar, leadPlayerPoke, playerPokeAndHP);
+            commentaryBox = myView.findViewById(R.id.commentaryBox);
+            commentary = "";
 
-                //initializations for the enemy trainer
-                enemy = new EnemyTrainer("Angel");
-                enemy.addPokemon("Voltorb");
-                enemy.addPokemon("Wooper");
-                enemy.addPokemon("Snubbull");
-                // Add more pokemon later //TODO
-
-                leadEnemyPoke = enemy.getTeam().get(0);
-                //initializes text boxes
-                enemyName = myView.findViewById(R.id.enemyName);
-                enemyName.setText(enemy.getName());
-
-                enemyPokeAndHP = myView.findViewById(R.id.enemyPokeAndHP);
-                enemyPokeAndHP.setText(String.format("%s HP: 100%%", leadEnemyPoke.getName()));
-                enemyConditions = myView.findViewById(R.id.enemyConditions);
-                enemyConditions.setText("");
-
-                enemyImages = new ArrayList<>();
-                for (int i = 0; i < enemy.getTeam().size(); i++) {
-                    //initialize images to R.id.image# and set their text to the leadPoke's moves
-                    switch (i) {
-                        case 0:
-                            enemyImages.add(myView.findViewById(R.id.enemyPoke1));
-                            break;
-                        case 1:
-                            enemyImages.add(myView.findViewById(R.id.enemyPoke2));
-                            break;
-                        case 2:
-                            enemyImages.add(myView.findViewById(R.id.enemyPoke3));
-                            break;
-                        case 3:
-                            enemyImages.add(myView.findViewById(R.id.enemyPoke4));
-                            break;
-                        case 4:
-                            enemyImages.add(myView.findViewById(R.id.enemyPoke5));
-                            break;
-                        case 5:
-                            enemyImages.add(myView.findViewById(R.id.enemyPoke6));
-                            break;
-                    }
-                }
-                setImages(enemyImages, enemy.getTeam());
-
-                enemyPoke = myView.findViewById(R.id.currentEnemyPoke);
-                setImage(enemyPoke, leadEnemyPoke);
-                //initializes HP bars
-                enemyHPBar = myView.findViewById(R.id.enemyHPBar);
-                adjustHPBars(enemyHPBar, leadEnemyPoke, enemyPokeAndHP);
-
-                moveButtons.get(0).setOnClickListener((v) -> resolveSpeedTiers(0));
-                if(moveButtons.size() > 1)
-                    moveButtons.get(1).setOnClickListener((v) -> resolveSpeedTiers(1));
-                if(moveButtons.size() > 2)
-                    moveButtons.get(2).setOnClickListener((v) -> resolveSpeedTiers(2));
-                if(moveButtons.size() > 3)
-                    moveButtons.get(3).setOnClickListener((v) -> resolveSpeedTiers(3));
+            moveButtons.get(0).setOnClickListener((v) -> resolveSpeedTiers(0));
+            if(moveButtons.size() > 1)
+                moveButtons.get(1).setOnClickListener((v) -> resolveSpeedTiers(1));
+            if(moveButtons.size() > 2)
+                moveButtons.get(2).setOnClickListener((v) -> resolveSpeedTiers(2));
+            if(moveButtons.size() > 3)
+                moveButtons.get(3).setOnClickListener((v) -> resolveSpeedTiers(3));
         });
         adb.show();
         return myView;
@@ -443,11 +445,10 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void movePlayerFirst(int moveIndex) {
         if(leadPlayerPoke.getInitStats()[0] > 0) {
-            resolveMoveType(moveIndex);  // Player
-            didPlayerMoveFirst = true;
+            resolveMoveType(moveIndex, true);  // Player
         }
         if(leadEnemyPoke.getInitStats()[0] > 0) {
-            resolveAIMove(); // Enemy
+            resolveAIMove(true); // Enemy
         }
     }
 
@@ -459,11 +460,10 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void moveEnemyFirst(int moveIndex) {
         if(leadEnemyPoke.getInitStats()[0] > 0) {
-            resolveAIMove(); // Enemy
-            didPlayerMoveFirst = false;
+            resolveAIMove(false); // Enemy
         }
         if(leadPlayerPoke.getInitStats()[0] > 0) {
-            resolveMoveType(moveIndex);  // Player
+            resolveMoveType(moveIndex, false);  // Player
         }
     }
 
@@ -471,18 +471,20 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * A helper method that checks if the chosen move is valid and passes it off to the appropriate resolveMove
      * method based whether or not it is an AttackingMove.
      * @param index The index of the chosen move.
+     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
+     *                           which is important for calculating BP and certain effects in some cases.
      */
-    private void resolveMoveType(int index) {
+    private void resolveMoveType(int index, boolean didPlayerMoveFirst) {
         Move genericMove = leadPlayerPoke.getMoves().get(index);
         if(genericMove == null || genericMove.getName() == null)
             throw new IllegalStateException("The move at index " + index + " is not valid!");
         if (!genericMove.isAttackingMove()) {
             StatusMove move = (StatusMove) genericMove;
-            resolveMove(move, leadPlayerPoke, leadEnemyPoke);
+            resolveMove(move, leadPlayerPoke, leadEnemyPoke, didPlayerMoveFirst);
         }
         else {
             AttackingMove move = (AttackingMove) genericMove;
-            resolveMove(move, leadPlayerPoke, leadEnemyPoke, true);
+            resolveMove(move, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
         }
     }
 
@@ -490,8 +492,10 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * This method determines the AI's move selection based on the opponent. Essentially, it picks the neutral
      * damage or better moves, and it picks the highest BP and effectiveness out of those. If there are no neutral or better moves,
      * it picks the best useful status move. If there is no good status move and no neutral move, the Pokémon switches out.
+     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
+     *                           which is important for calculating BP and certain effects in some cases.
      */
-    private void resolveAIMove() { // implement status moves //TODO
+    private void resolveAIMove(boolean didPlayerMoveFirst) { // implement status moves //TODO
         ArrayList<Move> moves = leadEnemyPoke.getMoves(), firstMoveChoices = new ArrayList<>();
         int numAdded = 0;
         for (Move m : moves)  //check for neutral/super-effective hits
@@ -517,18 +521,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     //switch out //TODO
                 }
                 else if (numAdded == 1)
-                    resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false);
+                    resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
                 else
-                    compareBP(firstMoveChoices);
+                    compareBP(firstMoveChoices, didPlayerMoveFirst);
             }
             else if(numAdded == 1)
-                resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false);
+                resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
             else {
                 //decide based on status move //TODO
             }
         }
         else if(numAdded == 1)
-            resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false);
+            resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
         else { //more than one stab and/or neutral/super-effective hits
             ArrayList<Move> secondMoveChoices = new ArrayList<>();
             int numAdded2 = 0;
@@ -538,11 +542,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 }
 
             if(numAdded2 == 0)
-                compareBP(firstMoveChoices);
+                compareBP(firstMoveChoices, didPlayerMoveFirst);
             else if(numAdded2 == 1)
-                resolveMove((AttackingMove) secondMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false);
+                resolveMove((AttackingMove) secondMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
             else
-                compareBP(secondMoveChoices);
+                compareBP(secondMoveChoices, didPlayerMoveFirst);
         }
     }
 
@@ -550,33 +554,36 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * Selects the highest BP move among the AI's choices in the provided array. If there are multiple choices,
      * it picks randomly between them.
      * @param moveChoices The array of possible moves for the AI.
+     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
+     *                           which is important for calculating BP and certain effects in some cases.
      */
-    private void compareBP(ArrayList<Move> moveChoices) {
+    private void compareBP(ArrayList<Move> moveChoices, boolean didPlayerMoveFirst) {
         Move[] equalBPMoves = new Move[4];
         int numAdded = 0; //this is the effective length of the array
         AttackingMove maxMove = (AttackingMove) moveChoices.get(0);
         equalBPMoves[numAdded++] = maxMove;
         double maxBPModifier = checkTypeMatchups(leadPlayerPoke.getType(), maxMove.getType(), 1, leadEnemyPoke);
-        int maxBP = (int) (calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke) * maxBPModifier);
+        int maxBP = (int) (calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * maxBPModifier);
 
         for(int i = 1; i < moveChoices.size(); i++) { //compare each move
             AttackingMove move = (AttackingMove) moveChoices.get(i);
             double modifier = checkTypeMatchups(leadPlayerPoke.getType(), move.getType(), 1, leadEnemyPoke);
-            int newBP = (int) (calculateBP(move, leadEnemyPoke, leadPlayerPoke) * modifier);
+            int newBP = (int) (calculateBP(move, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * modifier);
             if(newBP > maxBP) {
                 maxBP = newBP; //reset the maxBP and the array of equal BPs
                 equalBPMoves = new Move[4];
                 numAdded = 0;
                 equalBPMoves[numAdded++] = move;
             }
-            else if((calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke) * maxBPModifier) == (calculateBP(move, leadEnemyPoke, leadPlayerPoke) * modifier))
+            else if((calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * maxBPModifier) ==
+                    (calculateBP(move, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * modifier))
                 equalBPMoves[numAdded++] = move; //add the duplicate BP to the array
         }
         if(numAdded == 1)
-            resolveMove(maxMove, leadEnemyPoke, leadPlayerPoke, false);
+            resolveMove(maxMove, leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
         else {
             int randomNum = rand.nextInt(numAdded); //choose randomly from the equal BP moves
-            resolveMove((AttackingMove) equalBPMoves[randomNum], leadEnemyPoke, leadPlayerPoke, false);
+            resolveMove((AttackingMove) equalBPMoves[randomNum], leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
         }
     }
 
@@ -589,16 +596,24 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
      * @param isPlayerTheUser Determines whether or not the moveUser is on the player's team.
+     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
+                                 which is important for calculating BP and certain effects in some cases.
      */
-    private void resolveMove(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
+    private void resolveMove(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, boolean didPlayerMoveFirst) {
         int acc = rand.nextInt(100);
         switch(weather) { //finish this section later //TODO
             case 1: case 5:
-                if(move.getName().equals("Thunder") || move.getName().equals("Hurricane"))
-                    acc = -1; break;
+                if(move.getName().equals("Thunder") || move.getName().equals("Hurricane")) {
+                    acc = -1; // Ensure that it hits
+                    break;
+                }
             case 4:
-                if(move.getName().equals("Blizzard"))
-                    acc -= 30; break; //increase accuracy
+                if(move.getName().equals("Blizzard")) {
+                    acc -= 30; // Increase accuracy
+                    break;
+                }
+            default:
+                break;
         }
         if ((acc + 1) <= (move.getAccuracy() * moveUser.getInitStats()[6] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[6]]
                 / moveTarget.getInitStats()[7] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[7]]) && !isInvulnerable(moveTarget, move)) {
@@ -606,7 +621,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             if(takesTwoTurns(move, moveUser, weather)) //check for two-turn Moves
                 return;
             //first part of formula
-            double damage = (2 * moveUser.getLevel() + 10) * calculateBP(move, moveUser, moveTarget) / 250.0;
+            double damage = (2 * moveUser.getLevel() + 10) * calculateBP(move, moveUser, moveTarget, didPlayerMoveFirst) / 250.0;
             Log.d("AddPersonActivity", damage + "");
 
             boolean isCrit = isCriticalHit(move, moveUser, moveTarget);
@@ -631,8 +646,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
             Log.d("AddPersonActivity", damage + "");
 
             int roundedDownDamage = (int) damage; //round down
-            int actualDamage = Math.max(moveTarget.getInitStats()[0] - roundedDownDamage, 0);
-            moveTarget.setStat(actualDamage, 0); //reduce HP
+            int initHP = moveTarget.getInitStats()[0];
+            int actualDamage = Math.min(roundedDownDamage, initHP);
+            moveTarget.setStat(initHP - actualDamage, 0); //Reduce HP
 
             ProgressBar tempBar = enemyHPBar;
             TextView tempV = enemyPokeAndHP; //choose the appropriate hp bar and text box
@@ -738,7 +754,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         }
     }
 
-    private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget) {
+    private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget, boolean didPlayerMoveFirst) {
         //Actually handle these moves //TODO
     }
 
@@ -787,9 +803,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * those are calculated later.
      * @param move The move for which BP is to be calculated.
      * @param moveUser The user of the move.
+     * @param moveTarget The target of the move.
+     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
+     *                           Which is important for calculating BP and certain effects in some cases.
      * @return The rounded down value of the new BP (by truncating it back to int).
      */
-    private int calculateBP(AttackingMove move, Pokemon moveUser, Pokemon moveTarget) {
+    private int calculateBP(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean didPlayerMoveFirst) {
         if(move.hasBPCode(1))
             return move.getBP() * moveUser.getInitStats()[0] / moveUser.getMaxHP(); //eruption/water spout
         if(move.hasBPCode(2) && moveTarget.getInvulnCode() == 6)

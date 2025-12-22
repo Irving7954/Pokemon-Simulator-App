@@ -159,7 +159,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
             5: Low Kick and Grass Knot (BP depends directly on weight)
          */
         return bpCode != 0;
-    } //watch out for changed BP codes //TODO
+    } //watch out for BP codes //TODO
 
     /**
      * *Precondition: bpCode is not zero.

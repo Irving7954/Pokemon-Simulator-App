@@ -125,7 +125,6 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                 break;
             default:
                 throw new IllegalArgumentException(pokemonName + " has not been defined yet!");
-            //more cases will follow in the future //TODO
         }
         //initializes the list array
         String[] listPokeStats = {"TYPE:          " + poke.getType(), "ABILITY:     " + poke.getAbility(),
@@ -178,7 +177,8 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                                 makeBoxWithOk(s + " Ability", "Whenever the user is hit by a Water type move, the " +
                                                               "user heals 25% of its health instead of taking damage.");
                                 break;
-                            //more cases later //TODO
+                            default:
+                                throw new IllegalArgumentException(s + " is not an ability that is currently supported by the simulator!");
                         }
                         break;
                     case 10: case 11: case 12: case 13: //all the move slots act the same
@@ -371,7 +371,6 @@ public class PokemonFragment extends Fragment { //Fragment code 1
                         formatting[1] + "Flying, Grass, and Bug" + formatting[2] +
                         "Water/Ground" + formatting[3] + "Grass" + formatting[4] +
                         "Steel, Electric, Fire, Poison, and Rock" + formatting[5];
-            // Add more cases later, using the same format //TODO
             default:
                 return "";
         }

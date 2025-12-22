@@ -78,11 +78,11 @@ public abstract class Move implements Parcelable {
      */
     private boolean statusesUser;
 
-    //consider adding priority tiers later //TODO
+    // Add priority tiers //TODO
 
-    //add sound-based (breaks through sub) //TODO
+    // Add sound-based moves, which break through substitutes //TODO
 
-    //add multi-target moves //TODO
+    // Add multi-target moves //TODO
 
     /**
      * Presets the move to its effects based on its name.
@@ -382,7 +382,7 @@ public abstract class Move implements Parcelable {
             default:
                 throw new IllegalArgumentException(moveStatus + " is not a valid volatile status at this time!");
         }
-        //Expand on these later and check the details above//TODO
+        // Expand on these later and check the details above //TODO
     }
 
     /**

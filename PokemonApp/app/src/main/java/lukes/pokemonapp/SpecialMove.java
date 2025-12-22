@@ -235,5 +235,5 @@ public class SpecialMove extends AttackingMove {
             default:
                 setName("");
         }
-    } //watch out for BP Codes //TODO
+    }
 }

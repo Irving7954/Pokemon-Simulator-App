@@ -213,7 +213,7 @@ public class PhysicalMove extends AttackingMove {
                 setChangesUserStats(false);
                 setAddEffectChance(20);
                 break;
-            case "Flare Blitz": //deal with recoil (currently has bogus code, at best) //TODO
+            case "Flare Blitz":
                 setType("Fire");
                 setPP(15);
                 setTwoTurnCode(0);
@@ -265,8 +265,8 @@ public class PhysicalMove extends AttackingMove {
                 setAddEffectChance(20);
                 break;
             case "Rock Slide":
-                setType("Rock"); // implement flinching //TODO
-                setPP(10);       // deal with multiple targets much later //TODO
+                setType("Rock"); // Implement flinching and deal with multiple targets //TODO
+                setPP(10);
                 setTwoTurnCode(0);
                 setBP(75);
                 setAccuracy(90);

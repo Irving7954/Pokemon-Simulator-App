@@ -238,7 +238,7 @@ public class StatusMove extends Move {
                            "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(true);
                 break;
-            case "Protect": //implement protection as some sort of status move attribute code //TODO
+            case "Protect": //implement protection as some sort of status move attribute code and handle priority //TODO
                 setType("Normal");
                 setPP(10);
                 setTwoTurnCode(0);
@@ -247,7 +247,6 @@ public class StatusMove extends Move {
                            "that only target the user. This has increased priority (+4) and has a large failure chance " +
                            "after the initial usage when used consecutively with itself or other protection moves.");
                 setChangesUserStats(true);
-                // implement priority for all moves //TODO
                 break;
             case "Rain Dance":
                 setType("Water"); // Implement weather as some sort of status move/ability attribute code //TODO
@@ -260,7 +259,7 @@ public class StatusMove extends Move {
             default:
                 setName("");
         }
-    } //add more moves once the game works //TODO
+    }
 
     /**
      * Returns this move's effects.

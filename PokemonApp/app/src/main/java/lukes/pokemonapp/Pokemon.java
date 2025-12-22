@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 @SuppressWarnings("unused")
 public class Pokemon implements Parcelable {
     //add gender later //TODO
-    //add accuracy/evasion eventually //TODO
     //add experience in due time //TODO
 
     /**
@@ -285,7 +284,7 @@ public class Pokemon implements Parcelable {
             default:
                 throw new IllegalArgumentException(pName + " is currently not a valid Pokémon in this simulator!");
         }
-    } //add more pokemon once the game works //TODO
+    }
 
     /**
      * Increments the level of a Pokémon (to a maximum of 100).
@@ -386,7 +385,7 @@ public class Pokemon implements Parcelable {
      */
     public void transform(String pName) {
         setPokemon(pName);
-        //will need more detail //TODO
+        // Add more detail later //TODO
     }
 
     /**
