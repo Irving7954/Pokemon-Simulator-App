@@ -480,7 +480,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             throw new IllegalStateException("The move at index " + index + " is not valid!");
         if (!genericMove.isAttackingMove()) {
             StatusMove move = (StatusMove) genericMove;
-            resolveMove(move, leadPlayerPoke, leadEnemyPoke, didPlayerMoveFirst);
+            resolveMove(move, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
         }
         else {
             AttackingMove move = (AttackingMove) genericMove;
@@ -495,30 +495,30 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
      *                           which is important for calculating BP and certain effects in some cases.
      */
-    private void resolveAIMove(boolean didPlayerMoveFirst) { // implement status moves //TODO
+    private void resolveAIMove(boolean didPlayerMoveFirst) {
         ArrayList<Move> moves = leadEnemyPoke.getMoves(), firstMoveChoices = new ArrayList<>();
         int numAdded = 0;
-        for (Move m : moves)  //check for neutral/super-effective hits
+        for (Move m : moves)  // Check for neutral/super-effective hits
             if (m.isAttackingMove() && checkTypeMatchups(leadPlayerPoke.getType(), m.getType(), 1, leadEnemyPoke) >= 1) {
                 firstMoveChoices.add(m);
                 numAdded++;
             }
 
-        if (numAdded == 0) { //use status moves if no moves hit for neutral or better
+        if (numAdded == 0) { // Use status moves if no moves hit for neutral or better
             for (Move m : moves)
-                if (!m.isAttackingMove() /*and some other arguments*/) { //add other arguments //TODO
+                if (!m.isAttackingMove()) { // Likely add other arguments later //TODO
                     firstMoveChoices.add(m);
                     numAdded++;
                 }
             if(numAdded == 0) {
-                for (Move m : moves)  //check for stab and avoid 4x resists as a last case
+                for (Move m : moves)  // Check for stab and avoid 4x resists as a last case
                     if(m.isAttackingMove() && checkTypeMatchups(leadPlayerPoke.getType(), m.getType(), 1, leadEnemyPoke) >= 0.5) {
                         firstMoveChoices.add(m);
                         numAdded++;
                     }
 
                 if(numAdded == 0) {
-                    //switch out //TODO
+                    // Switch out, which will be implemented later once 1v1 fights work properly //TODO
                 }
                 else if (numAdded == 1)
                     resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
@@ -528,12 +528,13 @@ public class BattleFragment extends Fragment { //Fragment code 3
             else if(numAdded == 1)
                 resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
             else {
-                //decide based on status move //TODO
+                int randomNum = rand.nextInt(numAdded); // Choose randomly from the status moves until status moves are implemented, at least for now //TODO
+                resolveMove((StatusMove) firstMoveChoices.get(randomNum), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
             }
         }
-        else if(numAdded == 1)
+        else if(numAdded == 1) // Handle the simple case with one neutral or better attack
             resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
-        else { //more than one stab and/or neutral/super-effective hits
+        else { // Handle the more complex case with more than one neutral or better attack
             ArrayList<Move> secondMoveChoices = new ArrayList<>();
             int numAdded2 = 0;
             for(int i = 0; i < numAdded; i++)
@@ -615,10 +616,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
             default:
                 break;
         }
-        if ((acc + 1) <= (move.getAccuracy() * moveUser.getInitStats()[6] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[6]]
-                / moveTarget.getInitStats()[7] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[7]]) && !isInvulnerable(moveTarget, move)) {
+        int moveAcc = move.getAccuracy(); // Save the move accuracy primarily for moves that never miss like Aerial Ace
+        if (moveAcc == 1000 || ((acc + 1) <= (moveAcc * moveUser.getInitStats()[6] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[6]]
+                / moveTarget.getInitStats()[7] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[7]]) && !isInvulnerable(moveTarget, move))) {
 
-            if(takesTwoTurns(move, moveUser, weather)) //check for two-turn Moves
+            if(takesTwoTurns(move, moveUser, weather)) // Check for two-turn moves
                 return;
             //first part of formula
             double damage = (2 * moveUser.getLevel() + 10) * calculateBP(move, moveUser, moveTarget, didPlayerMoveFirst) / 250.0;
@@ -754,7 +756,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
         }
     }
 
-    private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget, boolean didPlayerMoveFirst) {
+    /**
+     * Resolves a status move used by the moveUser on the moveTarget, which is not yet implemented.
+     * For reference, IsPlayerTheUser indicates whether or not the moveUser is the player, which
+     * determines which text boxes, hp bars, and other important objects on the screen to use.
+     * @param move The attacking move to be used.
+     * @param moveUser The user of the move.
+     * @param moveTarget The target of the move.
+     * @param isPlayerTheUser Determines whether or not the moveUser is on the player's team.
+     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
+     *                           which is important for calculating BP and certain effects in some cases.
+     */
+    private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, boolean didPlayerMoveFirst) {
         //Actually handle these moves //TODO
     }
 

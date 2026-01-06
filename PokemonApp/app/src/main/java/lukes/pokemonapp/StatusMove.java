@@ -170,7 +170,7 @@ public class StatusMove extends Move {
                 setEffects("This status move uses 25% of the user's HP to create a substitute for the user. " +
                            "This substitute is immune to the effects of most status moves but is usually " +
                            "destroyed when an attacking move takes at least 25% of the user's HP." +
-                           "For reference, sound-based moves and certain other effects bypass substitutes, so" +
+                           "For reference, sound-based moves and certain other effects bypass substitutes, so " +
                            "this does not ensure that the user and their side of the field is fully protected.");
                 setChangesUserStats(true);
                 break;
