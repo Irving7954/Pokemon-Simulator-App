@@ -215,7 +215,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     player.addPokemon("Torchic");
                     break;
                 default:
-                    throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
+                    Log.d("AddPersonActivity", firstPokeName + " cannot yet be the first possible Pokémon in normal cases!");
+                    //throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
             }
 
             leadPlayerPoke = player.getTeam().get(0);
@@ -336,7 +337,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             adjustHPBars(enemyHPBar, leadEnemyPoke, enemyPokeAndHP);
 
             commentaryBox = myView.findViewById(R.id.commentaryBox);
-            commentary = "";
+            setCommentary("");
 
             moveButtons.get(0).setOnClickListener((v) -> resolveSpeedTiers(0));
             if(moveButtons.size() > 1)
@@ -418,6 +419,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param moveIndex The index of the chosen move.
      */
     private void resolveSpeedTiers(int moveIndex) {
+        setCommentary("");
         int playerSpeed = (int) (leadPlayerPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadPlayerPoke.getStatStages()[5]]);
         int enemySpeed = (int) (leadEnemyPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadEnemyPoke.getStatStages()[5]]);
         if(playerSpeed > enemySpeed) {
@@ -445,9 +447,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void movePlayerFirst(int moveIndex) {
         if(leadPlayerPoke.getInitStats()[0] > 0) {
+            setCommentary(leadPlayerPoke.getName() + " moved first, and");
             resolveMoveType(moveIndex, true);  // Player
         }
         if(leadEnemyPoke.getInitStats()[0] > 0) {
+            setCommentary(commentary + "\n" + leadEnemyPoke.getName() + " moved second, and");
             resolveAIMove(true); // Enemy
         }
     }
@@ -455,15 +459,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
     /**
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
-     * The Pokemon have fainted before or during the turn during move resolution.
+     * The Pokemon has taken damage and/or fainted before the move is actually resolved, including on the same turn.
      * @param moveIndex The index of the chosen move.
      */
     private void moveEnemyFirst(int moveIndex) {
         if(leadEnemyPoke.getInitStats()[0] > 0) {
+            setCommentary(leadEnemyPoke.getName() + " moved first, and");
             resolveAIMove(false); // Enemy
+
         }
         if(leadPlayerPoke.getInitStats()[0] > 0) {
-            resolveMoveType(moveIndex, false);  // Player
+            setCommentary(commentary + "\n" + leadPlayerPoke.getName() + " moved second, and");
+            resolveMoveType(moveIndex, false);  // Playe
         }
     }
 
@@ -616,6 +623,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             default:
                 break;
         }
+        String pokeName = moveTarget.getName();
         int moveAcc = move.getAccuracy(); // Save the move accuracy primarily for moves that never miss like Aerial Ace
         if (moveAcc == 1000 || ((acc + 1) <= (moveAcc * moveUser.getInitStats()[6] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[6]]
                 / moveTarget.getInitStats()[7] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[7]]) && !isInvulnerable(moveTarget, move))) {
@@ -650,6 +658,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             int roundedDownDamage = (int) damage; //round down
             int initHP = moveTarget.getInitStats()[0];
             int actualDamage = Math.min(roundedDownDamage, initHP);
+            setCommentary(commentary + " " + pokeName + " took " + actualDamage + "% damage!");
             moveTarget.setStat(initHP - actualDamage, 0); //Reduce HP
 
             ProgressBar tempBar = enemyHPBar;
@@ -661,6 +670,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
             adjustHPBars(tempBar, moveTarget, tempV); //adjust the hp bars
 
             resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, actualDamage); //stat changes, status changes, other
+        }
+        else {
+            setCommentary(commentary + pokeName + "'s attack missed!"); // Handle the attacking moves that can fail rather than miss, such as Sucker Punch //TODO
         }
     }
 
@@ -757,6 +769,16 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
+     * Adjusts the commentary box. This can be used whenever the commentary should be changed,
+     * even if this is not the direct result of a move.
+     * @param comments The intended commentary string in the commentary box.
+     */
+    private void setCommentary(String comments) {
+        commentary = comments;
+        commentaryBox.setText(commentary);
+    }
+
+    /**
      * Resolves a status move used by the moveUser on the moveTarget, which is not yet implemented.
      * For reference, IsPlayerTheUser indicates whether or not the moveUser is the player, which
      * determines which text boxes, hp bars, and other important objects on the screen to use.
@@ -768,7 +790,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      *                           which is important for calculating BP and certain effects in some cases.
      */
     private void resolveMove(StatusMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, boolean didPlayerMoveFirst) {
-        //Actually handle these moves //TODO
+        // Actually handle these moves //TODO
     }
 
     /**
