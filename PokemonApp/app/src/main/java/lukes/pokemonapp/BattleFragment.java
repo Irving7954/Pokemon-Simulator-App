@@ -447,11 +447,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void movePlayerFirst(int moveIndex) {
         if(leadPlayerPoke.getInitStats()[0] > 0) {
-            setCommentary(leadPlayerPoke.getName() + " moved first, and");
+            addCommentary("First, ");
             resolveMoveType(moveIndex, true);  // Player
         }
         if(leadEnemyPoke.getInitStats()[0] > 0) {
-            setCommentary(commentary + "\n" + leadEnemyPoke.getName() + " moved second, and");
+            addCommentaryWithNewLine("Second, ");
             resolveAIMove(true); // Enemy
         }
     }
@@ -464,12 +464,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void moveEnemyFirst(int moveIndex) {
         if(leadEnemyPoke.getInitStats()[0] > 0) {
-            setCommentary(leadEnemyPoke.getName() + " moved first, and");
+            addCommentary("First, ");
             resolveAIMove(false); // Enemy
 
         }
         if(leadPlayerPoke.getInitStats()[0] > 0) {
-            setCommentary(commentary + "\n" + leadPlayerPoke.getName() + " moved second, and");
+            addCommentaryWithNewLine("Second, ");
             resolveMoveType(moveIndex, false);  // Playe
         }
     }
@@ -623,7 +623,8 @@ public class BattleFragment extends Fragment { //Fragment code 3
             default:
                 break;
         }
-        String pokeName = moveTarget.getName();
+        String moveUserName = moveUser.getName();
+        String moveTargetName = moveTarget.getName();
         int moveAcc = move.getAccuracy(); // Save the move accuracy primarily for moves that never miss like Aerial Ace
         if (moveAcc == 1000 || ((acc + 1) <= (moveAcc * moveUser.getInitStats()[6] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[6]]
                 / moveTarget.getInitStats()[7] * ACCURACY_STAT_STAGES[moveUser.getStatStages()[7]]) && !isInvulnerable(moveTarget, move))) {
@@ -658,8 +659,15 @@ public class BattleFragment extends Fragment { //Fragment code 3
             int roundedDownDamage = (int) damage; //round down
             int initHP = moveTarget.getInitStats()[0];
             int actualDamage = Math.min(roundedDownDamage, initHP);
-            setCommentary(commentary + " " + pokeName + " took " + actualDamage + "% damage!");
             moveTarget.setStat(initHP - actualDamage, 0); //Reduce HP
+
+            // Change the code so that these strings match the actual player names later //TODO
+            String playerString = getString(R.string.PlayerTrainerNameLabel).toLowerCase();
+            String enemyString = getString(R.string.EnemyTrainerNameLabel).toLowerCase();
+            String userString = isPlayerTheUser ? playerString : enemyString;
+            String targetString = isPlayerTheUser ? enemyString : playerString;
+            addCommentary("the " + userString + "'s " + moveUserName + " used " + move.getName() + ", and " +
+                                                    "the " + targetString + "'s " + moveTargetName + " took " + actualDamage + "% damage!");
 
             ProgressBar tempBar = enemyHPBar;
             TextView tempV = enemyPokeAndHP; //choose the appropriate hp bar and text box
@@ -672,7 +680,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, actualDamage); //stat changes, status changes, other
         }
         else {
-            setCommentary(commentary + pokeName + "'s attack missed!"); // Handle the attacking moves that can fail rather than miss, such as Sucker Punch //TODO
+            setCommentary(commentary + moveUserName + "'s attack missed!"); // Handle the attacking moves that can fail rather than miss, such as Sucker Punch //TODO
         }
     }
 
@@ -769,13 +777,31 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
-     * Adjusts the commentary box. This can be used whenever the commentary should be changed,
-     * even if this is not the direct result of a move.
-     * @param comments The intended commentary string in the commentary box.
+     * Sets the commentary box to the provided comments parameter and adjusts the commentary variable appropriately.
+     * This can be used whenever the commentary should be changed, even if this is not the direct result of a move.
+     * @param newComments The new comments that should replace any existing comments in the commentary box.
      */
-    private void setCommentary(String comments) {
-        commentary = comments;
+    private void setCommentary(String newComments) {
+        commentary = newComments;
         commentaryBox.setText(commentary);
+    }
+
+    /**
+     * Adds the provided comments parameter to the commentary box and adjusts the commentary variable appropriately.
+     * This can be used whenever the commentary should be changed, even if this is not the direct result of a move.
+     * @param extraComments The comments to be added to the commentary box.
+     */
+    private void addCommentary(String extraComments) {
+        setCommentary(commentary + extraComments);
+    }
+
+    /**
+     * Adds the provided comments parameter to the commentary box with a preceding new line and adjusts the commentary variable appropriately.
+     * This can be used whenever the commentary should be changed, even if this is not the direct result of a move.
+     * @param extraComments The comments to be added to the commentary box.
+     */
+    private void addCommentaryWithNewLine(String extraComments) {
+        setCommentary(commentary + "\n" + extraComments);
     }
 
     /**
