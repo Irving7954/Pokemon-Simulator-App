@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion = 36
-    buildToolsVersion = '35.0.0'
+    buildToolsVersion = '36.0.0'
     namespace = 'lukes.pokemonapp'
 
     defaultConfig {
         applicationId "lukes.pokemonapp"
         minSdkVersion 33
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
     }

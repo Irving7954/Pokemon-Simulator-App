@@ -739,9 +739,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private boolean isCriticalHit(AttackingMove move, Pokemon moveUser, Pokemon moveTarget) {
         int critState = moveUser.getCritState();
-        if(move.getAdditionalEffects().contains("high critical chance"))
+        if(move.getAdditionalEffects().contains("high critical chance")) // Refactor this string parsing into a move attribute //TODO
             critState++;
-        int critChance = 16; //critical chance is 1/16 unless it is increased in some way
+        int critChance = 16; // Default critical chance is 1/16
         if(critState == 1)
             critChance /= 2;
         else if(critState == 2)
@@ -750,7 +750,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             return true;
         int randomNum = rand.nextInt(critChance);
         return randomNum == 0;
-    } //consider abilities //TODO
+    } // Consider abilities //TODO
 
     /**
      * Resolves any weather effects, like rain's boosts or sun's boosts. Eventually, this will also
@@ -1285,7 +1285,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
-     * Resolves a stat change (except for HP). It changes the status texts on the screen,
+     * Resolves a stat change other than HP. It changes the status texts on the screen,
      * and it also catches stat changes beyond +/- 6.
      * @param statIndex The index of the stat to be changed.
      * @param numStages The number of stages to increase or decrease the stat.
@@ -1296,6 +1296,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
         if(statChanger.getInitStats()[0] == 0) {
             return; // Skip the stat change if the Pokemon has fainted
         }
+
+        /*int actualChange = numStages;
+        if (numStages > 0) { // Update the commentary to compute the exact stat change later //TODO
+            actualChange = Math.min(numStages, 12 - numStages - statChanger.getStatStages()[statIndex]);
+        }*/
+
         statChanger.getStatStages()[statIndex] += numStages; // Change the stat stage
         if(statChanger.getStatStages()[statIndex] > 12) {
             statChanger.getStatStages()[statIndex] = 12; // Catch out of bounds above +6
@@ -1339,6 +1345,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 throw new IllegalArgumentException(statIndex + " is not a possible index in this scenario!");
         }
         changeStatsText(statName, modifier, isPlayerChangingStats);
+        addCommentary(" " + statChanger.getName() + "'s " + statName + " is now at " + (currStage - 6) + "!");
     }
 
     /**

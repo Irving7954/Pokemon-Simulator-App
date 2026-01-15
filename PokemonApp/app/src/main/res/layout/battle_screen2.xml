@@ -11,9 +11,8 @@
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
         android:gravity="center_horizontal"
         android:text="@string/EnemyTrainerNameLabel"
         android:textSize="20sp"/>
@@ -24,10 +23,8 @@
         android:layout_height="36dp"
         android:layout_below="@+id/enemyName"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="103dp"
-        android:layout_marginRight="103dp"
         android:contentDescription="@string/EnemyTeamPokeImageDescLabel" />
 
     <ImageView
@@ -37,7 +34,7 @@
         android:layout_below="@+id/enemyName"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="62.5dp"
+        android:layout_marginEnd="62.5dp"
         android:contentDescription="@string/EnemyTeamPokeImageDescLabel" />
 
     <ImageView
@@ -47,7 +44,7 @@
         android:layout_below="@+id/enemyName"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="17.5dp"
+        android:layout_marginEnd="17.5dp"
         android:contentDescription="@string/EnemyTeamPokeImageDescLabel" />
 
     <ImageView
@@ -56,9 +53,8 @@
         android:layout_height="30dp"
         android:layout_below="@+id/enemyName"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="55dp"
-        android:layout_marginRight="107.5dp"
+        android:layout_marginEnd="107.5dp"
         android:contentDescription="@string/EnemyTeamPokeImageDescLabel" />
 
     <ImageView
@@ -69,7 +65,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="55dp"
-        android:layout_marginRight="62.5dp"
+        android:layout_marginEnd="62.5dp"
         android:contentDescription="@string/EnemyCurrPokeImageDescLabel" />
 
     <ImageView
@@ -80,7 +76,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="55dp"
-        android:layout_marginRight="17.5dp"
+        android:layout_marginEnd="17.5dp"
         android:contentDescription="@string/EnemyTeamPokeImageDescLabel" />
 
     <TextView
@@ -89,10 +85,9 @@
         android:layout_height="wrap_content"
         android:maxWidth="200dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="false"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:text="@string/PlayerTrainerNameLabel"
@@ -104,8 +99,7 @@
         android:layout_height="30dp"
         android:layout_below="@+id/playerName"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="false"
-        android:layout_marginLeft="17.5dp"
+        android:layout_marginStart="17.5dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/PlayerTeamPokeImageDescLabel" />
 
@@ -115,8 +109,7 @@
         android:layout_height="30dp"
         android:layout_below="@+id/playerName"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="false"
-        android:layout_marginLeft="62.5dp"
+        android:layout_marginStart="62.5dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/PlayerTeamPokeImageDescLabel" />
 
@@ -125,9 +118,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@+id/playerName"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
-        android:layout_marginLeft="107.5dp"
+        android:layout_marginStart="107.5dp"
         android:layout_marginTop="10dp"
         android:contentDescription="@string/PlayerTeamPokeImageDescLabel" />
 
@@ -137,9 +130,8 @@
         android:layout_height="30dp"
         android:layout_below="@+id/playerName"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="false"
-        android:layout_marginLeft="17.5dp"
+        android:layout_marginStart="17.5dp"
         android:layout_marginTop="55dp"
         android:contentDescription="@string/PlayerCurrPokeImageDescLabel" />
 
@@ -149,9 +141,8 @@
         android:layout_height="30dp"
         android:layout_below="@+id/playerName"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="false"
-        android:layout_marginLeft="62.5dp"
+        android:layout_marginStart="62.5dp"
         android:layout_marginTop="55dp"
         android:contentDescription="@string/PlayerCurrPokeImageDescLabel" />
 
@@ -161,9 +152,8 @@
         android:layout_height="30dp"
         android:layout_below="@+id/playerName"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="false"
-        android:layout_marginLeft="107.5dp"
+        android:layout_marginStart="107.5dp"
         android:layout_marginTop="55dp"
         android:contentDescription="@string/PlayerTeamPokeImageDescLabel" />
 
@@ -172,13 +162,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/playerHPBar"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:indeterminate="false"
-        android:layout_alignRight="@+id/playerPoke6"
+        android:layout_alignEnd="@+id/playerPoke6"
         android:layout_below="@+id/playerPoke6"
         android:layout_marginTop="60dp"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginStart="10dp" />
 
     <ProgressBar
         android:id="@+id/enemyHPBar"
@@ -186,10 +175,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/enemyPoke4"
-        android:layout_alignLeft="@+id/enemyPoke1"
+        android:layout_alignStart="@+id/enemyPoke1"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="60dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:indeterminate="false" />
 
     <TextView
@@ -197,10 +186,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/playerHPBar"
-        android:layout_alignLeft="@+id/playerHPBar"
+        android:layout_alignStart="@+id/playerHPBar"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="-60dp"
         android:text="@string/PlayerPokeHPBarLabel" />
 
@@ -209,9 +197,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/enemyHPBar"
-        android:layout_alignLeft="@+id/enemyHPBar"
+        android:layout_alignStart="@+id/enemyHPBar"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="-60dp"
         android:text="@string/EnemyPokeHPBarLabel" />
 
@@ -221,11 +209,9 @@
         android:layout_height="100dp"
         android:layout_below="@+id/playerHPBar"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="27dp"
-        android:layout_toRightOf="@+id/playerHPBar"
+        android:layout_toEndOf="@+id/playerHPBar"
         android:contentDescription="@string/PlayerCurrPokeImageDescLabel" />
 
     <ImageView
@@ -234,8 +220,7 @@
         android:layout_height="100dp"
         android:layout_alignTop="@+id/currentPlayerPoke"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:contentDescription="@string/PlayerCurrPokeImageDescLabel" />
 
     <TextView
@@ -244,8 +229,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/playerHPBar"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:text="@string/PlayerPokeConditionsLabel"
         android:textSize="11sp" />
 
@@ -255,8 +239,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/enemyHPBar"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/EnemyPokeConditionsLabel"
         android:textSize="11sp" />
 
@@ -268,8 +251,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
         <Button
             android:id="@+id/move1"
@@ -328,9 +311,9 @@
         android:layout_below="@+id/enemyPoke4"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:textSize="11sp" />
 

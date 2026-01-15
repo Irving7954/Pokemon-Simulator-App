@@ -27,8 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/teamText"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/FirstTeamButtonLabel" />
 
     <Button
@@ -38,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/teamText"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:text="@string/SecondTeamButtonLabel" />
 
     <Button
@@ -49,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/teamText"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:text="@string/ThirdTeamButtonLabel" />
 </RelativeLayout>

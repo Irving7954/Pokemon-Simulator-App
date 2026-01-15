@@ -89,7 +89,7 @@ public class StatusMove extends Move {
                 setTwoTurnCode(0);
                 setAccuracy(1000);
                 setStatChanges(new Integer[] {0, 0, 0, 0, 2, 0, 0, 0});
-                setEffects("This status move raises the user's S.Defense by two stages. Keep in mind that " +
+                setEffects("This status move raises the user's S. Defense by two stages. Keep in mind that " +
                            "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(true);
                 break;
