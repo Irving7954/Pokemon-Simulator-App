@@ -1297,18 +1297,16 @@ public class BattleFragment extends Fragment { //Fragment code 3
             return; // Skip the stat change if the Pokemon has fainted
         }
 
-        /*int actualChange = numStages;
-        if (numStages > 0) { // Update the commentary to compute the exact stat change later //TODO
-            actualChange = Math.min(numStages, 12 - numStages - statChanger.getStatStages()[statIndex]);
-        }*/
+        int actualChange;
+        int initStats = statChanger.getStatStages()[statIndex];
+        if (numStages > 0) {
+            actualChange = Math.min(numStages, 12 - initStats);
+        }
+        else {
+            actualChange = Math.max(numStages, -1 * initStats); // Choose the less negative option (the lesser of two negative numbers)
+        }
+        statChanger.getStatStages()[statIndex] += actualChange; // Change the stat stage
 
-        statChanger.getStatStages()[statIndex] += numStages; // Change the stat stage
-        if(statChanger.getStatStages()[statIndex] > 12) {
-            statChanger.getStatStages()[statIndex] = 12; // Catch out of bounds above +6
-        }
-        else if(statChanger.getStatStages()[statIndex] < 0)   {
-            statChanger.getStatStages()[statIndex] = 0; // Catch out of bounds below -6
-        }
         String statName;
         double modifier;
         int currStage = statChanger.getStatStages()[statIndex];
@@ -1345,7 +1343,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 throw new IllegalArgumentException(statIndex + " is not a possible index in this scenario!");
         }
         changeStatsText(statName, modifier, isPlayerChangingStats);
-        addCommentary(" " + statChanger.getName() + "'s " + statName + " is now at " + (currStage - 6) + "!");
+        addCommentary(" " + statChanger.getName() + "'s " + statName + " changed by " + actualChange  + " stages!");
     }
 
     /**
