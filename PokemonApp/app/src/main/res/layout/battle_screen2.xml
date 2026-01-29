@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/masterLayout">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/masterLayout"
+    android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/enemyName"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="200dp"
@@ -183,6 +187,7 @@
 
     <TextView
         android:id="@+id/playerPokeAndHP"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/playerHPBar"
@@ -194,6 +199,7 @@
 
     <TextView
         android:id="@+id/enemyPokeAndHP"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/enemyHPBar"
@@ -225,6 +231,7 @@
 
     <TextView
         android:id="@+id/playerConditions"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/playerHPBar"
@@ -235,6 +242,7 @@
 
     <TextView
         android:id="@+id/enemyConditions"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/enemyHPBar"
@@ -305,6 +313,7 @@
 
     <TextView
         android:id="@+id/commentaryBox"
+        style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/enemyPokeAndHP"
