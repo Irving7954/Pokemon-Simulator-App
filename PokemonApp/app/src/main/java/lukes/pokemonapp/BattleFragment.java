@@ -54,11 +54,6 @@ public class BattleFragment extends Fragment { //Fragment code 3
     private String playerNameText;
 
     /**
-     * The name of the player's first Pokémon, which is provided in this fragment's Arguments.
-     */
-    private String firstPokeName;
-
-    /**
      * The various text boxes that are on the screen, including the Trainer name's, the label for the Pokémon's
      * HPs, and the description of each turn for both players.
      */
@@ -138,7 +133,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * the name box, which is a bit clunky.
      * @param inflater Creates this view from the layout file.
      * @param container Puts this view into the specified container.
-     * @param savedInstance Not used in this case.
+     * @param savedInstance The bundle that contains the first player Pokemon argument.
      * @return The view created by the inflater.
      */
     @Override
@@ -148,21 +143,15 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            Pokemon poke = bundle.getParcelable("key", Pokemon.class); // Actually use the full pokemon later //TODO
-            firstPokeName = poke.getName();
+            leadPlayerPoke = bundle.getParcelable("key", Pokemon.class);
         }
 
-        Log.d("AddPersonActivity", firstPokeName);
         weather = 0;
         rand = new Random();
 
-        // A button that controls the turn timing, which means that clicking it allows the user to
-        // Advance to the next action, such as another move or end-of-turn effects).
-        Button nextButton = myView.findViewById(R.id.nextButton);
+        Button switchButton = myView.findViewById(R.id.switchButton); // Implement player switching later //TODO
 
-        //nextButton.setOnClickListener((v) -> nextClicked = !nextClicked); // Use this later //TODO
-
-        //creates the name box
+        // Creates the name box
         final EditText et = new EditText(getContext());
         et.setInputType(InputType.TYPE_CLASS_TEXT);
         AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
@@ -171,85 +160,83 @@ public class BattleFragment extends Fragment { //Fragment code 3
         adb.setTitle("Name?");
         adb.setMessage("Enter your name here: ");
         adb.setPositiveButton("Ok", (dialog, id) -> {
-            //initializations for the player
+            // Initializations for the player
             playerNameText = et.getText().toString();
             playerName = myView.findViewById(R.id.playerName);
             playerName.setText(playerNameText);
             player = new Player(playerNameText);
-            player.addPokemon(firstPokeName);
-            switch(firstPokeName) { // Determines the rest of the team based on the first Pokemon
+            player.addPokemon(leadPlayerPoke);
+            String firstPokeName = leadPlayerPoke.getName();
+            switch(firstPokeName) { // Determines the rest of the team based on the first Pokemon's name
                 case "Bulbasaur":
                     player.addPokemon("Charmander");
                     player.addPokemon("Squirtle");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Charmander");
                     player.addPokemon("Squirtle");
                     break;
                 case "Charmander":
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Squirtle");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Squirtle");
                     break;
                 case "Squirtle":
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Charmander");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Charmander");
-
                     break;
                 case "Chikorita":
                     player.addPokemon("Cyndaquil");
                     player.addPokemon("Totodile");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Cyndaquil");
                     player.addPokemon("Totodile");
                     break;
                 case "Cyndaquil":
                     player.addPokemon("Chikorita");
                     player.addPokemon("Totodile");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Chikorita");
                     player.addPokemon("Totodile");
-
                     break;
                 case "Totodile":
                     player.addPokemon("Chikorita");
                     player.addPokemon("Cyndaquil");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Chikorita");
                     player.addPokemon("Cyndaquil");
                     break;
                 case "Treecko":
                     player.addPokemon("Torchic");
                     player.addPokemon("Mudkip");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Torchic");
                     player.addPokemon("Mudkip");
                     break;
                 case "Torchic":
                     player.addPokemon("Treecko");
                     player.addPokemon("Totodile");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Treecko");
                     player.addPokemon("Totodile");
                     break;
                 case "Mudkip":
                     player.addPokemon("Treecko");
                     player.addPokemon("Torchic");
-                    player.addPokemon(firstPokeName);
+                    player.addPokemon(leadPlayerPoke);
                     player.addPokemon("Treecko");
                     player.addPokemon("Torchic");
                     break;
                 default:
                     Log.d("AddPersonActivity", firstPokeName + " cannot yet be the first possible Pokémon in normal cases!");
-                    //throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
+                    // throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
             }
 
-            leadPlayerPoke = player.getTeam().get(0);
-            //initializes text boxes
+            // Initializes text boxes
             playerPokeAndHP = myView.findViewById(R.id.playerPokeAndHP);
             playerPokeAndHP.setText(String.format("%s HP: 100%%", leadPlayerPoke.getName()));
             playerConditions = myView.findViewById(R.id.playerConditions);
@@ -1361,16 +1348,16 @@ public class BattleFragment extends Fragment { //Fragment code 3
             tempV = enemyConditions;
         String csc = tempV.getText() + "";
         String statModifier = stat + " x" + String.format(Locale.US, "%.2f",modifier) + " ";
-        //check to see if a stat has already been changed
+        // Check if a stat has already been changed
         if (!csc.contains(stat + " x")) {
             String change = csc + statModifier;
-            tempV.setText(change); //add the sentence if it doesn't already have it
+            tempV.setText(change); // Add the sentence if it doesn't already have it
         }
         else {
             for (int i = 0; i < csc.length() - stat.length() - 1; i++) {
                 if (csc.startsWith(stat)) {
                     result.append(csc.substring(i + stat.length() + 6));
-                    break; //add everything but the "_x1.55"
+                    break; // Add everything but the "_xModifier"
                 }
                 else
                     result.append(csc.charAt(i));
@@ -1380,14 +1367,14 @@ public class BattleFragment extends Fragment { //Fragment code 3
             tempV.setText(result);
             csc = tempV.getText() + "";
             if(!csc.isEmpty() && csc.charAt(0) == ' ') {
-                result = new StringBuilder(csc); //delete leading space
+                result = new StringBuilder(csc); // Delete leading spaces
                 result.deleteCharAt(0);
                 tempV.setText(result);
             }
             else if(csc.substring(0, csc.indexOf(stat)).contains("  ")) {
                 result = new StringBuilder(csc);
                 for(int i = 0; i < result.length() - 2; i++)
-                    if(result.substring(i, i + 2).equals("  ")) //delete the first space in double spaces
+                    if(result.substring(i, i + 2).equals("  ")) // Delete the first space in double spaces
                         result.deleteCharAt(i);
                 tempV.setText(result);
             }
@@ -1405,19 +1392,22 @@ public class BattleFragment extends Fragment { //Fragment code 3
     private void changeNonVolStatus(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
         String moveStatus = move.getNonVolChanges();
         if(moveStatus == null || moveTarget.getInitStats()[0] == 0)  {
-            return; //skip this if it causes no non-volatile changes or if the target has fainted
+            return; // Skip this if it causes no non-volatile changes or if the target has fainted
         }
         String moveUserAbility = moveUser.getAbility();
         boolean nonVolCheck = move.avoidsNonVolStatus(moveStatus, moveUser.getNonVolStatus(), moveUser.getType(), moveUserAbility, moveUserAbility);
-        if(move.statusesUser() && !nonVolCheck) { //if it would affect the user
+        if(move.statusesUser() && !nonVolCheck) { // If it would affect the user
             moveUser.setNonVolStatus(moveStatus);
             changeStatusText(moveStatus, isPlayerTheUser);
+            addCommentary(" " + moveUser.getName());
         }
         else if(!move.statusesUser() && !move.avoidsNonVolStatus(moveStatus, moveTarget.getNonVolStatus(),
-                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { //if it would affect the opponent
+                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { // If it would affect the opponent
             moveTarget.setNonVolStatus(moveStatus);
             changeStatusText(moveStatus, !isPlayerTheUser);
+            addCommentary(" " + moveTarget.getName());
         }
+        addCommentary(" became " + moveStatus + "!");
     }
 
     /**
@@ -1431,26 +1421,29 @@ public class BattleFragment extends Fragment { //Fragment code 3
     private void changeVolStatus(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser) {
         String moveStatus = move.getVolChanges();
         if(moveStatus == null  || moveTarget.getInitStats()[0] == 0)  {
-            return; //skip this if it causes no volatile changes or if the target has fainted
+            return; // Skip this if it causes no volatile changes or if the target has fainted
         }
         String moveType = move.getType();
         String userStatus = moveUser.getVolStatus();
         String moveUserAbility = moveUser.getAbility();
         boolean volCheck = move.avoidsVolStatus(moveStatus, userStatus, moveUser.getType(), moveUserAbility, moveUserAbility);
-        if(move.statusesUser() && !volCheck) { //if it would affect the user
+        if(move.statusesUser() && !volCheck) { // If it would affect the user
             if(!userStatus.contains(moveStatus)) {
                 moveUser.setNonVolStatus(moveStatus);
-                changeStatusText(moveStatus, isPlayerTheUser); //user case
+                changeStatusText(moveStatus, isPlayerTheUser); // User case
+                addCommentary(" " + moveUser.getName() + " ");
             }
         }
         else if(!move.statusesUser() && !move.avoidsVolStatus(moveStatus, moveTarget.getVolStatus(),
-                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { //if it would affect the opponent
+                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { // If it would affect the opponent
             String targetStatus = moveTarget.getVolStatus();
             if(!targetStatus.contains(moveStatus)) {
                 moveTarget.setNonVolStatus(moveStatus);
-                changeStatusText(moveStatus, !isPlayerTheUser); //target case
+                changeStatusText(moveStatus, !isPlayerTheUser); // Target case
+                addCommentary(" " + moveTarget.getName() + " ");
             }
         }
+        addCommentary(" became " + moveStatus + "!");
     }
 
     /**
@@ -1464,12 +1457,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
         TextView tempConditions = playerConditions;
         if(!isPlayerChangingStatus) {
             csc = new StringBuilder(enemyConditions.getText() + "");
-            tempConditions = enemyConditions; //choose player or enemy
+            tempConditions = enemyConditions; // Choose player or enemy
         }
         if(csc.length() > 0 && csc.charAt(0) == ' ')
             csc.deleteCharAt(0);
         csc.append(" ");
-        csc.append(status); //append the new status
+        csc.append(status); // Append the new status
         tempConditions.setText(csc);
     }
 }

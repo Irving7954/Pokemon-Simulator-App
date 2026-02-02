@@ -303,13 +303,13 @@
     </GridLayout>
 
     <Button
-        android:id="@+id/nextButton"
+        android:id="@+id/switchButton"
         style="@style/Theme.AppCompat.Light.DarkActionBar"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_above="@+id/movesLayout"
         android:layout_centerHorizontal="true"
-        android:text="@string/NextButtonLabel" />
+        android:text="@string/SwitchButtonLabel" />
 
     <TextView
         android:id="@+id/commentaryBox"

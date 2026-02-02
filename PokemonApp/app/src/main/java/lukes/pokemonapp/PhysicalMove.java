@@ -130,7 +130,7 @@ public class PhysicalMove extends AttackingMove {
                 setMakesContact(true);
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and has a 10% chance to freeze the opponent, " +
-                                     "assuming that the opponent is not immune to being frozen.");
+                                     "assuming that the opposing Pokémon is not immune to the freeze condition.");
                 setAddEffectChance(10);
                 setNonVolChanges("Frozen");
                 break;
@@ -142,7 +142,8 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(3);
-                setAdditionalEffects("This physical move doubles in power if the opponent moves before the user.");
+                setAdditionalEffects("This physical move deals damage and doubles in power " +
+                                     "if the opponent moves before the user.");
                 break;
             case "Play Rough":
                 setType("Fairy");
@@ -221,9 +222,9 @@ public class PhysicalMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(true);
                 setBPCode(0);
-                setAdditionalEffects("This physical move deals damage and also causes the user to suffer " +
-                                     "30% of the target's damage as recoil. Additionally, if necessary, " +
-                                     "the user is thawed out before the moved is performed.");
+                setAdditionalEffects("This physical move deals damage, has a 30% chance to burn the opponent, " +
+                                     "and causes the user to suffer 30% of the target's damage as recoil. " +
+                                     "Additionally, if necessary, the user is thawed out before the moved is performed.");
                 setStatChanges(new Integer[] {-30, 0, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
                 setAddEffectChance(100);

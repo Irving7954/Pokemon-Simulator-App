@@ -49,7 +49,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
      * and the listView. It also causes the buttons to change the screen to other Fragments.
      * @param inflater Creates this view from the layout file.
      * @param container Puts this view into the specified container.
-     * @param savedInstance Not used in this case.
+     * @param savedInstance The bundle that contains the current Pokemon argument.
      * @return The view created by the inflater.
      */
     @Override

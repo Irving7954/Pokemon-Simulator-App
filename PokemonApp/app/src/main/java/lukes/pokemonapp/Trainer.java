@@ -42,13 +42,25 @@ public abstract class Trainer {
     }
 
     /**
-     * Adds the named Pokémon to the team, as long as the team is already not full of six Pokémon.
-     * @param pName The Pokémon to be added to the team.
+     * Adds the Pokémon with the given name to the team, as long as the team is already not full of six Pokémon.
+     * @param pName The name of the Pokémon to be added to the team.
      * @throws IllegalStateException When there are already six Pokémon on the team.
      */
     public void addPokemon(String pName) {
         if(team.size() < 6)
             team.add(new Pokemon(pName));
+        else
+            throw new IllegalStateException("No Pokémon team can have greater than six Pokémon.");
+    }
+
+    /**
+     * Adds the Pokémon to the team, as long as the team is already not full of six Pokémon.
+     * @param poke The Pokémon to be added to the team.
+     * @throws IllegalStateException When there are already six Pokémon on the team.
+     */
+    public void addPokemon(Pokemon poke) {
+        if(team.size() < 6)
+            team.add(poke);
         else
             throw new IllegalStateException("No Pokémon team can have greater than six Pokémon.");
     }

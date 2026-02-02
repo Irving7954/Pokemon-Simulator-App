@@ -85,7 +85,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move deals damage and has a 30% chance to paralyze the opponent.");
+                setAdditionalEffects("This special move deals damage and has a 30% chance to paralyze the opponent," +
+                                     "assuming that the opposing Pokémon is not immune to the paralysis condition.");
                 setAddEffectChance(30);
                 setNonVolChanges("Paralyzed");
                 break;
@@ -123,7 +124,7 @@ public class SpecialMove extends AttackingMove {
                 setMakesContact(false);
                 setBPCode(0);
                 setAdditionalEffects("This special move deals damage and has a 10% chance to burn the opponent, " +
-                                     "assuming that the opponent is not immune to being burned.");
+                                     "assuming that the opposing Pokémon is not immune to the burn condition.");
                 setAddEffectChance(10);
                 setNonVolChanges("Burned");
                 break;
@@ -151,7 +152,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move deals damage and has a 10% chance to freeze the opponent.");
+                setAdditionalEffects("This special move deals damage and has a 10% chance to freeze the opponent," +
+                                     "assuming that the opposing Pokémon is not immune to the freeze condition.");
                 setAddEffectChance(10);
                 setNonVolChanges("Frozen");
                 break;
@@ -190,8 +192,8 @@ public class SpecialMove extends AttackingMove {
                 setAccuracy(100);
                 setMakesContact(false);
                 setBPCode(0);
-                setAdditionalEffects("This special move deals damage and has a 30% chance to poison the opponent " +
-                                     "assuming that the opposing Pokémon is not immune to being poisoned.");
+                setAdditionalEffects("This special move deals damage and has a 30% chance to poison the opponent, " +
+                                     "assuming that the opposing Pokémon is not immune to the poison condition.");
                 setAddEffectChance(30);
                 setNonVolChanges("Poisoned");
                 break;
