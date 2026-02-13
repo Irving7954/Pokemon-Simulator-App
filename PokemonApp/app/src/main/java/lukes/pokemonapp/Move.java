@@ -22,7 +22,7 @@ public abstract class Move implements Parcelable {
     private String name;
 
     /**
-     * The move's type. This can be any type or ??? (Curse). Each move has only only one type.
+     * The move's type. This can be any type or ??? (Curse). Each move has only one type.
      */
     private String type;
 
@@ -45,7 +45,7 @@ public abstract class Move implements Parcelable {
 
     /**
      * A list of the invulnerable codes that this move passes through. This is used to reduce the ugliness
-     * of breaking semi-invulnerability by name only. This depends on the invulnCodes in the Pokemon class.
+     * of breaking semi-invulnerability by name only. This depends on the invulnCodes in the Pokémon class.
      */
     private final ArrayList<Integer> IBList = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public abstract class Move implements Parcelable {
     private Integer[] statChanges;
 
     /**
-     * Determines whether or not the stat changes affect the user or the opponent.
+     * Determines if the stat changes affect the user or the opponent.
      */
     private boolean changesUserStats;
 
@@ -145,7 +145,7 @@ public abstract class Move implements Parcelable {
     public abstract void setMove(String mName);
 
     /**
-     * Determines whether or not the move is an attacking move. This is undefined in this superclass
+     * Determines if not the move is an attacking move. This is undefined in this superclass
      * because this cannot be determined without knowing its subtype (AttackingMove or StatusMove).
      * @return True if this move is an attacking move, false otherwise.
      */
@@ -285,7 +285,7 @@ public abstract class Move implements Parcelable {
     }
 
     /**
-     * Sets whether or not this move changes the user's stats, as opposed to the opponent's stats.
+     * Sets if this move changes the user's stats, as opposed to the opponent's stats.
      * @param cus The new value of the boolean variable.
      */
     public void setChangesUserStats(boolean cus) {
@@ -330,7 +330,7 @@ public abstract class Move implements Parcelable {
     }
 
     /**
-     * Determines if the Pokemon is immune to the provided non-volatile status from a move in
+     * Determines if the Pokémon is immune to the provided non-volatile status from a move in
      * The provided scenario, which is essentially a shortcut for checking a bunch of
      * status-related Types and abilities in one method.
      * @param moveStatus The move's non-volatile status that is in question.
@@ -362,7 +362,7 @@ public abstract class Move implements Parcelable {
     }
 
     /**
-     * Determines whether or not this Pokémon is immune to the volatile status listed.
+     * Determines if this Pokémon is immune to the volatile status listed.
      * @param moveStatus The move's non-volatile status that is in question.
      * @param targetStatus The target's current non-volatile status, if it exists.
      * @param targetType The target's type in question.
@@ -402,7 +402,7 @@ public abstract class Move implements Parcelable {
     }
 
     /**
-     * Returns whether or not this move can change the user's stats (or if it changes the opponent's stats).
+     * Returns if this move can change the user's stats (or if it changes the opponent's stats).
      * @return If this move changes the user's stats.
      */
     public boolean changesUserStats() {
@@ -410,7 +410,7 @@ public abstract class Move implements Parcelable {
     }
 
     /**
-     * Determines whether or not this move's statuses conditions affect the user or the target.
+     * Determines if this move's statuses conditions affect the user or the target.
      * @return True if the status is inflicted on user, false otherwise.
      */
     public boolean statusesUser() {

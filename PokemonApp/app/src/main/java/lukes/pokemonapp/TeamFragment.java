@@ -15,8 +15,8 @@ import android.widget.Button;
 public class TeamFragment extends Fragment { //fragment code 2
 
     /**
-     * This Fragment's main activity. This is essentially just a shortcut so I don't have to say
-     * (MainActivity) getActivity() for changing fragments every time.
+     * This Fragment's main activity. This is essentially just a shortcut to avoid calling
+     * (MainActivity) getActivity() to change fragments each time.
      */
     private MainActivity ma;
 

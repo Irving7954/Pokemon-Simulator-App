@@ -13,8 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * A fragment for displaying Pokemon data and moves. It contains an image and stats about the pokemon
- * that are displayed in a list view. You can also toggle between different Pokemon using the buttons.
+ * A fragment for displaying Pokémon data and moves. It contains an image and stats about the Pokémon
+ * that are displayed in a list view. You can also toggle between different Pokémon using the buttons.
  * This class is likely complete, except for the minor details.
  * @author Luke Schoeberle 7/16/2016.
  */
@@ -25,13 +25,13 @@ public class PokemonFragment extends Fragment { //Fragment code 1
     private Pokemon poke;
 
     /**
-     * This Fragment's main activity. This is essentially just a shortcut so I don't have to say
-     * (MainActivity) getActivity() for changing fragments every time.
+     * This Fragment's main activity. This is essentially just a shortcut to avoid calling
+     * (MainActivity) getActivity() to change fragments each time.
      */
     private MainActivity ma;
 
     /**
-     * Determines whether or not you are at the end of a team. This is necessary to know when to
+     * Determines if you are at the end of a team. This is necessary to know when to
      * behave different because the team ending message has already appeared.
      */
     private boolean atEndOfTeam;
@@ -49,7 +49,7 @@ public class PokemonFragment extends Fragment { //Fragment code 1
      * and the listView. It also causes the buttons to change the screen to other Fragments.
      * @param inflater Creates this view from the layout file.
      * @param container Puts this view into the specified container.
-     * @param savedInstance The bundle that contains the current Pokemon argument.
+     * @param savedInstance The bundle that contains the current Pokémon argument.
      * @return The view created by the inflater.
      */
     @Override
@@ -80,7 +80,12 @@ public class PokemonFragment extends Fragment { //Fragment code 1
 
         atEndOfTeam = false;
 
-        //sets the text to the pokemon's name.
+        // Use Bulbasaur as the default Pokémon for now if the bundle fails to provide the parameter
+        if(poke == null) {
+            poke = new Pokemon("Bulbasaur");
+        }
+
+        // Sets the text to the Pokémon's name.
         String pokemonName = poke.getName();
 
         pokeName.setText(pokemonName);
@@ -377,8 +382,8 @@ public class PokemonFragment extends Fragment { //Fragment code 1
     }
 
     /**
-     * A helper method that generates a description of each move. It describes all of the basic features
-     * of each move, and its exact implementation depends on the type of move.
+     * A helper method that generates a description of each move. It describes each move's basic feature;
+     * and its exact implementation depends on the type of move.
      * @param move1 The move to be described.
      * @return A String that describes the basic features of the move.
      */

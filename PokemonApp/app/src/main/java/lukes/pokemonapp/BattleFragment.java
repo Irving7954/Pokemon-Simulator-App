@@ -23,7 +23,7 @@ import java.util.Random;
 /**
  * The fragment for the battle simulation. Generally, this is the most complex fragment with the most parts
  * and the most logic. The other classes, ideally, should be designed to minimize difficulties in this
- * fragment. This fragment controls weather and all of the buttons that appear on the battle screen. This contains
+ * fragment. This fragment controls weather and each button that appear on the battle screen. This contains
  * the damage formula, type effectiveness, and many other crucial aspects of Pokémon battling.
  * @author Luke Schoeberle 7/23/2016.
  */
@@ -101,7 +101,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * An integer that specifies the weather. This can deal residual damage and affects certain moves
-     * like Hurricane, Thunder, and Blizzard, along with several abilities. The meaning of all of the codes
+     * like Hurricane, Thunder, and Blizzard, along with several abilities. The meaning of each code
      * is specified below.
      */
     private int weather; /* weather codes:
@@ -128,12 +128,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
-     * Creates this view based on the parameters. Essentially, it initializes all of the important parts and causes them
-     * to have their intended effects. The main battle loop occurs in here because it depends on the result from
-     * the name box, which is a bit clunky.
+     * Creates this view based on the parameters. Essentially, it initializes each important part and causes it
+     * to have its intended effects. The main battle loop occurs in here because it depends on the result from
+     * the name box, which is clunky and definitely needs to be changed for auto-rotation, at the very least //TODO.
      * @param inflater Creates this view from the layout file.
      * @param container Puts this view into the specified container.
-     * @param savedInstance The bundle that contains the first player Pokemon argument.
+     * @param savedInstance The bundle that contains the first player Pokémon argument.
      * @return The view created by the inflater.
      */
     @Override
@@ -167,7 +167,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             player = new Player(playerNameText);
             player.addPokemon(leadPlayerPoke);
             String firstPokeName = leadPlayerPoke.getName();
-            switch(firstPokeName) { // Determines the rest of the team based on the first Pokemon's name
+            switch(firstPokeName) { // Determines the rest of the team based on the first Pokémon's name
                 case "Bulbasaur":
                     player.addPokemon("Charmander");
                     player.addPokemon("Squirtle");
@@ -371,7 +371,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
-     * A helper method that sets all of the images to the desired Pokémon. This is here for code reuse.
+     * A helper method that sets each image to the desired Pokémon. This is here for code reuse.
      * @param ivs The list of images.
      * @param pTeam The Pokémon to show.
      */
@@ -434,7 +434,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
     /**
      * A helper method used to reduce repetitive code in resolving speed tiers. This simply compares speeds
      * And resolves moves in that order, barring additional effects like priority. It also considers if
-     * The Pokemon have fainted before or during the turn during move resolution.
+     * The Pokémon have fainted before or during the turn during move resolution.
      * @param moveIndex The index of the chosen move.
      */
     private void resolveSpeedTiers(int moveIndex) {
@@ -461,7 +461,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
     /**
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
-     * The Pokemon have fainted before or during the turn during move resolution.
+     * The Pokémon have fainted before or during the turn during move resolution.
      * @param moveIndex The index of the chosen move.
      */
     private void movePlayerFirst(int moveIndex) {
@@ -478,7 +478,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
     /**
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
-     * The Pokemon has taken damage and/or fainted before the move is actually resolved, including on the same turn.
+     * The Pokémon has taken damage and/or fainted before the move is actually resolved, including on the same turn.
      * @param moveIndex The index of the chosen move.
      */
     private void moveEnemyFirst(int moveIndex) {
@@ -495,7 +495,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * A helper method that checks if the chosen move is valid and passes it off to the appropriate resolveMove
-     * method based whether or not it is an AttackingMove.
+     * method based on if it is an AttackingMove.
      * @param index The index of the chosen move.
      * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
      *                           which is important for calculating BP and certain effects in some cases.
@@ -617,12 +617,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
     /**
      * Resolves an attacking move used by the moveUser on the moveTarget. This contains the main logic for
      * damage and additional effects, although its functions will be increasing as more abilities and
-     * additional effects come into play. IsPlayerTheUser indicates whether or not the moveUser is the player (which
+     * additional effects come into play. IsPlayerTheUser indicates if the moveUser is the player (which
      * determines which text boxes, hp bars, and other important objects on the screen to use).
      * @param move The attacking move to be used.
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
-     * @param isPlayerTheUser Determines whether or not the moveUser is on the player's team.
+     * @param isPlayerTheUser Determines if the moveUser is on the player's team.
      * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
                                  which is important for calculating BP and certain effects in some cases.
      */
@@ -707,7 +707,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * Checks to see if this move can hit through the target Pokémon's semi-invulnerable state, if applicable.
-     * @param moveTarget The Pokémon who will take the next attack.
+     * @param moveTarget The Pokémon that will take the next attack.
      * @param move The chosen move.
      * @return True if the target Pokémon is invulnerable to the chosen move, false otherwise
      */
@@ -717,7 +717,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
     }
 
     /**
-     * Determines whether or not the moveUser critically hits against the moveTarget with the given move. This
+     * Determines if the moveUser critically hits against the moveTarget with the given move. This
      * contains the logic for dealing with increased critical chances.
      * @param move The move to be used.
      * @param moveUser The user of the move.
@@ -827,12 +827,12 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * Resolves a status move used by the moveUser on the moveTarget, which is not yet implemented.
-     * For reference, IsPlayerTheUser indicates whether or not the moveUser is the player, which
+     * For reference, IsPlayerTheUser indicates if the moveUser is the player, which
      * determines which text boxes, hp bars, and other important objects on the screen to use.
      * @param move The attacking move to be used.
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
-     * @param isPlayerTheUser Determines whether or not the moveUser is on the player's team.
+     * @param isPlayerTheUser Determines if the moveUser is on the player's team.
      * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
      *                           which is important for calculating BP and certain effects in some cases.
      */
@@ -898,7 +898,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         if(move.hasBPCode(3) && !didPlayerMoveFirst)
             return move.getBP() * 2; //payback
         if(move.hasBPCode(4) && (weather != 2 && weather != 0 && weather != 6 && weather != 7))
-            return move.getBP() / 2; //solar beam in non-sun, non air current, or no weather
+            return move.getBP() / 2; //solar beam in non-sun, non-air current, or no weather
         //add more codes later with more moves //TODO
         return move.getBP();
     }
@@ -1213,7 +1213,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param move The used move.
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
-     * @param isPlayerTheUser Whether or not the player used this move.
+     * @param isPlayerTheUser If the player used this move.
      * @param moveDamage The damage inflicted by the move, which is relevant at this stage for HP-draining and recoil-inducing moves.
      */
     private void changeStats(Move move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, int moveDamage) {
@@ -1281,7 +1281,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void resolveStatChange(int statIndex, int numStages, Pokemon statChanger, boolean isPlayerChangingStats) {
         if(statChanger.getInitStats()[0] == 0) {
-            return; // Skip the stat change if the Pokemon has fainted
+            return; // Skip the stat change if the Pokémon has fainted
         }
 
         int actualChange;
@@ -1383,7 +1383,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * Changes the non-volatile status of the Pokémon done by the move, if necessary and applicable. It uses other methods
-     * to decide whether or not the stat change if valid, and then it changes the appropriate text boxes as well.
+     * to decide if the stat change if valid, and then it changes the appropriate text boxes as well.
      * @param move The move used.
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
@@ -1396,13 +1396,13 @@ public class BattleFragment extends Fragment { //Fragment code 3
         }
         String moveUserAbility = moveUser.getAbility();
         boolean nonVolCheck = move.avoidsNonVolStatus(moveStatus, moveUser.getNonVolStatus(), moveUser.getType(), moveUserAbility, moveUserAbility);
-        if(move.statusesUser() && !nonVolCheck) { // If it would affect the user
+        if(move.statusesUser() && !nonVolCheck) { // If it affects the user
             moveUser.setNonVolStatus(moveStatus);
             changeStatusText(moveStatus, isPlayerTheUser);
             addCommentary(" " + moveUser.getName());
         }
         else if(!move.statusesUser() && !move.avoidsNonVolStatus(moveStatus, moveTarget.getNonVolStatus(),
-                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { // If it would affect the opponent
+                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { // If it affects the opponent
             moveTarget.setNonVolStatus(moveStatus);
             changeStatusText(moveStatus, !isPlayerTheUser);
             addCommentary(" " + moveTarget.getName());
@@ -1412,7 +1412,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
     /**
      * Changes the volatile status of the Pokémon done by the move, if necessary and applicable. It uses other methods
-     * to decide whether or not the status change if valid, and then it changes the appropriate text boxes as well.
+     * to decide if the status change if valid, and then it changes the appropriate text boxes as well.
      * @param move The move used.
      * @param moveUser The user of the move.
      * @param moveTarget The target of the move.
@@ -1427,7 +1427,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         String userStatus = moveUser.getVolStatus();
         String moveUserAbility = moveUser.getAbility();
         boolean volCheck = move.avoidsVolStatus(moveStatus, userStatus, moveUser.getType(), moveUserAbility, moveUserAbility);
-        if(move.statusesUser() && !volCheck) { // If it would affect the user
+        if(move.statusesUser() && !volCheck) { // If it affects the user
             if(!userStatus.contains(moveStatus)) {
                 moveUser.setNonVolStatus(moveStatus);
                 changeStatusText(moveStatus, isPlayerTheUser); // User case
@@ -1435,7 +1435,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
             }
         }
         else if(!move.statusesUser() && !move.avoidsVolStatus(moveStatus, moveTarget.getVolStatus(),
-                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { // If it would affect the opponent
+                moveTarget.getType(), moveUserAbility, moveTarget.getAbility())) { // If it affects the opponent
             String targetStatus = moveTarget.getVolStatus();
             if(!targetStatus.contains(moveStatus)) {
                 moveTarget.setNonVolStatus(moveStatus);

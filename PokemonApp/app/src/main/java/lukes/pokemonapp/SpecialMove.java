@@ -59,7 +59,7 @@ public class SpecialMove extends AttackingMove {
     };
 
     /**
-     * Determines whether or not the move is physical.
+     * Determines if the move is physical.
      * For this class, it always returns false since we know the subtype at this point (SpecialMove).
      * @return True if the move is physical, which means that it always returns false.
      */
@@ -69,8 +69,8 @@ public class SpecialMove extends AttackingMove {
     }
 
     /**
-     * Sets the move to its preset state based on its name. This contains all of the known special moves
-     * in the game at this point.
+     * Sets the move to its preset state based on its name. This contains each known special move
+     * In the game at this point.
      * @param mName The name of the move.
      */
     @Override

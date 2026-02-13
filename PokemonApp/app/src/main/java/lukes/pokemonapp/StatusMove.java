@@ -71,7 +71,7 @@ public class StatusMove extends Move {
     };
 
     /**
-     * Checks whether or not the move is an attacking move, which is mainly used for polymorphism.
+     * Checks if the move is an attacking move, which is mainly used for polymorphism.
      * For this class, it always returns false since we know the subtype at this point (StatusMove).
      * @return True if the move is an attacking move, which means that it always returns false.
      */

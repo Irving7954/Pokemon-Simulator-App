@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
  * The representation of a Pokémon. This contains the necessary information about the Pokémon,
  * including its name, type, statuses, ability, level, current currStats, starting currStats, and moves.
  * Its functionality is still being tweaked (including gender, accuracy, evasion, and others). This also
- * contains lists of all of the base current stats of known Pokémon (9 so far).
+ * contains lists of the current base stats of known Pokémon (9 so far).
  * @author Luke Schoeberle 7/11/2016.
  */
 @SuppressWarnings("unused")
@@ -426,7 +426,7 @@ public class Pokemon implements Parcelable {
      * Copies the stat stages from the provided array to this Pokémon's stat stage array, which is used mainly
      * for initialization and changing many different stat stages. For reference, the values in the array
      * from index 0-7 are HP, Attack, Defense, Special Attack, Special Defense, Speed, Accuracy, and Evasion.
-     * @param newStatStages The new array that represents all of the stat stages.
+     * @param newStatStages The new array that represents the new stat stages.
      */
     public void setStatStages(Integer[] newStatStages) {
         statStages = newStatStages;
@@ -434,7 +434,7 @@ public class Pokemon implements Parcelable {
 
     /**
      * Sets the stat at index to value, which changes one specific stat value.
-     * This is the preferred external API to change a Pokemon's stats since these stats
+     * This is the preferred external API to change a Pokémon's stats since these stats
      * typically only change individually (or at most in small groups) during actual battles.
      * @param value The new value of the stat.
      * @param index The index of the stat.
@@ -448,7 +448,7 @@ public class Pokemon implements Parcelable {
      * for initialization and changing the base stats for rare moves like Transform. For reference,
      * the values in the array from index 0-7 are HP, Attack, Defense, Special Attack, Special Defense,
      * Speed, Accuracy, and Evasion, respectively.
-     * @param newStats The new array that represents all of the stats.
+     * @param newStats The new array that represents the new stats.
      */
     public void setStats(Integer[] newStats) {
         initStats = newStats;
@@ -499,72 +499,72 @@ public class Pokemon implements Parcelable {
     }
 
     /**
-     * Returns the Pokemon's name.
-     * @return the Pokemon's name.
+     * Returns the Pokémon's name.
+     * @return The Pokémon's name.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Returns the Pokemon's type.
-     * @return the Pokemon's type.
+     * Returns the Pokémon's type.
+     * @return The Pokémon's type.
      */
     public String getType() {
         return type;
     }
 
     /**
-     * Returns the Pokemon's volatile status.
-     * @return the Pokemon's volatile status.
+     * Returns the Pokémon's volatile status.
+     * @return The Pokémon's volatile status.
      */
     public String getVolStatus() {
         return volStatus;
     }
 
     /**
-     * Returns the Pokemon's level.
-     * @return the Pokemon's level.
+     * Returns the Pokémon's level.
+     * @return The Pokémon's level.
      */
     public int getLevel() {
         return level;
     }
 
     /**
-     * Returns the Pokemon's moves.
-     * @return the Pokemon's moves.
+     * Returns the Pokémon's moves.
+     * @return The Pokémon's moves.
      */
     public ArrayList<Move> getMoves() {
         return moves;
     }
 
     /**
-     * Returns the Pokemon's current stats.
-     * @return the Pokemon's current stats.
+     * Returns the Pokémon's current stats.
+     * @return The Pokémon's current stats.
      */
     public Integer[] getStatStages() {
         return statStages;
     }
 
     /**
-     * Returns the Pokemon's ability.
-     * @return the Pokemon's ability.
+     * Returns the Pokémon's ability.
+     * @return The Pokémon's ability.
      */
     public String getAbility() {
         return ability;
     }
 
     /**
-     * Returns the Pokemon's initial stats.
-     * @return the Pokemon's initial stats.
+     * Returns the Pokémon's initial stats.
+     * @return The Pokémon's initial stats.
      */
     public Integer[] getInitStats() {
         return initStats;
     }
 
     /**
-     * Returns the Pokemon's non-volatile status.
-     * @return the Pokemon's non-volatile status
+     * Returns the Pokémon's non-volatile status.
+     * @return The Pokémon's non-volatile status
      */
     public String getNonVolStatus() {
         return nonVolStatus;

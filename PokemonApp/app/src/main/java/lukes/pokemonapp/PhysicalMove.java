@@ -59,7 +59,7 @@ public class PhysicalMove extends AttackingMove {
     };
 
     /**
-     * Determines whether or not the move is physical.
+     * Determines if the move is physical.
      * For this class, it always returns true since we know the subtype at this point (PhysicalMove).
      * @return True if the move is physical, which means that it always returns true.
      */
@@ -69,8 +69,8 @@ public class PhysicalMove extends AttackingMove {
     }
 
     /**
-     * Sets the move to its preset state based on its name. This contains all of the known physical moves
-     * in the game at this point.
+     * Sets the move to its preset state based on its name. This contains each known physical move
+     * In the game at this point.
      * @param mName The name of the move.
      */
     public void setMove(String mName) {

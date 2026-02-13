@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets the fragment to the specified code and pokemon name, if applicable. Each code represents
+     * Sets the fragment based on the specified code and the Pokémon's name, if applicable. Each code represents
      * a different screen, and this method is used to toggle between them. For certain ones, it uses
      * the same screen but displays different data based on the second parameter (the name). This uses
      * FragmentManager and FragmentTransaction for this, which I don't entirely understand.
      * @param position The fragment that you wish to move to (based on its code).
-     * @param pokeName The Pokemon that you wish to display (meaningless except for certain Fragments).
+     * @param pokeName The Pokémon that you wish to display (meaningless except for certain Fragments).
      */
     public void displayView(int position, String pokeName) {
         Fragment fragment;

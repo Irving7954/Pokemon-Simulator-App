@@ -95,5 +95,4 @@ public abstract class Trainer {
         }
         return s.toString();
     }
-
 }

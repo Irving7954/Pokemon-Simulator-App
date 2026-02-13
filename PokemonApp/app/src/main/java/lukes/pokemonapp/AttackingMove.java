@@ -30,7 +30,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
     private String addEffects;
 
     /**
-     * Determines whether or not the move makes contact. This matters for certain abilities and moves.
+     * Determines if the move makes contact. This matters for certain abilities and moves.
      */
     private boolean makesContact;
 
@@ -90,14 +90,14 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
     public abstract void setMove(String mName);
 
     /**
-     * Determines whether or not the move is physical. This is undefined in this superclass
+     * Determines if the move is physical. This is undefined in this superclass
      * because this cannot be determined without knowing its subtype (PhysicalMove or SpecialMove).
      * @return True if this move is physical, false otherwise.
      */
     public abstract boolean isPhysical();
 
     /**
-     * Checks whether or not the move is an attacking move, which is mainly used for polymorphism.
+     * Checks if the move is an attacking move, which is mainly used for polymorphism.
      * For this class, it always returns true since we know the subtype at this point (AttackingMove).
      * @return True if the move is an attacking move, which means that it always returns true.
      */
@@ -131,7 +131,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
     }
 
     /**
-     * Returns whether or not this move makes contact.
+     * Returns if this move makes contact.
      * @return True if this move makes contact, false otherwise.
      */
     public boolean makesContact() {
@@ -147,7 +147,7 @@ public abstract class AttackingMove extends Move { // add accuracy codes //TODO
     }
 
     /**
-     * Determines whether or not this move's BP can change.
+     * Determines if this move's BP can change.
      * @return True if this move's BP can change, false otherwise.
      */
     public boolean canBPChange() {  //think about adding a similar method for accuracy later (Thunder, Hurricane, etc.)
