@@ -1330,7 +1330,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 throw new IllegalArgumentException(statIndex + " is not a possible index in this scenario!");
         }
         changeStatsText(statName, modifier, isPlayerChangingStats);
-        addCommentary(" " + statChanger.getName() + "'s " + statName + " changed by " + actualChange  + " stages!");
+        String statChangeTextBase = " " + statChanger.getName() + "'s " + statName;
+        if(actualChange < 0) {
+            int absChange = Math.abs(actualChange);
+            addCommentary(statChangeTextBase + " fell by " + absChange + " stage" + (absChange > 1 ? "s" : "") + ".");
+        }
+        else if(actualChange > 0) {
+            addCommentary(statChangeTextBase + " increased by " + actualChange + " stage" + (actualChange > 1 ? "s" : "") + ".");
+        }
+        else {
+            boolean isAtNegativeLimit = modifier < 1;
+            addCommentary(statChangeTextBase + " won't go any " + (isAtNegativeLimit ? "lower" : "higher") + "!");
+        }
     }
 
     /**
