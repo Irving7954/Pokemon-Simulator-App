@@ -1,7 +1,17 @@
-This is a very unfinished version of a single-player Android Pokémon simulator app.
+**Note: This is a very unfinished version of a single-player Android Pokémon simulator app, so many of its intended features, such as statuses, end-of-turn effects, and complex field effects, have not been implemented yet. Currently, users can mainly only use attacking moves with the first two Pokémon, so this functionality can be tested with the instructions below.**
 
-At the moment, the user can only select a team of three starter Pokémon at roughly level 50 from three different teams, and then they battle a pre-determined team of three Pokémon at roughly level 50. Currently, most of the attacking moves generally function as expected with a technically functional but confusing UI, but most of the status moves, end-of-turn effects, and more complex field effects like weather still need to be implemented.
+To test the Pokémon app's in its current state, follow the instructions below:
 
-With that in mind, the main current issue with the app is that many significant features need to be added before it can truly be considered complete.
+1. If necessary, download Android Studio, and ensure that it is set up for development on Android 33+.
 
-For reference, the app can be tested by cloning the repo and then testing it in Android Studio  on an emulator or in developer mode on an actual Android device on Android 33+, but, as I mentioned above, this is not  currently ready for an official release due to the problems noted above.
+2. In the terminal, clone the repository to its own folder with the following command:
+
+`git clone https://github.com/Irving7954/Pokemon-Simulator-App`
+
+3. In Android Studio, open the `PokemonApp` folder as a new Android project.
+
+4. In Android Studio, create an Android 33+ emulator, or connect an Android 33+ device to your computer. If you are using an actual Android device, connect your device to Android Studio in whatever way you prefer, such as turning on developer mode by clicking the build number five times and enabling USB debugging.
+
+5. In Android Studio, build the project in Gradle, and then run/debug the app on your Android emulator/device. If you are using an actual Android device, this should install the app on your machine. On either version of the Android app, you should see the following introductory screen:
+
+![Expected Pokémon App Image](./screenshot.png)
