@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PokemonApp</string>
     <string name="WelcomeTextLabel">Welcome to the world of Pokémon! Press the button below to begin your journey.</string>
-    <string name="TeamSelectionIntroLabel">Two teams of three Pokémon are available to you. Click on the buttons below to see each Pokémon team in detail, and then choose one team.</string>
+    <string name="TeamSelectionIntroLabel">Three teams of three Pokémon are available to you. Click on the buttons below to see each Pokémon team in detail, and then choose one team.</string>
     <string name="StartButtonLabel">Start</string>
     <string name="EnemyTrainerNameLabel">Enemy</string>
     <string name="PlayerTrainerNameLabel">Player</string>
