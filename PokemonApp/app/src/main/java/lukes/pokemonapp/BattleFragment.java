@@ -171,65 +171,65 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 case "Bulbasaur":
                     player.addPokemon("Charmander");
                     player.addPokemon("Squirtle");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Charmander");
-                    player.addPokemon("Squirtle");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Charmander");
+                    //player.addPokemon("Squirtle");
                     break;
                 case "Charmander":
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Squirtle");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Bulbasaur");
-                    player.addPokemon("Squirtle");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Bulbasaur");
+                    //player.addPokemon("Squirtle");
                     break;
                 case "Squirtle":
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Charmander");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Bulbasaur");
-                    player.addPokemon("Charmander");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Bulbasaur");
+                    //player.addPokemon("Charmander");
                     break;
                 case "Chikorita":
                     player.addPokemon("Cyndaquil");
                     player.addPokemon("Totodile");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Cyndaquil");
-                    player.addPokemon("Totodile");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Cyndaquil");
+                    //player.addPokemon("Totodile");
                     break;
                 case "Cyndaquil":
                     player.addPokemon("Chikorita");
                     player.addPokemon("Totodile");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Chikorita");
-                    player.addPokemon("Totodile");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Chikorita");
+                    //player.addPokemon("Totodile");
                     break;
                 case "Totodile":
                     player.addPokemon("Chikorita");
                     player.addPokemon("Cyndaquil");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Chikorita");
-                    player.addPokemon("Cyndaquil");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Chikorita");
+                    //player.addPokemon("Cyndaquil");
                     break;
                 case "Treecko":
                     player.addPokemon("Torchic");
                     player.addPokemon("Mudkip");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Torchic");
-                    player.addPokemon("Mudkip");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Torchic");
+                    //player.addPokemon("Mudkip");
                     break;
                 case "Torchic":
                     player.addPokemon("Treecko");
                     player.addPokemon("Totodile");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Treecko");
-                    player.addPokemon("Totodile");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Treecko");
+                    //player.addPokemon("Totodile");
                     break;
                 case "Mudkip":
                     player.addPokemon("Treecko");
                     player.addPokemon("Torchic");
-                    player.addPokemon(leadPlayerPoke);
-                    player.addPokemon("Treecko");
-                    player.addPokemon("Torchic");
+                    //player.addPokemon(leadPlayerPoke);
+                    //player.addPokemon("Treecko");
+                    //player.addPokemon("Torchic");
                     break;
                 default:
                     Log.d("AddPersonActivity", firstPokeName + " cannot yet be the first possible Pokémon in normal cases!");
@@ -297,18 +297,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
             playerPoke = myView.findViewById(R.id.currentPlayerPoke);
             setImage(playerPoke, leadPlayerPoke);
-            //initializes the progress bars
+            // Initializes the progress bars
             playerHPBar = myView.findViewById(R.id.playerHPBar);
             adjustHPBars(playerHPBar, leadPlayerPoke, playerPokeAndHP);
 
-            //initializations for the enemy trainer
+            // Initializations for the enemy trainer
             enemy = new EnemyTrainer("Angel");
             enemy.addPokemon("Voltorb");
             enemy.addPokemon("Wooper");
             enemy.addPokemon("Snubbull");
-            enemy.addPokemon("Voltorb");
-            enemy.addPokemon("Wooper");
-            enemy.addPokemon("Snubbull");
+            //enemy.addPokemon("Voltorb");
+            //enemy.addPokemon("Wooper");
+            //enemy.addPokemon("Snubbull");
             // Add more enemy pokemon later //TODO
 
             leadEnemyPoke = enemy.getTeam().get(0);
