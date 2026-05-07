@@ -20,11 +20,11 @@ To test the Pokémon app's in its current state, follow the instructions below:
 
 ![Expected Team Selection Image](./PokemonApp/screenshots/team_selection_image.png)
 
-7. Using the buttons on the Team Selection screens, choose your team of three Pokémon, and then advance to the Battle Simulator screen. For reference, here is an image of the Team Selection screen with the team's first Pokémon after one of the teams has been selected:
+7. Using the buttons on the Team Selection screens, choose your team of three Pokémon, and then advance to the Battle Simulator screen. For reference, here is an image of the Team Selection screen with Team 2's first Pokémon (Chikorita) after Team 2 has been selected:
 
 ![Expected Pokémon Details Image](./PokemonApp/screenshots/team_pokemon_details_image.png)
 
-8. On the Battle Simulator screen, enter your name, and then start battling by selecting a move, which must be an attacking move at this point. For reference, here is an image of the Battle Simulator screen once you have started battling:
+8. On the Battle Simulator screen, enter your name, and then start battling by selecting a move, which must be an attacking move at this point. For reference, here is a sample image of the Battle Simulator screen once you have started battling:
 
 ![Expected Battle Simulator Image](./PokemonApp/screenshots/battle_simulator_image.png)
 
