@@ -28,7 +28,7 @@ import java.util.Random;
  * @author Luke Schoeberle 7/23/2016.
  */
 @SuppressWarnings("unused")
-public class BattleFragment extends Fragment { //Fragment code 3
+public class BattleFragment extends Fragment { // Fragment code 3
 
     /**
      * The list of stat modifiers for the normal stats (Attack, Defense, Sp. Att., Sp. Def., and HP). These
@@ -104,7 +104,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * like Hurricane, Thunder, and Blizzard, along with several abilities. The meaning of each code
      * is specified below.
      */
-    private int weather; /* weather codes:
+    private int weather; /* Weather codes:
                                 0: none, 1: rain, 2: sun, 3: sand, 4: hail, 5: heavy rain, 6: harsh sunlight, 7: air current
                                                                                POgre        PDon                MRay        */
 
@@ -171,70 +171,44 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 case "Bulbasaur":
                     player.addPokemon("Charmander");
                     player.addPokemon("Squirtle");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Charmander");
-                    //player.addPokemon("Squirtle");
                     break;
                 case "Charmander":
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Squirtle");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Bulbasaur");
-                    //player.addPokemon("Squirtle");
                     break;
                 case "Squirtle":
                     player.addPokemon("Bulbasaur");
                     player.addPokemon("Charmander");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Bulbasaur");
-                    //player.addPokemon("Charmander");
                     break;
                 case "Chikorita":
                     player.addPokemon("Cyndaquil");
                     player.addPokemon("Totodile");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Cyndaquil");
-                    //player.addPokemon("Totodile");
                     break;
                 case "Cyndaquil":
                     player.addPokemon("Chikorita");
                     player.addPokemon("Totodile");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Chikorita");
-                    //player.addPokemon("Totodile");
                     break;
                 case "Totodile":
                     player.addPokemon("Chikorita");
                     player.addPokemon("Cyndaquil");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Chikorita");
-                    //player.addPokemon("Cyndaquil");
                     break;
                 case "Treecko":
                     player.addPokemon("Torchic");
                     player.addPokemon("Mudkip");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Torchic");
-                    //player.addPokemon("Mudkip");
                     break;
                 case "Torchic":
                     player.addPokemon("Treecko");
                     player.addPokemon("Totodile");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Treecko");
-                    //player.addPokemon("Totodile");
                     break;
                 case "Mudkip":
                     player.addPokemon("Treecko");
                     player.addPokemon("Torchic");
-                    //player.addPokemon(leadPlayerPoke);
-                    //player.addPokemon("Treecko");
-                    //player.addPokemon("Torchic");
                     break;
                 default:
                     Log.d("AddPersonActivity", firstPokeName + " cannot yet be the first possible Pokémon in normal cases!");
                     // throw new IllegalArgumentException(firstPokeName + " cannot yet be the first possible Pokémon!");
             }
+            // Add more player Pokémon later //TODO
 
             // Initializes text boxes
             playerPokeAndHP = myView.findViewById(R.id.playerPokeAndHP);
@@ -247,7 +221,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
             ArrayList<Move> playerMoves = leadPlayerPoke.getMoves();
             for (int i = 0; i < playerMoves.size(); i++) {
-               //initialize buttons to R.id.move# and set their text to the leadPoke's moves
+               // Initialize buttons to R.id.move# and set their text to the leadPoke's moves
                switch (i) {
                    case 0:
                        moveButtons.add(myView.findViewById(R.id.move1));
@@ -269,7 +243,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
             playerImages = new ArrayList<>();
             for (int i = 0; i < player.getTeam().size(); i++) {
-                //initialize images to R.id.image# and set their text to the leadPoke's moves
+                // Initialize images to R.id.image# and set their text to the leadPoke's moves
                 switch (i) {
                     case 0:
                         playerImages.add(myView.findViewById(R.id.playerPoke1));
@@ -306,13 +280,10 @@ public class BattleFragment extends Fragment { //Fragment code 3
             enemy.addPokemon("Voltorb");
             enemy.addPokemon("Wooper");
             enemy.addPokemon("Snubbull");
-            //enemy.addPokemon("Voltorb");
-            //enemy.addPokemon("Wooper");
-            //enemy.addPokemon("Snubbull");
-            // Add more enemy pokemon later //TODO
+            // Add more enemy Pokémon later //TODO
 
             leadEnemyPoke = enemy.getTeam().get(0);
-            //initializes text boxes
+            // Initializes text boxes
             enemyName = myView.findViewById(R.id.enemyName);
             enemyName.setText(enemy.getName());
 
@@ -323,7 +294,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
             enemyImages = new ArrayList<>();
             for (int i = 0; i < enemy.getTeam().size(); i++) {
-                //initialize images to R.id.image# and set their text to the leadPoke's moves
+                // Initialize images to R.id.image# and set their text to the leadPoke's moves
                 switch (i) {
                     case 0:
                         enemyImages.add(myView.findViewById(R.id.enemyPoke1));
@@ -351,7 +322,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
             enemyPoke = myView.findViewById(R.id.currentEnemyPoke);
             setImage(enemyPoke, leadEnemyPoke);
-            //initializes HP bars
+            // Initializes HP bars
             enemyHPBar = myView.findViewById(R.id.enemyHPBar);
             adjustHPBars(enemyHPBar, leadEnemyPoke, enemyPokeAndHP);
 
@@ -447,7 +418,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         else if(playerSpeed < enemySpeed) {
             moveEnemyFirst(moveIndex);
         }
-        else { //speed tie
+        else { // Speed tie
             int randomNum = rand.nextInt(2); // This will properly give a fifty 50% chance of 0 and 1
             if (randomNum == 0) {
                 movePlayerFirst(moveIndex);
@@ -489,7 +460,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
         }
         if(leadPlayerPoke.getInitStats()[0] > 0) {
             addCommentaryWithNewLine("Second, ");
-            resolveMoveType(moveIndex, false);  // Playe
+            resolveMoveType(moveIndex, false);  // Player
         }
     }
 
@@ -586,30 +557,30 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void compareBP(ArrayList<Move> moveChoices, boolean didPlayerMoveFirst) {
         Move[] equalBPMoves = new Move[4];
-        int numAdded = 0; //this is the effective length of the array
+        int numAdded = 0; // This is the effective length of the array
         AttackingMove maxMove = (AttackingMove) moveChoices.get(0);
         equalBPMoves[numAdded++] = maxMove;
         double maxBPModifier = checkTypeMatchups(leadPlayerPoke.getType(), maxMove.getType(), 1, leadEnemyPoke);
         int maxBP = (int) (calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * maxBPModifier);
 
-        for(int i = 1; i < moveChoices.size(); i++) { //compare each move
+        for(int i = 1; i < moveChoices.size(); i++) { // Compare each move
             AttackingMove move = (AttackingMove) moveChoices.get(i);
             double modifier = checkTypeMatchups(leadPlayerPoke.getType(), move.getType(), 1, leadEnemyPoke);
             int newBP = (int) (calculateBP(move, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * modifier);
             if(newBP > maxBP) {
-                maxBP = newBP; //reset the maxBP and the array of equal BPs
+                maxBP = newBP; // Reset the maxBP and the array of equal BPs
                 equalBPMoves = new Move[4];
                 numAdded = 0;
                 equalBPMoves[numAdded++] = move;
             }
             else if((calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * maxBPModifier) ==
                     (calculateBP(move, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * modifier))
-                equalBPMoves[numAdded++] = move; //add the duplicate BP to the array
+                equalBPMoves[numAdded++] = move; // Add the duplicate BP to the array
         }
         if(numAdded == 1)
             resolveMove(maxMove, leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
         else {
-            int randomNum = rand.nextInt(numAdded); //choose randomly from the equal BP moves
+            int randomNum = rand.nextInt(numAdded); // Choose randomly from the equal BP moves
             resolveMove((AttackingMove) equalBPMoves[randomNum], leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
         }
     }
@@ -628,7 +599,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private void resolveMove(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean isPlayerTheUser, boolean didPlayerMoveFirst) {
         int acc = rand.nextInt(100);
-        switch(weather) { //finish this section later //TODO
+        switch(weather) { // Finish this section later //TODO
             case 1: case 5:
                 if(move.getName().equals("Thunder") || move.getName().equals("Hurricane")) {
                     acc = -1; // Ensure that it hits
@@ -650,35 +621,35 @@ public class BattleFragment extends Fragment { //Fragment code 3
 
             if(takesTwoTurns(move, moveUser, weather)) // Check for two-turn moves
                 return;
-            //first part of formula
+            // First part of formula
             double damage = (2 * moveUser.getLevel() + 10) * calculateBP(move, moveUser, moveTarget, didPlayerMoveFirst) / 250.0;
             Log.d("AddPersonActivity", damage + "");
 
             boolean isCrit = isCriticalHit(move, moveUser, moveTarget);
-            damage = getStatsModifier(move, moveUser, moveTarget, damage, isCrit); //compare attacking to defensive values
+            damage = getStatsModifier(move, moveUser, moveTarget, damage, isCrit); // Compare attacking to defensive values
             Log.d("AddPersonActivity", damage + "");
 
             damage += 2;
             String mType = move.getType();
             String eType = moveTarget.getType();
-            damage = checkTypeMatchups(eType, mType, damage, moveUser); //adjust based on type matchups
+            damage = checkTypeMatchups(eType, mType, damage, moveUser); // Adjust based on type matchups
             Log.d("AddPersonActivity", damage + "");
 
             if(isCrit)
                 damage *= 1.5;
             if(move.isPhysical() && moveUser.getNonVolStatus().contains("Burned"))
-                damage /= 2; //consider more factors like abilities and items later //TODO
+                damage /= 2; // Consider more factors like abilities and items later //TODO
             damage = resolveWeatherEffects(move, moveUser, moveTarget, damage, weather);
             Log.d("AddPersonActivity", damage + "");
 
-            int randomNum = rand.nextInt(16) + 85; //random modifier between .85 and 1
+            int randomNum = rand.nextInt(16) + 85; // Random modifier between .85 and 1
             damage *= randomNum / 100.0;
             Log.d("AddPersonActivity", damage + "");
 
-            int roundedDownDamage = (int) damage; //round down
+            int roundedDownDamage = (int) damage; // Round down
             int initHP = moveTarget.getInitStats()[0];
             int actualDamage = Math.min(roundedDownDamage, initHP);
-            moveTarget.setStat(initHP - actualDamage, 0); //Reduce HP
+            moveTarget.setStat(initHP - actualDamage, 0); // Reduce HP
 
             // Change the code so that these strings match the actual player names later //TODO
 //            String playerString = getString(R.string.PlayerTrainerNameLabel).toLowerCase();
@@ -691,14 +662,14 @@ public class BattleFragment extends Fragment { //Fragment code 3
                                                                 " took " + actualDamage + "% damage!");
 
             ProgressBar tempBar = enemyHPBar;
-            TextView tempV = enemyPokeAndHP; //choose the appropriate hp bar and text box
+            TextView tempV = enemyPokeAndHP; // Choose the appropriate hp bar and text box
             if(!isPlayerTheUser) {
                 tempBar = playerHPBar;
                 tempV = playerPokeAndHP;
             }
-            adjustHPBars(tempBar, moveTarget, tempV); //adjust the hp bars
+            adjustHPBars(tempBar, moveTarget, tempV); // Adjust the hp bars
 
-            resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, actualDamage); //stat changes, status changes, other
+            resolveAdditionalEffects(move, moveUser, moveTarget, isPlayerTheUser, actualDamage); // Stat changes, status changes, other
         }
         else {
             setCommentary(commentary + moveUserName + "'s attack missed!"); // Handle the attacking moves that can fail rather than miss, such as Sucker Punch //TODO
@@ -763,7 +734,7 @@ public class BattleFragment extends Fragment { //Fragment code 3
                     damage *= 0.5;
                 break;
         }
-        //add in other effects later, such as abilities //TODO
+        // Add in other effects later, such as abilities //TODO
         return damage;
     }
 
@@ -775,14 +746,14 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @param hpText The HP text of the injured Pokémon.
      */
     private void adjustHPBars(ProgressBar hpBar, Pokemon injuredPoke, TextView hpText) {
-        double hpPercentage = (double) injuredPoke.getInitStats()[0] / injuredPoke.getMaxHP(); //find HP percentage
-        long roundedHPPercent = Math.round(hpPercentage * 100); //round hpPercentage
+        double hpPercentage = (double) injuredPoke.getInitStats()[0] / injuredPoke.getMaxHP(); // Find HP percentage
+        long roundedHPPercent = Math.round(hpPercentage * 100); // Round hpPercentage
 
-        hpBar.setProgress((int) roundedHPPercent);  //changes HP bar percentage
+        hpBar.setProgress((int) roundedHPPercent);  // Changes HP bar percentage
         if(hpBar.getProgress() <= 50 && hpBar.getProgress() >= 25) {
             hpBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(255, 255, 25), BlendModeCompat.SRC_IN));
         }
-        else if(hpBar.getProgress() <= 25) {  //change color
+        else if(hpBar.getProgress() <= 25) {  // Change color
             hpBar.getProgressDrawable().setColorFilter(BlendModeColorFilterCompat.createBlendModeColorFilterCompat(Color.rgb(255, 50, 50), BlendModeCompat.SRC_IN));
         }
         else {
@@ -790,10 +761,10 @@ public class BattleFragment extends Fragment { //Fragment code 3
         }
         String commonHpPrefix = injuredPoke.getName() + " HP: ";
         if (roundedHPPercent >= 0) {
-            hpText.setText(String.format("%s%s%%", commonHpPrefix, roundedHPPercent)); //set the text to the percentage
+            hpText.setText(String.format("%s%s%%", commonHpPrefix, roundedHPPercent)); // Set the text to the percentage
         }
         else {
-            hpText.setText(String.format("%s0%%", commonHpPrefix)); //Deal with fainting once it is at most zero //TODO
+            hpText.setText(String.format("%s0%%", commonHpPrefix)); // Deal with fainting once it is at most zero //TODO
         }
     }
 
@@ -854,26 +825,26 @@ public class BattleFragment extends Fragment { //Fragment code 3
     private boolean takesTwoTurns(AttackingMove move, Pokemon moveUser, int weather) {
         int ttCode = move.getTwoTurnCode();
         if(ttCode == 2 && (weather == 2 || weather == 6))
-            return false; //check this //TODO
+            return false; // Check this //TODO
         if(ttCode != 100) {
-            currTTCode = ttCode; //store initial ttCode
+            currTTCode = ttCode; // Store initial ttCode
             if(ttCode == 0)
                 return false;
             else {
                 for(int i = 0; i < moveButtons.size(); i++)
                     if (moveButtons.get(i) != null && !moveButtons.get(i).getText().toString().equals(move.getName()))
-                        moveButtons.get(i).setEnabled(false);  //disable all move buttons
-                move.setTwoTurnCode(100); //set ttCode to charging turn
+                        moveButtons.get(i).setEnabled(false);  // Disable all move buttons
+                move.setTwoTurnCode(100); // Set ttCode to charging turn
                 if(ttCode > 2)
                     moveUser.setInvulnCode(ttCode);
                 return true;
             }
         }
-        else { //deal with yawn and interruptions //TODO
-            move.setTwoTurnCode(currTTCode); //reset two-turn code and invulnerability
+        else { // Deal with yawn and interruptions //TODO
+            move.setTwoTurnCode(currTTCode); // Reset two-turn code and invulnerability
             moveUser.setInvulnCode(0);
             for(int i = 0; i < moveButtons.size(); i++)
-                if(!moveButtons.get(i).isEnabled()) //re-enable move buttons
+                if(!moveButtons.get(i).isEnabled()) // Re-enable move buttons
                     moveButtons.get(i).setEnabled(true);
             return false;
         }
@@ -892,14 +863,14 @@ public class BattleFragment extends Fragment { //Fragment code 3
      */
     private int calculateBP(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, boolean didPlayerMoveFirst) {
         if(move.hasBPCode(1))
-            return move.getBP() * moveUser.getInitStats()[0] / moveUser.getMaxHP(); //eruption/water spout
+            return move.getBP() * moveUser.getInitStats()[0] / moveUser.getMaxHP(); // Eruption/water spout
         if(move.hasBPCode(2) && moveTarget.getInvulnCode() == 6)
-            return move.getBP() * 2 ; //earthquake with dig
+            return move.getBP() * 2 ; // Earthquake with Dig
         if(move.hasBPCode(3) && !didPlayerMoveFirst)
-            return move.getBP() * 2; //payback
+            return move.getBP() * 2; // Payback
         if(move.hasBPCode(4) && (weather != 2 && weather != 0 && weather != 6 && weather != 7))
-            return move.getBP() / 2; //solar beam in non-sun, non-air current, or no weather
-        //add more codes later with more moves //TODO
+            return move.getBP() / 2; // Solar Beam in non-sun, non-air current, or no weather
+        // Add more codes later with more moves //TODO
         return move.getBP();
     }
 
@@ -915,18 +886,18 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @return The damage after it has been modified by this method.
      */
     private double getStatsModifier(AttackingMove move, Pokemon moveUser, Pokemon moveTarget, double damage, boolean isCrit) {
-        if (move.getName().equals("Foul Play")) { //Foul Play
+        if (move.getName().equals("Foul Play")) { // Foul Play
             if (isCrit && moveTarget.getStatStages()[1] <= 0)
-                damage *= moveTarget.getInitStats()[1]; //choose greater attack on crit (between 0 and -something)
+                damage *= moveTarget.getInitStats()[1]; // Choose greater attack on crit (between 0 and -something)
             else
-                damage *= moveTarget.getInitStats()[1] * NORMAL_STAT_STAGES[moveTarget.getStatStages()[1]]; // check this later //TODO
+                damage *= moveTarget.getInitStats()[1] * NORMAL_STAT_STAGES[moveTarget.getStatStages()[1]]; // Check this later //TODO
             if (isCrit && moveTarget.getStatStages()[2] >= 0)
                 damage /= moveTarget.getInitStats()[2];
-            else              //choose lower defense on crit (between 0 and +something)
+            else              // Choose lower defense on crit (between 0 and +something)
                 damage /= moveTarget.getInitStats()[2] * NORMAL_STAT_STAGES[moveTarget.getStatStages()[2]];
         }
 
-        else if (move.isPhysical()) { //normal physical move
+        else if (move.isPhysical()) { // Normal physical move
             if (isCrit && moveUser.getStatStages()[1] <= 0)
                 damage *= moveUser.getInitStats()[1];
             else
@@ -948,11 +919,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
             else
                 damage /= moveTarget.getInitStats()[4] * NORMAL_STAT_STAGES[moveTarget.getStatStages()[4]];
             if(moveTarget.getType().contains("Rock") && weather == 3)
-                damage /= 1.5; //sandstorm Sp.Def. modifier
+                damage /= 1.5; // Sandstorm Sp.Def. modifier
 
-        } //normal special move
+        } // Normal special move
 
-        else { //Psyshock, Psystrike, Secret Sword
+        else { // Psyshock, Psystrike, Secret Sword
             if (isCrit && moveUser.getStatStages()[3] <= 0)
                 damage *= moveUser.getInitStats()[3];
             else
@@ -975,11 +946,11 @@ public class BattleFragment extends Fragment { //Fragment code 3
      * @return A modified damage based on type effectiveness and STAB.
      */
     private double checkTypeMatchups(String eType, String mType, double damage, Pokemon moveUser) {
-        switch (mType) { // add modifiers for type effectiveness
+        switch (mType) { // Add modifiers for type effectiveness
             case "Dark":
                 if (eType.contains("Ghost"))
                     damage *= 2;
-                if (eType.contains("Psychic")) //cumbersome but necessary
+                if (eType.contains("Psychic")) // Cumbersome but necessary
                     damage *= 2;
                 if (eType.contains("Dark"))
                     damage /= 2;
@@ -1182,9 +1153,9 @@ public class BattleFragment extends Fragment { //Fragment code 3
                 break;
             default:
                 throw new IllegalArgumentException(mType + " is not yet a valid offensive type in this simulator!");
-            //add more offensive types //TODO
+            // Add more offensive types //TODO
         }
-        if (moveUser.getType().contains(mType)) //STAB bonus
+        if (moveUser.getType().contains(mType)) // STAB bonus
             damage *= 1.5;
         return damage;
     }
