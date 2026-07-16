@@ -2,7 +2,7 @@
 
 buildscript {
     ext {
-        agp_version1 = '9.2.1'
+        agp_version = '9.3.0'
     }
 
     repositories {
@@ -10,7 +10,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$agp_version1"
+        classpath "com.android.tools.build:gradle:$agp_version"
     }
 }
 
