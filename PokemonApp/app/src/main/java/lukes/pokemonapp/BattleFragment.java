@@ -412,19 +412,20 @@ public class BattleFragment extends Fragment { // Fragment code 3
         setCommentary("");
         int playerSpeed = (int) (leadPlayerPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadPlayerPoke.getStatStages()[5]]);
         int enemySpeed = (int) (leadEnemyPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadEnemyPoke.getStatStages()[5]]);
+        Move move = leadPlayerPoke.getMoves().get(moveIndex);
         if(playerSpeed > enemySpeed) {
-            movePlayerFirst(moveIndex);
+            movePlayerFirst(move);
         }
         else if(playerSpeed < enemySpeed) {
-            moveEnemyFirst(moveIndex);
+            moveEnemyFirst(move);
         }
         else { // Speed tie
             int randomNum = rand.nextInt(2); // This will properly give a fifty 50% chance of 0 and 1
             if (randomNum == 0) {
-                movePlayerFirst(moveIndex);
+                movePlayerFirst(move);
             }
             else {
-                moveEnemyFirst(moveIndex);
+                moveEnemyFirst(move);
             }
         }
     } // Resolve priority and end-of-turn effects //TODO
@@ -433,12 +434,12 @@ public class BattleFragment extends Fragment { // Fragment code 3
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
      * The Pokémon have fainted before or during the turn during move resolution.
-     * @param moveIndex The index of the chosen move.
+     * @param move The chosen move.
      */
-    private void movePlayerFirst(int moveIndex) {
+    private void movePlayerFirst(Move move) {
         if(leadPlayerPoke.getInitStats()[0] > 0) {
             addCommentary("First, ");
-            resolveMoveType(moveIndex, true);  // Player
+            resolveMoveType(move, true);  // Player
         }
         if(leadEnemyPoke.getInitStats()[0] > 0) {
             addCommentaryWithNewLine("Second, ");
@@ -450,9 +451,9 @@ public class BattleFragment extends Fragment { // Fragment code 3
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
      * The Pokémon has taken damage and/or fainted before the move is actually resolved, including on the same turn.
-     * @param moveIndex The index of the chosen move.
+     * @param move The chosen move.
      */
-    private void moveEnemyFirst(int moveIndex) {
+    private void moveEnemyFirst(Move move) {
         if(leadEnemyPoke.getInitStats()[0] > 0) {
             addCommentary("First, ");
             resolveAIMove(false); // Enemy
@@ -460,28 +461,27 @@ public class BattleFragment extends Fragment { // Fragment code 3
         }
         if(leadPlayerPoke.getInitStats()[0] > 0) {
             addCommentaryWithNewLine("Second, ");
-            resolveMoveType(moveIndex, false);  // Player
+            resolveMoveType(move, false);  // Player
         }
     }
 
     /**
      * A helper method that checks if the chosen move is valid and passes it off to the appropriate resolveMove
      * method based on if it is an AttackingMove.
-     * @param index The index of the chosen move.
+     * @param move The chosen move.
      * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
      *                           which is important for calculating BP and certain effects in some cases.
      */
-    private void resolveMoveType(int index, boolean didPlayerMoveFirst) {
-        Move genericMove = leadPlayerPoke.getMoves().get(index);
-        if(genericMove == null || genericMove.getName() == null)
-            throw new IllegalStateException("The move at index " + index + " is not valid!");
-        if (!genericMove.isAttackingMove()) {
-            StatusMove move = (StatusMove) genericMove;
-            resolveMove(move, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
+    private void resolveMoveType(Move move, boolean didPlayerMoveFirst) {
+        if(move == null || move.getName() == null)
+            throw new IllegalStateException("The provided move is not valid!");
+        if (!move.isAttackingMove()) {
+            StatusMove statusMove = (StatusMove) move;
+            resolveMove(statusMove, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
         }
         else {
-            AttackingMove move = (AttackingMove) genericMove;
-            resolveMove(move, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
+            AttackingMove attackingMove = (AttackingMove) move;
+            resolveMove(attackingMove, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
         }
     }
 
@@ -493,7 +493,8 @@ public class BattleFragment extends Fragment { // Fragment code 3
      *                           which is important for calculating BP and certain effects in some cases.
      */
     private void resolveAIMove(boolean didPlayerMoveFirst) {
-        ArrayList<Move> moves = leadEnemyPoke.getMoves(), firstMoveChoices = new ArrayList<>();
+        ArrayList<Move> moves = leadEnemyPoke.getMoves();
+        ArrayList<Move> firstMoveChoices = new ArrayList<>();
         int numAdded = 0;
         for (Move m : moves)  // Check for neutral/super-effective hits
             if (m.isAttackingMove() && checkTypeMatchups(leadPlayerPoke.getType(), m.getType(), 1, leadEnemyPoke) >= 1) {

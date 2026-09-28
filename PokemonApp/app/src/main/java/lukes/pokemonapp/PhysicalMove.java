@@ -85,6 +85,7 @@ public class PhysicalMove extends AttackingMove {
                 setMakesContact(true);
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and has no additional effects.");
+                setPriority(0);
                 break;
             case "Dig":
                 setType("Ground");
@@ -97,6 +98,7 @@ public class PhysicalMove extends AttackingMove {
                 setAdditionalEffects("This physical move burrows the user underground for one turn, making the user " +
                                      "invulnerable to most attacks. On the second turn, the user deals damage and comes " +
                                      "out of this semi-invulnerable state.");
+                setPriority(0);
                 break;
             case "Dragon Claw":
                 setType("Dragon");
@@ -107,6 +109,7 @@ public class PhysicalMove extends AttackingMove {
                 setMakesContact(true);
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and has no additional effects.");
+                setPriority(0);
                 break;
             case "Earthquake":
                 setType("Ground");
@@ -120,6 +123,7 @@ public class PhysicalMove extends AttackingMove {
                                      "except for dealing double damage to an opponent that is underground due to the move Dig." +
                                      "It also affects all other Pokémon in double battles.");
                 addToIBList(6);
+                setPriority(0);
                 break;
             case "Ice Punch":
                 setType("Ice");
@@ -133,6 +137,7 @@ public class PhysicalMove extends AttackingMove {
                                      "assuming that the opposing Pokémon is not immune to the freeze condition.");
                 setAddEffectChance(10);
                 setNonVolChanges("Frozen");
+                setPriority(0);
                 break;
             case "Payback":
                 setType("Dark");
@@ -144,6 +149,7 @@ public class PhysicalMove extends AttackingMove {
                 setBPCode(3);
                 setAdditionalEffects("This physical move deals damage and doubles in power " +
                                      "if the opponent moves before the user.");
+                setPriority(0);
                 break;
             case "Play Rough":
                 setType("Fairy");
@@ -158,6 +164,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, -1, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(10);
+                setPriority(0);
                 break;
             case "Superpower":
                 setType("Fighting");
@@ -172,6 +179,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, -1, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
                 setAddEffectChance(100);
+                setPriority(0);
                 break;
             case "Seed Bomb":
                 setType("Grass");
@@ -183,6 +191,7 @@ public class PhysicalMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and has no additional effects. " +
                                      "For future reference, it is blocked by the Bulletproof ability.");
+                setPriority(0);
                 break;
             case "Drain Punch":
                 setType("Fighting");
@@ -199,6 +208,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {50, 0, 0, 0, 0, 0, 0, 0});
                 setAddEffectChance(100);
                 setChangesUserStats(true);
+                setPriority(0);
                 break;
             case "Crunch":
                 setType("Dark");
@@ -213,6 +223,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
+                setPriority(0);
                 break;
             case "Flare Blitz":
                 setType("Fire");
@@ -228,6 +239,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {-30, 0, 0, 0, 0, 0, 0, 0});
                 setChangesUserStats(true);
                 setAddEffectChance(100);
+                setPriority(0);
                 break;
             case "Aerial Ace":
                 setType("Flying");
@@ -239,6 +251,7 @@ public class PhysicalMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This physical move deals damage and bypasses accuracy checks. For reference, " +
                                      "this means the move can only be directly avoided by Pokemon in semi-invulnerable states.");
+                setPriority(0);
                 break;
             case "Low Kick":
                 setType("Fighting");
@@ -250,6 +263,7 @@ public class PhysicalMove extends AttackingMove {
                 setBPCode(5);
                 setAdditionalEffects("This physical move deals a variable amount of damage depending on the target's base weight value. " +
                                      "For reference, this increases by weight, so generally it is stronger against heavier foes.");
+                setPriority(0);
                 break;
             case "Liquidation":
                 setType("Water");
@@ -264,6 +278,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
+                setPriority(0);
                 break;
             case "Rock Slide":
                 setType("Rock"); // Implement flinching and deal with multiple targets //TODO
@@ -278,6 +293,7 @@ public class PhysicalMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, 0, -1, 0, 0, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
+                setPriority(0);
                 break;
             default:
                 setName("");

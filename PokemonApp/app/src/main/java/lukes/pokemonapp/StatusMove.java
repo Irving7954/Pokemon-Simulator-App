@@ -92,6 +92,7 @@ public class StatusMove extends Move {
                 setEffects("This status move raises the user's S. Defense by two stages. Keep in mind that " +
                            "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(true);
+                setPriority(0);
                 break;
             case "Leech Seed":
                 setType("Grass");
@@ -101,6 +102,7 @@ public class StatusMove extends Move {
                 setEffects("This status move has a 90% chance to drain a small amount of the opponent's HP " +
                            "each turn, which heals the user. This move fails against other Grass types and " +
                            "its effects disappear if an opponent afflicted with Leech Seed switches out.");
+                setPriority(0);
                 break;
             case "Light Screen":
                 setType("Psychic");
@@ -109,14 +111,17 @@ public class StatusMove extends Move {
                 setAccuracy(1000);
                 setEffects("This status move uses psychic power to increase the S.Defense of the user's " +
                            "team for five turns.");
+                setPriority(0);
                 break;
             case "Magic Coat":
                 setType("Psychic");
                 setPP(30);
                 setTwoTurnCode(0);
                 setAccuracy(1000);
-                setEffects("This status move reflects the effects of most status moves that are used by the opponent. " +
-                           "However, the user will still be vulnerable to direct damage during this time.");
+                setEffects("This status move reflects the effects of most status moves that are used by the " +
+                           "opponent with increased priority (+4). However, the user will still be vulnerable " +
+                           "to direct damage during this time.");
+                setPriority(4);
                 break;
             case "Magnet Rise":
                 setType("Electric");
@@ -124,6 +129,7 @@ public class StatusMove extends Move {
                 setTwoTurnCode(0);
                 setAccuracy(1000);
                 setEffects("This status move makes the user immune to Ground type moves for five turns.");
+                setPriority(0);
                 break;
             case "Reflect":
                 setType("Psychic");
@@ -132,6 +138,7 @@ public class StatusMove extends Move {
                 setAccuracy(1000);
                 setEffects("This status move uses psychic power to increase the Defense of the user's " +
                            "team for five turns.");
+                setPriority(0);
                 break;
             case "Rest":
                 setType("Psychic");
@@ -140,6 +147,7 @@ public class StatusMove extends Move {
                 setAccuracy(1000);
                 setEffects("This status move will put the user to sleep for two turns. As a result, the " +
                            "user is fully healed and loses all of its status conditions.");
+                setPriority(0);
                 break;
             case "Roar":
                 setType("Normal");
@@ -149,7 +157,9 @@ public class StatusMove extends Move {
                 addToIBList(1);
                 addToIBList(2);
                 setEffects("This status move scares the opponent out and replaces it with a different random Pokémon " +
-                           "on their team. However, the user almost always moves last when using this move.");
+                           "on their team. However, this move has decreased priority (-6), so the user almost always " +
+                           "goes last when using this move.");
+                setPriority(-6);
                 break;
             case "Screech":
                 setType("Normal");
@@ -160,6 +170,7 @@ public class StatusMove extends Move {
                 setEffects("This status move has an 85% chance to reduce the opponent's Defense by two stages. Keep in mind that " +
                            "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(false);
+                setPriority(0);
                 break;
             case "Substitute": // Handle sub health drop (and sub in general) //TODO
                 setType("Normal");
@@ -173,6 +184,7 @@ public class StatusMove extends Move {
                            "For reference, sound-based moves and certain other effects bypass substitutes, so " +
                            "this does not ensure that the user and their side of the field is fully protected.");
                 setChangesUserStats(true);
+                setPriority(0);
                 break;
             case "Sunny Day":
                 setType("Fire");
@@ -181,6 +193,7 @@ public class StatusMove extends Move {
                 setAccuracy(1000);
                 setEffects("This status move brings out the sunlight for five turns, which strengthens Fire " +
                            "type moves, weakens Water type moves, and has many other small effects.");
+                setPriority(0);
                 break;
             case "Synthesis": // Handle variable health changes from synthesis from weather //TODO
                 setType("Grass");
@@ -192,6 +205,7 @@ public class StatusMove extends Move {
                            "no weather conditions are present, it heals 50% of the user's HP, but it heals more " +
                            "in sunlight and less in other weather conditions.");
                 setChangesUserStats(true);
+                setPriority(0);
                 break;
             case "Thunder Wave":
                 setType("Electric");
@@ -201,6 +215,7 @@ public class StatusMove extends Move {
                 setEffects("This status move paralyzes the opponent. This makes the opponent have a 25% chance of being " +
                            "unable to act due to paralysis and reduces the opponent's speed significantly. Electric types " +
                            "and Ground types are immune to the effects of this move.");
+                setPriority(0);
                 break;
             case "Toxic":
                 setType("Poison");
@@ -210,6 +225,7 @@ public class StatusMove extends Move {
                 setEffects("This status move has an 90% chance to badly poison the target. Each turn, " +
                            "the damage from this poison increases, but Steel and Poison type Pokémon are " +
                            "immune to this status condition.");
+                setPriority(0);
                 break;
             case "Will-O-Wisp":
                 setType("Fire");
@@ -218,6 +234,7 @@ public class StatusMove extends Move {
                 setAccuracy(85);
                 setEffects("This status move has an 85% chance to burn the opponent, which deals damage each turn " +
                            "and reduces the opponent's Attack by two stages. Fire types are immune to this status condition.");
+                setPriority(0);
                 break;
             case "Yawn":
                 setType("Normal");
@@ -227,6 +244,7 @@ public class StatusMove extends Move {
                 setEffects("This status move makes the opponent drowsy, which means that the opponent will fall asleep " +
                            "for 1-3 turns after the opponent's next turn. If the opponent switches out before the opponent " +
                            "falls asleep, the effects of Yawn on that Pokémon are nullified.");
+                setPriority(0);
                 break;
             case "Swords Dance":
                 setType("Normal");
@@ -237,6 +255,7 @@ public class StatusMove extends Move {
                 setEffects("This status move increases the user's Attack by two stages. Keep in mind that " +
                            "each stat can only be increased or decreased by six stages.");
                 setChangesUserStats(true);
+                setPriority(0);
                 break;
             case "Protect": // Implement protection as some sort of status move attribute code and handle priority //TODO
                 setType("Normal");
@@ -247,6 +266,7 @@ public class StatusMove extends Move {
                            "that only target the user. This has increased priority (+4) and has a large failure chance " +
                            "after the initial usage when used consecutively with itself or other protection moves.");
                 setChangesUserStats(true);
+                setPriority(4);
                 break;
             case "Rain Dance":
                 setType("Water"); // Implement weather as some sort of status move/ability attribute code //TODO
@@ -255,6 +275,7 @@ public class StatusMove extends Move {
                 setAccuracy(1000);
                 setEffects("This status move brings out the rain for five turns, which strengthens Water " +
                            "type moves, weakens Fire type moves, and has many other small effects.");
+                setPriority(0);
                 break;
             default:
                 setName("");

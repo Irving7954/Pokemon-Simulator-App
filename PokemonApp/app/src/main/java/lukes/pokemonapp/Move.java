@@ -78,7 +78,12 @@ public abstract class Move implements Parcelable {
      */
     private boolean statusesUser;
 
-    // Add priority tiers //TODO
+    /**
+     * This move's priority, which is an integer between -7 and +5. In most cases, moves use the default priority (0)
+     * And therefore determine move order by comparing speeds, but there are plenty of exceptions,
+     * Such as abilities and moves like Prankster, Armor Tail, Trick Room, and Fake Out.
+     */
+    private int priority; // Finish priority logic in BattleFragment.java //TODO
 
     // Add sound-based moves, which break through substitutes //TODO
 
@@ -98,7 +103,7 @@ public abstract class Move implements Parcelable {
      * So this is a critical detail that may need to be updated when this class is changed.
      * @param in The incoming Move parcel.
      */
-    protected Move(Parcel in){
+    protected Move(Parcel in) {
         // Initialize a variable for later
         Class<Integer> integerClass = Integer.class;
 
@@ -113,6 +118,7 @@ public abstract class Move implements Parcelable {
         setNonVolChanges(in.readString());
         setVolChanges(in.readString());
         setStatusesUser(in.readBoolean());
+        setPriority(in.readInt());
     }
 
     /**
@@ -135,6 +141,7 @@ public abstract class Move implements Parcelable {
         out.writeString(nonVolChanges);
         out.writeString(volChanges);
         out.writeBoolean(statusesUser);
+        out.writeInt(priority);
     }
 
     /**
@@ -330,6 +337,19 @@ public abstract class Move implements Parcelable {
     }
 
     /**
+     * Sets the move's priority to the specified value. This throws an exception if the new value
+     * is not within the range of -7-5.
+     * @param pri The move's new priority value.
+     * @throws IllegalArgumentException When the new priority number is invalid.
+     */
+    public void setPriority(int pri) {
+        if(pri >= -7 && pri <= 5)
+            priority = pri;
+        else
+            throw new IllegalArgumentException("A move's accuracy can only be between -7 and 5!");
+    }
+
+    /**
      * Determines if the Pokémon is immune to the provided non-volatile status from a move in
      * The provided scenario, which is essentially a shortcut for checking a bunch of
      * status-related Types and abilities in one method.
@@ -415,6 +435,14 @@ public abstract class Move implements Parcelable {
      */
     public boolean statusesUser() {
         return statusesUser;
+    }
+
+    /**
+     * Returns this move's priority.
+     * @return This move's priority.
+     */
+    public int getPriority() {
+        return priority;
     }
 
     /**

@@ -89,6 +89,7 @@ public class SpecialMove extends AttackingMove {
                                      "assuming that the opposing Pokémon is not immune to the paralysis condition.");
                 setAddEffectChance(30);
                 setNonVolChanges("Paralyzed");
+                setPriority(0);
                 break;
             case "Energy Ball":
                 setType("Grass");
@@ -103,6 +104,7 @@ public class SpecialMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, 0, 0, 0, -1, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(10);
+                setPriority(0);
                 break;
             case "Eruption":
                 setType("Fire");
@@ -114,6 +116,7 @@ public class SpecialMove extends AttackingMove {
                 setBPCode(1);
                 setAdditionalEffects("This special move decreases in power as the user's HP decreases " +
                                      "and also hits both targets in a double battle.");
+                setPriority(0);
                 break;
             case "Flamethrower":
                 setType("Fire");
@@ -127,6 +130,7 @@ public class SpecialMove extends AttackingMove {
                                      "assuming that the opposing Pokémon is not immune to the burn condition.");
                 setAddEffectChance(10);
                 setNonVolChanges("Burned");
+                setPriority(0);
                 break;
             case "Giga Drain":
                 setType("Grass");
@@ -143,6 +147,7 @@ public class SpecialMove extends AttackingMove {
                 setStatChanges(new Integer[] {50, 0, 0, 0, 0, 0, 0, 0});
                 setAddEffectChance(100);
                 setChangesUserStats(true);
+                setPriority(0);
                 break;
             case "Ice Beam":
                 setType("Ice");
@@ -156,6 +161,7 @@ public class SpecialMove extends AttackingMove {
                                      "assuming that the opposing Pokémon is not immune to the freeze condition.");
                 setAddEffectChance(10);
                 setNonVolChanges("Frozen");
+                setPriority(0);
                 break;
             case "Lava Plume":
                 setType("Fire");
@@ -169,6 +175,7 @@ public class SpecialMove extends AttackingMove {
                                      "and also hits both targets in a double battle.");
                 setAddEffectChance(30);
                 setNonVolChanges("Burned");
+                setPriority(0);
                 break;
             case "Scald":
                 setType("Water");
@@ -179,10 +186,11 @@ public class SpecialMove extends AttackingMove {
                 setMakesContact(false);
                 setBPCode(0);
                 setAdditionalEffects("This special move deals damage and has a 30% chance to burn the opponent. " +
-                                     "Additionally, if necessary, the user is thawed out before the moved is performed," +
-                                     "It also unfreezes a frozen target hit by the attack.");
+                                     "If necessary, the user is thawed out before the moved is performed, and " +
+                                     "it also unfreezes a frozen target hit by the attack.");
                 setAddEffectChance(30);
                 setNonVolChanges("Burned");
+                setPriority(0);
                 break;
             case "Sludge Bomb":
                 setType("Poison");
@@ -196,6 +204,7 @@ public class SpecialMove extends AttackingMove {
                                      "assuming that the opposing Pokémon is not immune to the poison condition.");
                 setAddEffectChance(30);
                 setNonVolChanges("Poisoned");
+                setPriority(0);
                 break;
             case "Solar Beam":
                 setType("Grass");
@@ -208,6 +217,7 @@ public class SpecialMove extends AttackingMove {
                 setAdditionalEffects("This special move allows the user to gather up light for one turn " +
                                      "and then unleash it on the next turn. In sunlight, no charging turn " +
                                      "is required, and this move's power is decreased during other weather conditions.");
+                setPriority(0);
                 break;
             case "Volt Switch":
                 setType("Electric");
@@ -219,6 +229,7 @@ public class SpecialMove extends AttackingMove {
                 setBPCode(0);
                 setAdditionalEffects("This special move deals damage and then forces the user to switch to another " +
                                      "Pokémon on their team. The user will not switch if Volt Switch deals no damage.");
+                setPriority(0);
                 break;
             case "Earth Power":
                 setType("Ground");
@@ -233,6 +244,7 @@ public class SpecialMove extends AttackingMove {
                 setStatChanges(new Integer[] {0, 0, 0, 0, -1, 0, 0, 0});
                 setChangesUserStats(false);
                 setAddEffectChance(20);
+                setPriority(0);
                 break;
             default:
                 setName("");
