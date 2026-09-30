@@ -410,40 +410,64 @@ public class BattleFragment extends Fragment { // Fragment code 3
      */
     private void resolveSpeedTiers(int moveIndex) {
         setCommentary("");
-        int playerSpeed = (int) (leadPlayerPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadPlayerPoke.getStatStages()[5]]);
-        int enemySpeed = (int) (leadEnemyPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadEnemyPoke.getStatStages()[5]]);
-        Move move = leadPlayerPoke.getMoves().get(moveIndex);
-        if(playerSpeed > enemySpeed) {
-            movePlayerFirst(move);
+
+        // Check priority tiers first
+        Move playerMove = leadPlayerPoke.getMoves().get(moveIndex);
+        if(playerMove == null || playerMove.getName() == null) {
+            throw new IllegalStateException("The player's move is not valid!");
         }
-        else if(playerSpeed < enemySpeed) {
-            moveEnemyFirst(move);
+        int playerPriority = playerMove.getPriority();
+
+        Move enemyMove = determineAIMove();
+        if(enemyMove == null || enemyMove.getName() == null) {
+            throw new IllegalStateException("The enemy's move is not valid!");
         }
-        else { // Speed tie
-            int randomNum = rand.nextInt(2); // This will properly give a fifty 50% chance of 0 and 1
-            if (randomNum == 0) {
-                movePlayerFirst(move);
+
+        int enemyPriority = enemyMove.getPriority();
+        if(playerPriority > enemyPriority) {
+            movePlayerFirst(playerMove, enemyMove);
+        }
+        else if (playerPriority < enemyPriority) {
+            moveEnemyFirst(playerMove, enemyMove);
+        }
+        else {
+            // Check speed tiers if priority tiers are equal
+            int playerSpeed = (int) (leadPlayerPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadPlayerPoke.getStatStages()[5]]);
+            int enemySpeed = (int) (leadEnemyPoke.getInitStats()[5] * NORMAL_STAT_STAGES[leadEnemyPoke.getStatStages()[5]]);
+
+            if(playerSpeed > enemySpeed) {
+                movePlayerFirst(playerMove, enemyMove);
             }
-            else {
-                moveEnemyFirst(move);
+            else if(playerSpeed < enemySpeed) {
+                moveEnemyFirst(playerMove, enemyMove);
+            }
+            else { // Speed tie
+                int randomNum = rand.nextInt(2); // This will properly give a fifty 50% chance of 0 and 1
+                if (randomNum == 0) {
+                    movePlayerFirst(playerMove, enemyMove);
+                }
+                else {
+                    moveEnemyFirst(playerMove, enemyMove);
+                }
             }
         }
-    } // Resolve priority and end-of-turn effects //TODO
+    } // Resolve end-of-turn effects //TODO
 
     /**
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
      * The Pokémon have fainted before or during the turn during move resolution.
-     * @param move The chosen move.
+     * @param playerMove The player's chosen move.
+     * @param enemyMove The enemy's chosen move, which is controlled by an AI player currently.
      */
-    private void movePlayerFirst(Move move) {
+    private void movePlayerFirst(Move playerMove, Move enemyMove) {
         if(leadPlayerPoke.getInitStats()[0] > 0) {
             addCommentary("First, ");
-            resolveMoveType(move, true);  // Player
+            resolveMoveDelegator(playerMove, true, true);  // Player
         }
         if(leadEnemyPoke.getInitStats()[0] > 0) {
             addCommentaryWithNewLine("Second, ");
-            resolveAIMove(true); // Enemy
+            resolveMoveDelegator(enemyMove, false, true); // Enemy
         }
     }
 
@@ -451,17 +475,18 @@ public class BattleFragment extends Fragment { // Fragment code 3
      * A helper method used to reduce repetitive code in resolving speed tiers, which is primarily concerned
      * With proper move resolution order. Most notably, this method is one of the main places that considers if
      * The Pokémon has taken damage and/or fainted before the move is actually resolved, including on the same turn.
-     * @param move The chosen move.
+     * @param playerMove The player's chosen move.
+     * @param enemyMove The enemy's chosen move, which is controlled by an AI player currently.
      */
-    private void moveEnemyFirst(Move move) {
+    private void moveEnemyFirst(Move playerMove, Move enemyMove) {
         if(leadEnemyPoke.getInitStats()[0] > 0) {
             addCommentary("First, ");
-            resolveAIMove(false); // Enemy
+            resolveMoveDelegator(enemyMove, false, false); // Enemy
 
         }
         if(leadPlayerPoke.getInitStats()[0] > 0) {
             addCommentaryWithNewLine("Second, ");
-            resolveMoveType(move, false);  // Player
+            resolveMoveDelegator(playerMove, true, false);  // Player
         }
     }
 
@@ -469,30 +494,42 @@ public class BattleFragment extends Fragment { // Fragment code 3
      * A helper method that checks if the chosen move is valid and passes it off to the appropriate resolveMove
      * method based on if it is an AttackingMove.
      * @param move The chosen move.
+     * @param isPlayerTheUser Determines if the moveUser is on the player's team.
      * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
      *                           which is important for calculating BP and certain effects in some cases.
      */
-    private void resolveMoveType(Move move, boolean didPlayerMoveFirst) {
-        if(move == null || move.getName() == null)
+    private void resolveMoveDelegator(Move move, boolean isPlayerTheUser, boolean didPlayerMoveFirst) {
+        if(move == null || move.getName() == null) {
+            // Replace with logic for switching out later after 1v1 battles are generally working //TODO
             throw new IllegalStateException("The provided move is not valid!");
-        if (!move.isAttackingMove()) {
-            StatusMove statusMove = (StatusMove) move;
-            resolveMove(statusMove, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
+        }
+
+        Pokemon moveUser = leadPlayerPoke; // Assume the user is the player by default
+        Pokemon moveTarget = leadEnemyPoke;
+        if(!isPlayerTheUser) {
+            moveUser = leadEnemyPoke;
+            moveTarget = leadPlayerPoke;
+        }
+
+        if (move.isAttackingMove()) {
+            AttackingMove attackingMove = (AttackingMove) move;
+            resolveMove(attackingMove, moveUser, moveTarget, isPlayerTheUser, didPlayerMoveFirst);
         }
         else {
-            AttackingMove attackingMove = (AttackingMove) move;
-            resolveMove(attackingMove, leadPlayerPoke, leadEnemyPoke, true, didPlayerMoveFirst);
+            StatusMove statusMove = (StatusMove) move;
+            resolveMove(statusMove, moveUser, moveTarget, isPlayerTheUser, didPlayerMoveFirst);
         }
     }
 
     /**
-     * This method determines the AI's move selection based on the opponent. Essentially, it picks the neutral
+     * This method determines the AI player's move selection based on the opponent. Essentially, it picks the neutral
      * damage or better moves, and it picks the highest BP and effectiveness out of those. If there are no neutral or better moves,
-     * it picks the best useful status move. If there is no good status move and no neutral move, the Pokémon switches out.
-     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
-     *                           which is important for calculating BP and certain effects in some cases.
+     * it picks the best useful status move. If there is no good status move and no neutral move, it returns null, which will
+     * be used later in resolveMove to switch out the Pokémon. If it is not possible for the Pokémon to switch out
+     * since it is the last Pokémon on the team or due to certain abilities or moves, the move will be chosen randomly.
+     * @return The AI player's chosen move, or null if the Pokémon plans to switch out.
      */
-    private void resolveAIMove(boolean didPlayerMoveFirst) {
+    private Move determineAIMove() {
         ArrayList<Move> moves = leadEnemyPoke.getMoves();
         ArrayList<Move> firstMoveChoices = new ArrayList<>();
         int numAdded = 0;
@@ -503,86 +540,95 @@ public class BattleFragment extends Fragment { // Fragment code 3
             }
 
         if (numAdded == 0) { // Use status moves if no moves hit for neutral or better
-            for (Move m : moves)
+            for (Move m : moves) {
                 if (!m.isAttackingMove()) { // Likely add other arguments later //TODO
                     firstMoveChoices.add(m);
                     numAdded++;
                 }
+            }
             if(numAdded == 0) {
-                for (Move m : moves)  // Check for stab and avoid 4x resists as a last case
+                for (Move m : moves) { // Check for stab and avoid 4x resists as a last case
                     if(m.isAttackingMove() && checkTypeMatchups(leadPlayerPoke.getType(), m.getType(), 1, leadEnemyPoke) >= 0.5) {
                         firstMoveChoices.add(m);
                         numAdded++;
                     }
-
-                if(numAdded == 0) {
-                    // Switch out, which will be implemented later once 1v1 fights work properly //TODO
                 }
-                else if (numAdded == 1)
-                    resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
-                else
-                    compareBP(firstMoveChoices, didPlayerMoveFirst);
+                if(numAdded == 0) {
+                    return null; // Verify that switching out is not prevented by team size, specific abilities, or certain moves //TODO
+                }
+                else if (numAdded == 1) {
+                    return firstMoveChoices.get(0);
+                }
+                else {
+                    return compareBPAndSelectMove(firstMoveChoices);
+                }
             }
-            else if(numAdded == 1)
-                resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
+            else if(numAdded == 1) {
+                return firstMoveChoices.get(0);
+            }
             else {
-                int randomNum = rand.nextInt(numAdded); // Choose randomly from the status moves until status moves are implemented, at least for now //TODO
-                resolveMove((StatusMove) firstMoveChoices.get(randomNum), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
+                return firstMoveChoices.get(rand.nextInt(numAdded)); // Choose randomly from the status moves until status moves are implemented, at least for now //TODO
             }
         }
-        else if(numAdded == 1) // Handle the simple case with one neutral or better attack
-            resolveMove((AttackingMove) firstMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
+        else if(numAdded == 1) { // Handle the simple case with one neutral or better attack
+            return firstMoveChoices.get(0);
+        }
         else { // Handle the more complex case with more than one neutral or better attack
             ArrayList<Move> secondMoveChoices = new ArrayList<>();
             int numAdded2 = 0;
-            for(int i = 0; i < numAdded; i++)
+            for(int i = 0; i < numAdded; i++) {
                 if (checkTypeMatchups(leadPlayerPoke.getType(), firstMoveChoices.get(i).getType(), 1, leadEnemyPoke) >= 1.5) {
                     secondMoveChoices.add(numAdded2++, firstMoveChoices.get(i));
                 }
+            }
 
-            if(numAdded2 == 0)
-                compareBP(firstMoveChoices, didPlayerMoveFirst);
-            else if(numAdded2 == 1)
-                resolveMove((AttackingMove) secondMoveChoices.get(0), leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
-            else
-                compareBP(secondMoveChoices, didPlayerMoveFirst);
+            if(numAdded2 == 0) {
+                return compareBPAndSelectMove(firstMoveChoices);
+            }
+            else if(numAdded2 == 1) {
+                return secondMoveChoices.get(0);
+            }
+            else {
+                return compareBPAndSelectMove(secondMoveChoices);
+            }
         }
     }
 
     /**
      * Selects the highest BP move among the AI's choices in the provided array. If there are multiple choices,
-     * it picks randomly between them.
-     * @param moveChoices The array of possible moves for the AI.
-     * @param didPlayerMoveFirst True if the player moved first this round, and false otherwise,
-     *                           which is important for calculating BP and certain effects in some cases.
+     * it picks randomly between them. Note that this assumes that the AI is attacking first for any BP-related
+     * calculations since I do not think that it is possible to determine the attack sequence before this stage.
+     * @param moveChoices The array of the AI player's possible moves.
+     * @return The AI's player's chosen move, or null if the Pokémon plans to switch out.
      */
-    private void compareBP(ArrayList<Move> moveChoices, boolean didPlayerMoveFirst) {
+    private Move compareBPAndSelectMove(ArrayList<Move> moveChoices) {
         Move[] equalBPMoves = new Move[4];
         int numAdded = 0; // This is the effective length of the array
         AttackingMove maxMove = (AttackingMove) moveChoices.get(0);
         equalBPMoves[numAdded++] = maxMove;
         double maxBPModifier = checkTypeMatchups(leadPlayerPoke.getType(), maxMove.getType(), 1, leadEnemyPoke);
-        int maxBP = (int) (calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * maxBPModifier);
+        int maxBP = (int) (calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, false) * maxBPModifier);
 
         for(int i = 1; i < moveChoices.size(); i++) { // Compare each move
             AttackingMove move = (AttackingMove) moveChoices.get(i);
             double modifier = checkTypeMatchups(leadPlayerPoke.getType(), move.getType(), 1, leadEnemyPoke);
-            int newBP = (int) (calculateBP(move, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * modifier);
+            int newBP = (int) (calculateBP(move, leadEnemyPoke, leadPlayerPoke, false) * modifier);
             if(newBP > maxBP) {
                 maxBP = newBP; // Reset the maxBP and the array of equal BPs
                 equalBPMoves = new Move[4];
                 numAdded = 0;
                 equalBPMoves[numAdded++] = move;
             }
-            else if((calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * maxBPModifier) ==
-                    (calculateBP(move, leadEnemyPoke, leadPlayerPoke, didPlayerMoveFirst) * modifier))
+            else if((calculateBP(maxMove, leadEnemyPoke, leadPlayerPoke, false) * maxBPModifier) ==
+                    (calculateBP(move, leadEnemyPoke, leadPlayerPoke, false) * modifier)) {
                 equalBPMoves[numAdded++] = move; // Add the duplicate BP to the array
+            }
         }
-        if(numAdded == 1)
-            resolveMove(maxMove, leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
+        if(numAdded == 1) {
+            return maxMove;
+        }
         else {
-            int randomNum = rand.nextInt(numAdded); // Choose randomly from the equal BP moves
-            resolveMove((AttackingMove) equalBPMoves[randomNum], leadEnemyPoke, leadPlayerPoke, false, didPlayerMoveFirst);
+            return equalBPMoves[rand.nextInt(numAdded)]; // Choose randomly from the equal BP moves
         }
     }
 
@@ -867,7 +913,7 @@ public class BattleFragment extends Fragment { // Fragment code 3
             return move.getBP() * moveUser.getInitStats()[0] / moveUser.getMaxHP(); // Eruption/water spout
         if(move.hasBPCode(2) && moveTarget.getInvulnCode() == 6)
             return move.getBP() * 2 ; // Earthquake with Dig
-        if(move.hasBPCode(3) && !didPlayerMoveFirst)
+        if(move.hasBPCode(3) && ((moveUser == leadEnemyPoke && didPlayerMoveFirst) || (moveUser == leadPlayerPoke && !didPlayerMoveFirst)))
             return move.getBP() * 2; // Payback
         if(move.hasBPCode(4) && (weather != 2 && weather != 0 && weather != 6 && weather != 7))
             return move.getBP() / 2; // Solar Beam in non-sun, non-air current, or no weather

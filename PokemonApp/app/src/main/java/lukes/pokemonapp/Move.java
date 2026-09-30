@@ -83,7 +83,7 @@ public abstract class Move implements Parcelable {
      * And therefore determine move order by comparing speeds, but there are plenty of exceptions,
      * Such as abilities and moves like Prankster, Armor Tail, Trick Room, and Fake Out.
      */
-    private int priority; // Finish priority logic in BattleFragment.java //TODO
+    private int priority;
 
     // Add sound-based moves, which break through substitutes //TODO
 
