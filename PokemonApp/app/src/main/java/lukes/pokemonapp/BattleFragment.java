@@ -43,33 +43,10 @@ public class BattleFragment extends Fragment { // Fragment code 3
     public static final double[] ACCURACY_STAT_STAGES = new double[] {.333, .375, .429, .5, .6, .75, 1.0, 1.333, 1.666, 2, 2.333, 2.666, 3};
 
     /**
-     * The representation of the player and enemy trainers. The player will be of a Player type, and
-     * the other will be of an EnemyTrainer type.
+     * The various text boxes that are on the screen, including the label for the Pokémon
+     * on each side and the description of each turn from each player's perspective.
      */
-    private Trainer player, enemy;
-
-    /**
-     * The name of the player, which is provided initially by the user in the pop-up box.
-     */
-    private String playerNameText;
-
-    /**
-     * The various text boxes that are on the screen, including the Trainer name's, the label for the Pokémon's
-     * HPs, and the description of each turn for both players.
-     */
-    private TextView playerName, enemyName, playerPokeAndHP, enemyPokeAndHP, playerConditions, enemyConditions;
-
-    /**
-     * The small images of Pokémon that shows each Trainer's team. Each Trainer has up to six images (one
-     * for each Pokémon on their team).
-     */
-    private ArrayList<ImageView> playerImages, enemyImages;
-
-    /**
-     * An image of the current Pokémon for both the player and the enemy. This image does not change
-     * if the Pokémon is injured.
-     */
-    private ImageView playerPoke, enemyPoke;
+    private TextView playerPokeAndHP, enemyPokeAndHP, playerConditions, enemyConditions;
 
     /**
      * The buttons that provide the move choices for the player. This button array's indexes correspond
@@ -130,7 +107,7 @@ public class BattleFragment extends Fragment { // Fragment code 3
     /**
      * Creates this view based on the parameters. Essentially, it initializes each important part and causes it
      * to have its intended effects. The main battle loop occurs in here because it depends on the result from
-     * the name box, which is clunky and definitely needs to be changed for auto-rotation, at the very least //TODO.
+     * the name box, which is clunky and definitely needs to be changed for auto-rotation, at the very least. //TODO
      * @param inflater Creates this view from the layout file.
      * @param container Puts this view into the specified container.
      * @param savedInstance The bundle that contains the first player Pokémon argument.
@@ -161,10 +138,10 @@ public class BattleFragment extends Fragment { // Fragment code 3
         adb.setMessage("Enter your name here: ");
         adb.setPositiveButton("Ok", (dialog, id) -> {
             // Initializations for the player
-            playerNameText = et.getText().toString();
-            playerName = myView.findViewById(R.id.playerName);
+            String playerNameText = et.getText().toString();
+            TextView playerName = myView.findViewById(R.id.playerName);
             playerName.setText(playerNameText);
-            player = new Player(playerNameText);
+            Trainer player = new Player(playerNameText);
             player.addPokemon(leadPlayerPoke);
             String firstPokeName = leadPlayerPoke.getName();
             switch(firstPokeName) { // Determines the rest of the team based on the first Pokémon's name
@@ -241,7 +218,7 @@ public class BattleFragment extends Fragment { // Fragment code 3
                moveButtons.get(i).setText(playerMoves.get(i).toString());
             }
 
-            playerImages = new ArrayList<>();
+            ArrayList<ImageView> playerImages = new ArrayList<>();
             for (int i = 0; i < player.getTeam().size(); i++) {
                 // Initialize images to R.id.image# and set their text to the leadPoke's moves
                 switch (i) {
@@ -269,14 +246,14 @@ public class BattleFragment extends Fragment { // Fragment code 3
             }
             setImages(playerImages, player.getTeam());
 
-            playerPoke = myView.findViewById(R.id.currentPlayerPoke);
+            ImageView playerPoke = myView.findViewById(R.id.currentPlayerPoke);
             setImage(playerPoke, leadPlayerPoke);
             // Initializes the progress bars
             playerHPBar = myView.findViewById(R.id.playerHPBar);
             adjustHPBars(playerHPBar, leadPlayerPoke, playerPokeAndHP);
 
             // Initializations for the enemy trainer
-            enemy = new EnemyTrainer("Angel");
+            Trainer enemy = new EnemyTrainer("Angel");
             enemy.addPokemon("Voltorb");
             enemy.addPokemon("Wooper");
             enemy.addPokemon("Snubbull");
@@ -284,7 +261,7 @@ public class BattleFragment extends Fragment { // Fragment code 3
 
             leadEnemyPoke = enemy.getTeam().get(0);
             // Initializes text boxes
-            enemyName = myView.findViewById(R.id.enemyName);
+            TextView enemyName = myView.findViewById(R.id.enemyName);
             enemyName.setText(enemy.getName());
 
             enemyPokeAndHP = myView.findViewById(R.id.enemyPokeAndHP);
@@ -292,7 +269,7 @@ public class BattleFragment extends Fragment { // Fragment code 3
             enemyConditions = myView.findViewById(R.id.enemyConditions);
             enemyConditions.setText("");
 
-            enemyImages = new ArrayList<>();
+            ArrayList<ImageView> enemyImages = new ArrayList<>();
             for (int i = 0; i < enemy.getTeam().size(); i++) {
                 // Initialize images to R.id.image# and set their text to the leadPoke's moves
                 switch (i) {
@@ -320,7 +297,7 @@ public class BattleFragment extends Fragment { // Fragment code 3
             }
             setImages(enemyImages, enemy.getTeam());
 
-            enemyPoke = myView.findViewById(R.id.currentEnemyPoke);
+            ImageView enemyPoke = myView.findViewById(R.id.currentEnemyPoke);
             setImage(enemyPoke, leadEnemyPoke);
             // Initializes HP bars
             enemyHPBar = myView.findViewById(R.id.enemyHPBar);
